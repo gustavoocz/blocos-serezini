@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #11151a;
+  --color-panel: #191f26;
+  --color-panel-strong: #222a33;
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-copy: #f3efe8;
+  --color-muted: #a8b0bb;
+  --color-accent: #d42d20;
+  --color-accent-soft: #ff765a;
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body: "Barlow", sans-serif;
+  --shadow-frame: 0 30px 80px rgba(0, 0, 0, 0.32);
+  --shadow-glow: 0 24px 80px rgba(212, 45, 32, 0.2);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: var(--font-body);
+    background:
+      radial-gradient(circle at top right, rgba(212, 45, 32, 0.18), transparent 28%),
+      linear-gradient(180deg, #0d1116 0%, #11151a 45%, #141a21 100%);
+    color: var(--color-copy);
+  }
+
+  ::selection {
+    background: rgba(255, 118, 90, 0.3);
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .section-kicker {
+    @apply mb-4 inline-flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.35em] text-accent-soft;
+  }
+
+  .section-kicker::before {
+    content: "";
+    @apply h-px w-8 bg-accent;
+  }
+
+  .section-title {
+    @apply font-display text-5xl leading-[0.92] tracking-[0.04em] text-balance sm:text-6xl lg:text-7xl;
+  }
+
+  .section-copy {
+    @apply max-w-2xl text-base leading-7 text-muted sm:text-lg;
+  }
+
+  .frame {
+    @apply rounded-[2rem] border border-line bg-panel/80 shadow-[var(--shadow-frame)] backdrop-blur;
+  }
+
+  .ghost-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+
+  .reveal {
+    @apply translate-y-8 opacity-0 transition-all duration-700 ease-out;
+  }
+
+  .reveal.is-visible {
+    @apply translate-y-0 opacity-100;
+  }
+}
+
+@layer utilities {
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.18);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
