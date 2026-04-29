@@ -40,6 +40,33 @@ type Highlight = {
   description: string;
 };
 
+type CalculatorBlockOption = {
+  value: string;
+  label: string;
+  product: string;
+  dimensions: string;
+  blocksPerSquareMeter: number;
+};
+
+type CalculatorWall = {
+  label: string;
+  length: number;
+  height: number;
+  openings: number;
+  grossArea: number;
+  netArea: number;
+};
+
+type CalculatorResult = {
+  option: CalculatorBlockOption;
+  walls: CalculatorWall[];
+  waste: number;
+  grossArea: number;
+  openings: number;
+  netArea: number;
+  quantity: number;
+};
+
 type ContactItem = {
   label: string;
   value: string;
@@ -47,10 +74,10 @@ type ContactItem = {
 };
 
 const stats: Stat[] = [
-  { value: "20+", label: "anos atendendo obras no mercado capixaba" },
-  { value: "10K+", label: "pedidos entregues com logística própria" },
-  { value: "100%", label: "linhas alinhadas às normas ABNT aplicáveis" },
-  { value: "ES", label: "cobertura de entrega em todo o Espírito Santo" },
+  { value: "ES", label: "atendimento em Cachoeiro e região" },
+  { value: "3", label: "linhas principais para pronta cotação" },
+  { value: "ABNT", label: "referências técnicas nas especificações" },
+  { value: "Zap", label: "orçamento direto pelo WhatsApp" },
 ];
 
 const products: Product[] = [
@@ -58,7 +85,7 @@ const products: Product[] = [
     id: "01",
     name: "Bloco de Vedação",
     description:
-      "Bloco para alvenaria não estrutural com precisão dimensional, montagem limpa e opções de espessura para diferentes necessidades de fechamento.",
+      "Para paredes de fechamento e divisórias. Disponível nas medidas mais usadas em obra.",
     specs: [
       ["Normas", "NBR 6136 / NBR 15270"],
       ["Resistência", "≥ 3 MPa"],
@@ -77,7 +104,7 @@ const products: Product[] = [
     id: "02",
     name: "Bloco Estrutural",
     description:
-      "Linha pensada para alvenaria estrutural, com resistência maior, racionalização do canteiro e redução de desperdício na execução.",
+      "Para alvenaria estrutural, conforme projeto. Medidas de 12, 14 e 19 cm.",
     specs: [
       ["Normas", "NBR 6136 / NBR 16868"],
       ["Resistência", "4,5 MPa a 8 MPa"],
@@ -96,7 +123,7 @@ const products: Product[] = [
     id: "03",
     name: "Canaleta",
     description:
-      "Peça complementar para cintas, vergas, contravergas e detalhes de amarração, mantendo compatibilidade com a paginação da alvenaria.",
+      "Para cintas, vergas, contravergas e amarrações. Compatível com a modulação dos blocos.",
     specs: [
       ["Formato", "Canaleta"],
       ["Dimensões", "14x19x39 / 19x19x39 cm"],
@@ -134,80 +161,125 @@ const contactItems: ContactItem[] = [
   },
   {
     label: "Atendimento",
-    value: "Segunda a sexta: 7h às 17h | Sábado: 7h às 12h",
+    value: "Segunda a sexta: 7h às 17h | Sábado: 7h às 11h",
+  },
+];
+
+const calculatorBlockOptions: CalculatorBlockOption[] = [
+  {
+    value: "vedacao-9",
+    label: "Vedação 9x19x39 cm",
+    product: "Bloco de Vedação",
+    dimensions: "9x19x39 cm",
+    blocksPerSquareMeter: 12.5,
+  },
+  {
+    value: "vedacao-14",
+    label: "Vedação 14x19x39 cm",
+    product: "Bloco de Vedação",
+    dimensions: "14x19x39 cm",
+    blocksPerSquareMeter: 12.5,
+  },
+  {
+    value: "vedacao-19",
+    label: "Vedação 19x19x39 cm",
+    product: "Bloco de Vedação",
+    dimensions: "19x19x39 cm",
+    blocksPerSquareMeter: 12.5,
+  },
+  {
+    value: "estrutural-12",
+    label: "Estrutural 12x19x39 cm",
+    product: "Bloco Estrutural",
+    dimensions: "12x19x39 cm",
+    blocksPerSquareMeter: 12.5,
+  },
+  {
+    value: "estrutural-14",
+    label: "Estrutural 14x19x39 cm",
+    product: "Bloco Estrutural",
+    dimensions: "14x19x39 cm",
+    blocksPerSquareMeter: 12.5,
+  },
+  {
+    value: "estrutural-19",
+    label: "Estrutural 19x19x39 cm",
+    product: "Bloco Estrutural",
+    dimensions: "19x19x39 cm",
+    blocksPerSquareMeter: 12.5,
   },
 ];
 
 const steps: Step[] = [
   {
     id: "01",
-    title: "Matéria-prima controlada",
+    title: "Envie sua lista",
     description:
-      "Agregados, cimento e aditivos são selecionados para manter consistência de traço e previsibilidade na resistência final.",
+      "Informe produto, medida, quantidade aproximada e local de entrega pelo formulário ou WhatsApp.",
   },
   {
     id: "02",
-    title: "Dosagem e mistura",
+    title: "Confirmamos o pedido",
     description:
-      "O lote é calibrado com repetibilidade industrial para reduzir variação dimensional e garantir uniformidade de produção.",
+      "A equipe valida disponibilidade, medida correta e informações necessárias para fechar a cotação.",
   },
   {
     id: "03",
-    title: "Prensagem e cura",
+    title: "Separamos o lote",
     description:
-      "A vibrocompactação e a cura controlada estabilizam a peça antes da liberação, preservando desempenho e acabamento.",
+      "O pedido segue para separação ou programação de produção conforme volume e prazo combinado.",
   },
   {
     id: "04",
-    title: "Inspeção e entrega",
+    title: "Entrega combinada",
     description:
-      "As peças passam por conferência técnica e seguem para a obra com programação logística alinhada ao cronograma do cliente.",
+      "A entrega é programada para reduzir parada de obra e evitar compra em cima da hora.",
   },
 ];
 
 const highlights: Highlight[] = [
   {
-    title: "Qualidade rastreável",
+    title: "Medidas de obra",
     description:
-      "Padronização de lote, controle dimensional e foco em desempenho real de obra.",
+      "Blocos de 9, 12, 14 e 19 cm, além de canaletas para complemento da alvenaria.",
   },
   {
-    title: "Atendimento técnico",
+    title: "Orçamento rápido",
     description:
-      "A equipe ajuda a especificar a peça certa conforme o tipo de aplicação e o volume do projeto.",
+      "Pedido direto pelo WhatsApp, com produto, quantidade e local de entrega no mesmo fluxo.",
   },
   {
-    title: "Operação pronta para escala",
+    title: "Entrega programada",
     description:
-      "A estrutura atende desde pequenas reformas até empreendimentos com demanda contínua.",
+      "Combine prazo e volume antes da compra para manter a obra abastecida.",
   },
   {
-    title: "Entrega sem improviso",
+    title: "Compra orientada",
     description:
-      "Programação logística para reduzir atraso, retrabalho e ruptura de abastecimento no canteiro.",
+      "A equipe ajuda a escolher entre vedação, estrutural e canaleta conforme a aplicação.",
   },
 ];
 
 const differentials: Highlight[] = [
   {
-    title: "Conformidade técnica",
+    title: "Produto certo",
     description:
-      "Linha produzida com foco em normas, repetibilidade e segurança de aplicação.",
+      "Você informa a aplicação e recebe orientação para escolher a medida adequada.",
   },
   {
-    title: "Capacidade industrial",
+    title: "Menos espera",
     description:
-      "Processo produtivo desenhado para manter ritmo, estoque e consistência de fornecimento.",
+      "Cotação e retorno pelo WhatsApp, sem formulário longo ou troca de mensagens perdida.",
   },
   {
-    title: "Suporte comercial direto",
+    title: "Linha completa",
     description:
-      "Contato ágil para orçamento, reposição, dúvidas de especificação e programação de entrega.",
+      "Vedação, estrutural e canaleta no mesmo atendimento.",
   },
   {
-    title: "Custo total mais previsível",
+    title: "Prazo combinado",
     description:
-      "Menos improviso no canteiro significa menos perda, menos retrabalho e mais controle de cronograma.",
+      "Entrega alinhada antes do fechamento para evitar surpresa no canteiro.",
   },
 ];
 
@@ -247,15 +319,22 @@ app.innerHTML = `
           class="absolute left-5 right-5 top-[calc(100%+0.75rem)] hidden rounded-[1.75rem] border border-white/10 bg-panel/95 p-5 shadow-[var(--shadow-frame)] lg:static lg:flex lg:items-center lg:gap-10 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
         >
           <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
-            ${["sobre", "produtos", "processo", "diferenciais", "contato"]
+            ${[
+                { href: "sobre", label: "Sobre" },
+                { href: "produtos", label: "Produtos" },
+                { href: "calculadora", label: "Calculadora" },
+                { href: "processo", label: "Como comprar" },
+                { href: "diferenciais", label: "Diferenciais" },
+                { href: "contato", label: "Contato" },
+              ]
               .map(
                 (item) => `
                   <a
-                    href="#${item}"
+                    href="#${item.href}"
                     data-nav-link
                     class="text-sm font-semibold uppercase tracking-[0.22em] text-muted transition hover:text-white"
                   >
-                    ${capitalize(item)}
+                    ${item.label}
                   </a>
                 `,
               )
@@ -275,20 +354,20 @@ app.innerHTML = `
     <main>
       <section id="hero" class="shell grid min-h-screen items-center gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
         <div class="relative z-10 max-w-3xl">
-          <p class="section-kicker reveal" data-reveal>Fábrica de artefatos de concreto</p>
-          <h1 class="section-title reveal max-w-3xl text-[4.8rem] sm:text-[6.2rem] lg:text-[8.5rem]" data-reveal>
-            Construção com <span class="text-accent">ritmo industrial</span>
+          <p class="section-kicker reveal" data-reveal>Blocos de concreto no Espírito Santo</p>
+          <h1 class="section-title reveal max-w-3xl text-[4.3rem] sm:text-[5.8rem] lg:text-[7.6rem]" data-reveal>
+            Blocos para obra com <span class="text-accent">entrega combinada</span>
           </h1>
           <p class="section-copy reveal mt-6 max-w-xl text-lg sm:text-xl" data-reveal>
-            Blocos de vedação, alvenaria estrutural e peças complementares para obras que exigem resistência, padronização e entrega confiável.
+            Blocos de vedação, blocos estruturais e canaletas para construtoras, lojas de material e obras em geral.
           </p>
 
           <div class="reveal mt-10 flex flex-col gap-4 sm:flex-row" data-reveal>
             <a href="#produtos" class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
-              Ver linha de produtos
+              Ver medidas
             </a>
             <a href="#contato" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/30 hover:bg-white/10">
-              Falar com a equipe
+              Pedir orçamento
             </a>
           </div>
 
@@ -317,7 +396,7 @@ app.innerHTML = `
                     <img src="/brand/logo.png" alt="Blocos Serezini" class="h-16 w-auto max-w-[11rem] object-contain sm:h-20 sm:max-w-[13rem]" />
                   </div>
                   <div>
-                    <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Linha industrial</p>
+                    <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Pedido direto</p>
                     <p class="mt-2 font-display text-4xl tracking-[0.14em] text-white">BLOCOS SEREZINI</p>
                   </div>
                 </div>
@@ -332,7 +411,7 @@ app.innerHTML = `
                   "Vedação",
                   "Estrutural",
                   "Canaletas",
-                  "Sob medida",
+                  "Entrega",
                 ]
                   .map(
                     (item, index) => `
@@ -346,9 +425,9 @@ app.innerHTML = `
               </div>
 
               <div class="mt-8 rounded-[1.75rem] border border-accent/25 bg-accent/10 p-6">
-                <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Compromisso de obra</p>
+                <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Para cotar mais rápido</p>
                 <p class="mt-4 max-w-md text-base leading-7 text-copy/85">
-                  Fornecimento com padrão repetível, leitura rápida do portfólio e contato comercial direto para orçamento e logística.
+                  Informe medida, quantidade aproximada e local de entrega. A equipe responde com orientação, prazo e valor.
                 </p>
               </div>
             </div>
@@ -359,16 +438,16 @@ app.innerHTML = `
       <section id="sobre" class="shell py-20 lg:py-28">
         <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div class="reveal" data-reveal>
-            <p class="section-kicker">Quem somos</p>
-            <h2 class="section-title max-w-2xl">Uma operação pensada para obra, não para improviso.</h2>
+            <p class="section-kicker">O que fazemos</p>
+            <h2 class="section-title max-w-2xl">Bloco certo, na medida certa, para a obra andar.</h2>
           </div>
 
           <div class="reveal space-y-6" data-reveal>
             <p class="section-copy">
-              A Blocos Serezini atua no fornecimento de artefatos de concreto para obras que exigem previsibilidade de desempenho, padrão dimensional e logística alinhada ao cronograma.
+              A Blocos Serezini fabrica e fornece blocos de concreto para obras em Cachoeiro de Itapemirim e região.
             </p>
             <p class="section-copy">
-              A operação combina produção industrial, leitura técnica das necessidades do cliente e atendimento direto para orientar a melhor solução entre vedação, estrutura e peças complementares.
+              O atendimento ajuda a confirmar medidas, volume e entrega antes do fechamento do pedido.
             </p>
           </div>
         </div>
@@ -380,7 +459,7 @@ app.innerHTML = `
                 .map(
                   (item) => `
                     <article class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                      <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Ponto forte</p>
+                      <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Na prática</p>
                       <h3 class="mt-5 font-display text-3xl tracking-[0.06em] text-white">${item.title}</h3>
                       <p class="mt-3 text-sm leading-6 text-muted">${item.description}</p>
                     </article>
@@ -392,14 +471,14 @@ app.innerHTML = `
 
           <aside class="frame reveal flex flex-col justify-between gap-10 overflow-hidden p-8 sm:p-10" data-reveal>
             <div>
-              <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Compromisso Serezini</p>
-              <h3 class="mt-4 font-display text-5xl tracking-[0.08em] text-white">Base forte para cada entrega</h3>
+              <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Pedido sem rodeio</p>
+              <h3 class="mt-4 font-display text-5xl tracking-[0.08em] text-white">Você pede. A equipe confirma. A obra recebe.</h3>
             </div>
             <ul class="space-y-4 text-sm uppercase tracking-[0.2em] text-muted">
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Controle de qualidade</span><strong class="font-semibold text-white">ativo</strong></li>
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Atendimento técnico</span><strong class="font-semibold text-white">direto</strong></li>
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Programação logística</span><strong class="font-semibold text-white">ajustada</strong></li>
-              <li class="flex items-center justify-between"><span>Fornecimento recorrente</span><strong class="font-semibold text-white">pronto</strong></li>
+              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Medidas</span><strong class="font-semibold text-white">claras</strong></li>
+              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Orçamento</span><strong class="font-semibold text-white">direto</strong></li>
+              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Entrega</span><strong class="font-semibold text-white">combinada</strong></li>
+              <li class="flex items-center justify-between"><span>Atendimento</span><strong class="font-semibold text-white">local</strong></li>
             </ul>
           </aside>
         </div>
@@ -409,10 +488,10 @@ app.innerHTML = `
         <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div class="reveal" data-reveal>
             <p class="section-kicker">Linha de produtos</p>
-            <h2 class="section-title max-w-3xl">Portfólio organizado para leitura rápida do especificador.</h2>
+            <h2 class="section-title max-w-3xl">Escolha o produto e confira as medidas.</h2>
           </div>
           <p class="section-copy reveal max-w-md text-sm uppercase tracking-[0.16em]" data-reveal>
-            A seleção abaixo resume aplicação, faixa de uso e parâmetros técnicos principais para facilitar especificação e orçamento.
+            Clique no modelo 3D para ver o formato antes de chamar no WhatsApp.
           </p>
         </div>
 
@@ -444,7 +523,7 @@ app.innerHTML = `
                     data-product-trigger="${product.id}"
                     class="mt-8 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:border-accent/40 hover:bg-accent/10"
                   >
-                    Ver modelo 3D
+                    Ver medidas em 3D
                     <span class="text-accent-soft">→</span>
                   </button>
                 </article>
@@ -454,15 +533,98 @@ app.innerHTML = `
         </div>
       </section>
 
+      <section id="calculadora" class="shell py-20 lg:py-28">
+        <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div class="reveal" data-reveal>
+            <p class="section-kicker">Calculadora de blocos</p>
+            <h2 class="section-title max-w-2xl">Calcule uma estimativa antes de pedir orçamento.</h2>
+            <p class="section-copy mt-6">
+              Adicione uma ou mais paredes e veja uma quantidade aproximada de blocos. O cálculo considera bloco 39x19 cm com junta de 1 cm.
+            </p>
+          </div>
+
+          <div class="frame reveal p-6 sm:p-8 lg:p-10" data-reveal>
+            <form id="block-calculator-form" class="grid gap-6">
+              <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
+                <span>Tipo de bloco</span>
+                <select
+                  name="calculator-block"
+                  class="rounded-[1.25rem] border border-white/10 bg-surface px-4 py-4 text-base normal-case tracking-normal text-white outline-none transition focus:border-accent"
+                >
+                  ${calculatorBlockOptions
+                    .map((option) => `<option value="${option.value}">${option.label}</option>`)
+                    .join("")}
+                </select>
+              </label>
+
+              <div class="grid gap-3">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Paredes / trechos</p>
+                  <button
+                    type="button"
+                    id="calculator-add-wall"
+                    class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:border-accent/40 hover:bg-accent/10"
+                  >
+                    Adicionar parede
+                  </button>
+                </div>
+                <div id="calculator-walls" class="grid gap-4">
+                  ${calculatorWallRow(1, "10", "2.8", "0")}
+                </div>
+              </div>
+
+              <div class="grid gap-5 sm:grid-cols-2">
+                ${calculatorInputField("calculator-waste", "Perda", "%", "0")}
+              </div>
+
+              <div class="grid gap-4 rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-5 sm:grid-cols-3">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.22em] text-muted">Área líquida total</p>
+                  <p id="calculator-area" class="mt-2 font-display text-4xl tracking-[0.08em] text-white">0 m²</p>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-[0.22em] text-muted">Blocos estimados</p>
+                  <p id="calculator-quantity" class="mt-2 font-display text-4xl tracking-[0.08em] text-accent">0</p>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-[0.22em] text-muted">Base do cálculo</p>
+                  <p id="calculator-rate" class="mt-2 font-display text-4xl tracking-[0.08em] text-white">12,5/m²</p>
+                </div>
+              </div>
+
+              <p id="calculator-note" class="text-sm leading-6 text-muted">
+                Estimativa para compra inicial. Lance cada parede separadamente quando a obra tiver medidas diferentes.
+              </p>
+
+              <div class="flex flex-col gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  id="calculator-quote"
+                  class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft"
+                >
+                  Usar no orçamento
+                </button>
+                <a
+                  href="#contato"
+                  class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08]"
+                >
+                  Ir para contato
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
       <section id="processo" class="py-20 lg:py-28">
         <div class="shell">
           <div class="frame overflow-hidden">
             <div class="grid gap-10 px-6 py-10 sm:px-8 sm:py-12 lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:py-14">
               <div class="reveal" data-reveal>
-                <p class="section-kicker">Como trabalhamos</p>
-                <h2 class="section-title max-w-xl">Produção com sequência técnica clara.</h2>
+                <p class="section-kicker">Como comprar</p>
+                <h2 class="section-title max-w-xl">Envie a demanda e receba retorno direto.</h2>
                 <p class="section-copy mt-6">
-                  Da escolha dos insumos ao despacho para a obra, cada etapa é organizada para sustentar qualidade constante e entrega sem improviso.
+                  O orçamento começa pelo WhatsApp. Quanto mais completo o pedido, mais rápida a resposta.
                 </p>
               </div>
 
@@ -491,13 +653,13 @@ app.innerHTML = `
       <section id="diferenciais" class="shell py-20 lg:py-28">
         <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div class="reveal" data-reveal>
-            <p class="section-kicker">Por que Serezini</p>
-            <h2 class="section-title max-w-xl">Parceria sólida para obras que não podem parar.</h2>
+            <p class="section-kicker">Por que comprar aqui</p>
+            <h2 class="section-title max-w-xl">Menos dúvida no pedido. Menos atraso na obra.</h2>
             <p class="section-copy mt-6">
-              A escolha do fornecedor impacta custo, prazo e execução. Por isso a Serezini trabalha com padrão industrial, resposta comercial ágil e foco em continuidade de abastecimento.
+              A compra de bloco precisa ser simples: medida correta, quantidade alinhada e entrega combinada.
             </p>
             <a href="#contato" class="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
-              Solicitar contato
+              Pedir orçamento
             </a>
           </div>
 
@@ -521,9 +683,9 @@ app.innerHTML = `
         <div class="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
           <div class="frame reveal p-8 sm:p-10" data-reveal>
             <p class="section-kicker">Fale com a equipe</p>
-            <h2 class="section-title max-w-xl">Peça um orçamento direto com a equipe.</h2>
+            <h2 class="section-title max-w-xl">Passe sua lista de blocos pelo WhatsApp.</h2>
             <p class="section-copy mt-6">
-              Preencha os dados principais e envie a solicitação pelo WhatsApp. Assim o atendimento recebe a demanda com contexto suficiente para responder com mais rapidez.
+              Preencha produto, quantidade estimada e local de entrega. A mensagem já sai pronta para atendimento.
             </p>
 
             <div class="mt-10 space-y-6">
@@ -572,7 +734,7 @@ app.innerHTML = `
                 <textarea
                   name="message"
                   rows="6"
-                  placeholder="Descreva quantidade estimada, prazo e local de entrega."
+                  placeholder="Ex.: 1.000 blocos 14x19x39 para entrega em Cachoeiro."
                   class="rounded-[1.25rem] border border-white/10 bg-surface px-4 py-4 text-base normal-case tracking-normal text-white outline-none transition focus:border-accent"
                 ></textarea>
               </label>
@@ -611,7 +773,7 @@ app.innerHTML = `
             <div class="relative border-b border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,118,90,0.16),_transparent_35%),linear-gradient(180deg,#151a20_0%,#11151a_100%)] p-5 sm:p-8 lg:border-b-0 lg:border-r">
               <div class="mb-4 flex items-center justify-between gap-4">
                 <div>
-                  <p id="modal-kicker" class="text-xs uppercase tracking-[0.28em] text-accent-soft">Catálogo técnico</p>
+                  <p id="modal-kicker" class="text-xs uppercase tracking-[0.28em] text-accent-soft">Medidas do produto</p>
                   <h3 id="modal-title" class="mt-3 font-display text-4xl tracking-[0.08em] text-white sm:text-5xl"></h3>
                 </div>
                 <span class="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-muted">
@@ -638,9 +800,9 @@ app.innerHTML = `
               <dl id="modal-specs" class="mt-8 space-y-3 text-sm"></dl>
 
               <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Leitura visual</p>
+                <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Antes do orçamento</p>
                 <p class="mt-3 text-sm leading-7 text-muted">
-                  A visualização é uma representação técnica do bloco para ajudar na leitura de forma, vazados e proporção antes do orçamento.
+                  Use o modelo 3D para conferir formato, vazados e proporção antes de pedir preço.
                 </p>
               </div>
 
@@ -650,7 +812,7 @@ app.innerHTML = `
                   href="#contato"
                   class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft"
                 >
-                  Solicitar este modelo
+                  Pedir orçamento deste modelo
                 </a>
                 <button
                   type="button"
@@ -709,6 +871,13 @@ const modalVariantMeta = document.querySelector<HTMLDivElement>("#modal-variant-
 const modalCta = document.querySelector<HTMLAnchorElement>("#modal-cta");
 const viewerHost = document.querySelector<HTMLDivElement>("#product-viewer");
 const revealElements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+const calculatorForm = document.querySelector<HTMLFormElement>("#block-calculator-form");
+const calculatorWalls = document.querySelector<HTMLDivElement>("#calculator-walls");
+const calculatorAddWall = document.querySelector<HTMLButtonElement>("#calculator-add-wall");
+const calculatorArea = document.querySelector<HTMLParagraphElement>("#calculator-area");
+const calculatorQuantity = document.querySelector<HTMLParagraphElement>("#calculator-quantity");
+const calculatorRate = document.querySelector<HTMLParagraphElement>("#calculator-rate");
+const calculatorQuote = document.querySelector<HTMLButtonElement>("#calculator-quote");
 const form = document.querySelector<HTMLFormElement>("#contact-form");
 const formFeedback = document.querySelector<HTMLParagraphElement>("#form-feedback");
 const productField = document.querySelector<HTMLSelectElement>('select[name="product"]');
@@ -729,6 +898,7 @@ let dragOrigin = { x: 0, y: 0 };
 let targetRotation = { x: -0.38, y: 0.72 };
 let autoSpinVelocity = 0.0035;
 let cameraDistance = 7.2;
+let calculatorWallCount = 1;
 
 year!.textContent = new Date().getFullYear().toString();
 
@@ -770,6 +940,75 @@ navLinks.forEach((link) => {
       menuToggle?.setAttribute("aria-expanded", "false");
     }
   });
+});
+
+calculatorForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+});
+
+calculatorForm?.addEventListener("input", updateBlockCalculator);
+calculatorForm?.addEventListener("change", updateBlockCalculator);
+
+calculatorAddWall?.addEventListener("click", () => {
+  if (!calculatorWalls) {
+    return;
+  }
+
+  calculatorWallCount += 1;
+  calculatorWalls.insertAdjacentHTML("beforeend", calculatorWallRow(calculatorWallCount, "", "", "0"));
+  syncCalculatorWallLabels();
+  updateBlockCalculator();
+});
+
+calculatorWalls?.addEventListener("click", (event) => {
+  const target = event.target as HTMLElement;
+  const removeButton = target.closest<HTMLButtonElement>("[data-remove-wall]");
+
+  if (!removeButton) {
+    return;
+  }
+
+  const rows = calculatorWalls.querySelectorAll<HTMLElement>("[data-calculator-wall]");
+
+  if (rows.length <= 1) {
+    return;
+  }
+
+  removeButton.closest<HTMLElement>("[data-calculator-wall]")?.remove();
+  syncCalculatorWallLabels();
+  updateBlockCalculator();
+});
+
+calculatorQuote?.addEventListener("click", () => {
+  const result = updateBlockCalculator();
+
+  if (!result) {
+    return;
+  }
+
+  if (productField) {
+    productField.value = result.option.product;
+  }
+
+  if (messageField) {
+    messageField.value = [
+      `Olá, gostaria de orçamento para ${result.quantity} unidades de ${result.option.product} ${result.option.dimensions}.`,
+      `Paredes calculadas: ${result.walls.length}.`,
+      `Área bruta: ${formatDecimal(result.grossArea)} m².`,
+      `Aberturas: ${formatDecimal(result.openings)} m².`,
+      `Área líquida total: ${formatDecimal(result.netArea)} m².`,
+      `Perda considerada: ${formatDecimal(result.waste)}%.`,
+      "",
+      ...result.walls.map(
+        (wall) =>
+          `${wall.label}: ${formatDecimal(wall.length)} m x ${formatDecimal(wall.height)} m, aberturas ${formatDecimal(
+            wall.openings,
+          )} m², área líquida ${formatDecimal(wall.netArea)} m².`,
+      ),
+    ].join("\n");
+  }
+
+  document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
 });
 
 productButtons.forEach((button) => {
@@ -854,7 +1093,7 @@ form?.addEventListener("submit", (event) => {
   const lines = [
     "Olá, Blocos Serezini.",
     "",
-    "Quero solicitar um orçamento com os dados abaixo:",
+    "Quero orçamento para blocos:",
     `Nome: ${name}`,
     `Telefone: ${phone}`,
     email ? `E-mail: ${email}` : "",
@@ -870,6 +1109,114 @@ form?.addEventListener("submit", (event) => {
     formFeedback.textContent = "Mensagem pronta. Abrimos o WhatsApp em uma nova aba.";
   }
 });
+
+syncCalculatorWallLabels();
+updateBlockCalculator();
+
+function updateBlockCalculator(): CalculatorResult | null {
+  if (!calculatorForm) {
+    return null;
+  }
+
+  const data = new FormData(calculatorForm);
+  const selectedOption =
+    calculatorBlockOptions.find((option) => option.value === String(data.get("calculator-block"))) ??
+    calculatorBlockOptions[0];
+  const waste = clamp(readCalculatorNumber(data, "calculator-waste", 10), 0, 30);
+  const walls = readCalculatorWalls();
+  const grossArea = walls.reduce((sum, wall) => sum + wall.grossArea, 0);
+  const openings = walls.reduce((sum, wall) => sum + wall.openings, 0);
+  const netArea = walls.reduce((sum, wall) => sum + wall.netArea, 0);
+  const quantity = Math.ceil(netArea * selectedOption.blocksPerSquareMeter * (1 + waste / 100));
+
+  if (calculatorArea) {
+    calculatorArea.textContent = `${formatDecimal(netArea)} m²`;
+  }
+
+  if (calculatorQuantity) {
+    calculatorQuantity.textContent = quantity.toLocaleString("pt-BR");
+  }
+
+  if (calculatorRate) {
+    calculatorRate.textContent = `${formatDecimal(selectedOption.blocksPerSquareMeter)}/m²`;
+  }
+
+  return {
+    option: selectedOption,
+    walls,
+    waste,
+    grossArea,
+    openings,
+    netArea,
+    quantity,
+  };
+}
+
+function readCalculatorWalls(): CalculatorWall[] {
+  if (!calculatorWalls) {
+    return [];
+  }
+
+  return Array.from(calculatorWalls.querySelectorAll<HTMLElement>("[data-calculator-wall]")).map((row, index) => {
+    const length = readElementNumber(row, "[data-wall-length]", 0);
+    const height = readElementNumber(row, "[data-wall-height]", 0);
+    const grossArea = Math.max(length * height, 0);
+    const openings = clamp(readElementNumber(row, "[data-wall-openings]", 0), 0, grossArea);
+    const netArea = Math.max(grossArea - openings, 0);
+
+    return {
+      label: `Parede ${index + 1}`,
+      length,
+      height,
+      openings,
+      grossArea,
+      netArea,
+    };
+  });
+}
+
+function readElementNumber(root: HTMLElement, selector: string, fallback: number): number {
+  const input = root.querySelector<HTMLInputElement>(selector);
+  const raw = String(input?.value ?? "").replace(",", ".").trim();
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function readCalculatorNumber(data: FormData, name: string, fallback: number): number {
+  const raw = String(data.get(name) ?? "").replace(",", ".").trim();
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function syncCalculatorWallLabels(): void {
+  if (!calculatorWalls) {
+    return;
+  }
+
+  const rows = Array.from(calculatorWalls.querySelectorAll<HTMLElement>("[data-calculator-wall]"));
+
+  rows.forEach((row, index) => {
+    const title = row.querySelector<HTMLElement>("[data-wall-title]");
+    const removeButton = row.querySelector<HTMLButtonElement>("[data-remove-wall]");
+
+    if (title) {
+      title.textContent = `Parede ${index + 1}`;
+    }
+
+    if (removeButton) {
+      removeButton.disabled = rows.length <= 1;
+      removeButton.classList.toggle("opacity-40", rows.length <= 1);
+      removeButton.classList.toggle("cursor-not-allowed", rows.length <= 1);
+    }
+  });
+}
+
+function formatDecimal(value: number): string {
+  return value.toLocaleString("pt-BR", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: Number.isInteger(value) ? 0 : 1,
+  });
+}
 
 function openProductModal(productId: string): void {
   const product = productMap.get(productId);
@@ -964,7 +1311,7 @@ function renderModalContent(): void {
   }
 
   if (modalCta) {
-    modalCta.textContent = `Solicitar ${activeProduct.name}`;
+    modalCta.textContent = `Pedir orçamento de ${activeProduct.name}`;
   }
 }
 
@@ -1479,8 +1826,64 @@ function inputField(name: string, label: string, placeholder: string, type = "te
   `;
 }
 
-function capitalize(value: string): string {
-  return value.charAt(0).toUpperCase() + value.slice(1);
+function calculatorInputField(name: string, label: string, suffix: string, value: string): string {
+  return `
+    <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
+      <span>${label}</span>
+      <span class="flex overflow-hidden rounded-[1.25rem] border border-white/10 bg-surface transition focus-within:border-accent">
+        <input
+          type="number"
+          name="${name}"
+          value="${value}"
+          min="0"
+          step="0.1"
+          class="min-w-0 flex-1 bg-transparent px-4 py-4 text-base normal-case tracking-normal text-white outline-none"
+        />
+        <span class="grid min-w-14 place-items-center border-l border-white/10 px-4 text-sm text-muted">${suffix}</span>
+      </span>
+    </label>
+  `;
+}
+
+function calculatorWallRow(index: number, length: string, height: string, openings: string): string {
+  return `
+    <div data-calculator-wall class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-4">
+      <div class="mb-4 flex items-center justify-between gap-3">
+        <p data-wall-title class="text-xs uppercase tracking-[0.24em] text-muted">Parede ${index}</p>
+        <button
+          type="button"
+          data-remove-wall
+          class="rounded-full border border-white/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted transition hover:border-accent/40 hover:text-white"
+        >
+          Remover
+        </button>
+      </div>
+      <div class="grid gap-4 md:grid-cols-3">
+        ${calculatorWallInput("Comprimento", "m", length, "data-wall-length")}
+        ${calculatorWallInput("Altura", "m", height, "data-wall-height")}
+        ${calculatorWallInput("Portas e janelas", "m²", openings, "data-wall-openings")}
+      </div>
+    </div>
+  `;
+}
+
+function calculatorWallInput(label: string, suffix: string, value: string, attribute: string): string {
+  return `
+    <label class="grid gap-2 text-sm uppercase tracking-[0.18em] text-muted">
+      <span>${label}</span>
+      <span class="flex overflow-hidden rounded-[1.1rem] border border-white/10 bg-surface transition focus-within:border-accent">
+        <input
+          type="number"
+          ${attribute}
+          value="${value}"
+          min="0"
+          step="0.1"
+          class="min-w-0 flex-1 bg-transparent px-4 py-3 text-base normal-case tracking-normal text-white outline-none"
+        />
+        <span class="grid min-w-12 place-items-center border-l border-white/10 px-3 text-sm text-muted">${suffix}</span>
+      </span>
+    </label>
+  `;
 }
 
 function blockIcon(kind: "flat" | "structural" | "stack"): string {
