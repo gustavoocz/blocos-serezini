@@ -29,12 +29,6 @@ type ConcreteTextureKit = {
   bumpMap: import("three").CanvasTexture;
 };
 
-type Step = {
-  id: string;
-  title: string;
-  description: string;
-};
-
 type Highlight = {
   title: string;
   description: string;
@@ -210,53 +204,26 @@ const calculatorBlockOptions: CalculatorBlockOption[] = [
   },
 ];
 
-const steps: Step[] = [
-  {
-    id: "01",
-    title: "Envie sua lista",
-    description:
-      "Informe produto, medida, quantidade aproximada e local de entrega pelo formulário ou WhatsApp.",
-  },
-  {
-    id: "02",
-    title: "Confirmamos o pedido",
-    description:
-      "A equipe valida disponibilidade, medida correta e informações necessárias para fechar a cotação.",
-  },
-  {
-    id: "03",
-    title: "Separamos o lote",
-    description:
-      "O pedido segue para separação ou programação de produção conforme volume e prazo combinado.",
-  },
-  {
-    id: "04",
-    title: "Entrega combinada",
-    description:
-      "A entrega é programada para reduzir parada de obra e evitar compra em cima da hora.",
-  },
-];
-
 const highlights: Highlight[] = [
   {
-    title: "Medidas de obra",
+    title: "Desde 1995",
     description:
-      "Blocos de 9, 12, 14 e 19 cm, além de canaletas para complemento da alvenaria.",
+      "A fábrica começou com o avô da família, conhecido em Cachoeiro como Zé do Bloco.",
   },
   {
-    title: "Orçamento rápido",
+    title: "Família Serezini",
     description:
-      "Pedido direto pelo WhatsApp, com produto, quantidade e local de entrega no mesmo fluxo.",
+      "O sobrenome virou marca e segue presente no atendimento, na produção e na rotina da empresa.",
   },
   {
-    title: "Entrega programada",
+    title: "Mesmo lugar",
     description:
-      "Combine prazo e volume antes da compra para manter a obra abastecida.",
+      "A empresa nasceu e continua no mesmo ponto em Cachoeiro de Itapemirim.",
   },
   {
-    title: "Compra orientada",
+    title: "Todo tipo de obra",
     description:
-      "A equipe ajuda a escolher entre vedação, estrutural e canaleta conforme a aplicação.",
+      "Atendimento para construtoras, lojas, profissionais da obra e clientes finais.",
   },
 ];
 
@@ -323,7 +290,6 @@ app.innerHTML = `
                 { href: "sobre", label: "Sobre" },
                 { href: "produtos", label: "Produtos" },
                 { href: "calculadora", label: "Calculadora" },
-                { href: "processo", label: "Como comprar" },
                 { href: "diferenciais", label: "Diferenciais" },
                 { href: "contato", label: "Contato" },
               ]
@@ -438,16 +404,19 @@ app.innerHTML = `
       <section id="sobre" class="shell py-20 lg:py-28">
         <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div class="reveal" data-reveal>
-            <p class="section-kicker">O que fazemos</p>
-            <h2 class="section-title max-w-2xl">Bloco certo, na medida certa, para a obra andar.</h2>
+            <p class="section-kicker">Nossa história</p>
+            <h2 class="section-title max-w-2xl">De Zé do Bloco para a família Serezini.</h2>
           </div>
 
           <div class="reveal space-y-6" data-reveal>
             <p class="section-copy">
-              A Blocos Serezini fabrica e fornece blocos de concreto para obras em Cachoeiro de Itapemirim e região.
+              A Blocos Serezini começou em 1995, em Cachoeiro de Itapemirim, fundada pelo avô da família, conhecido na cidade como Zé do Bloco.
             </p>
             <p class="section-copy">
-              O atendimento ajuda a confirmar medidas, volume e entrega antes do fechamento do pedido.
+              Depois, a fábrica passou para a próxima geração. Hoje o pai está à frente do negócio, e Zé do Bloco continua trabalhando junto, no mesmo lugar onde tudo começou.
+            </p>
+            <p class="section-copy">
+              O nome Serezini vem do sobrenome da família. A empresa atende de pequenas obras a construtoras, lojas e clientes que precisam comprar bloco com orientação direta.
             </p>
           </div>
         </div>
@@ -459,7 +428,7 @@ app.innerHTML = `
                 .map(
                   (item) => `
                     <article class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                      <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Na prática</p>
+                      <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">História real</p>
                       <h3 class="mt-5 font-display text-3xl tracking-[0.06em] text-white">${item.title}</h3>
                       <p class="mt-3 text-sm leading-6 text-muted">${item.description}</p>
                     </article>
@@ -471,14 +440,14 @@ app.innerHTML = `
 
           <aside class="frame reveal flex flex-col justify-between gap-10 overflow-hidden p-8 sm:p-10" data-reveal>
             <div>
-              <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Pedido sem rodeio</p>
-              <h3 class="mt-4 font-display text-5xl tracking-[0.08em] text-white">Você pede. A equipe confirma. A obra recebe.</h3>
+              <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Raiz local</p>
+              <h3 class="mt-4 font-display text-5xl tracking-[0.08em] text-white">Três décadas fabricando bloco em Cachoeiro.</h3>
             </div>
             <ul class="space-y-4 text-sm uppercase tracking-[0.2em] text-muted">
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Medidas</span><strong class="font-semibold text-white">claras</strong></li>
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Orçamento</span><strong class="font-semibold text-white">direto</strong></li>
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Entrega</span><strong class="font-semibold text-white">combinada</strong></li>
-              <li class="flex items-center justify-between"><span>Atendimento</span><strong class="font-semibold text-white">local</strong></li>
+              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Fundação</span><strong class="font-semibold text-white">1995</strong></li>
+              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Origem</span><strong class="font-semibold text-white">familiar</strong></li>
+              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Cidade</span><strong class="font-semibold text-white">Cachoeiro</strong></li>
+              <li class="flex items-center justify-between"><span>Fundador</span><strong class="font-semibold text-white">Zé do Bloco</strong></li>
             </ul>
           </aside>
         </div>
@@ -612,40 +581,6 @@ app.innerHTML = `
                 </a>
               </div>
             </form>
-          </div>
-        </div>
-      </section>
-
-      <section id="processo" class="py-20 lg:py-28">
-        <div class="shell">
-          <div class="frame overflow-hidden">
-            <div class="grid gap-10 px-6 py-10 sm:px-8 sm:py-12 lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:py-14">
-              <div class="reveal" data-reveal>
-                <p class="section-kicker">Como comprar</p>
-                <h2 class="section-title max-w-xl">Envie a demanda e receba retorno direto.</h2>
-                <p class="section-copy mt-6">
-                  O orçamento começa pelo WhatsApp. Quanto mais completo o pedido, mais rápida a resposta.
-                </p>
-              </div>
-
-              <div class="grid gap-5 sm:grid-cols-2">
-                ${steps
-                  .map(
-                    (step) => `
-                      <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6" data-reveal>
-                        <div class="flex items-center gap-4">
-                          <div class="grid h-14 w-14 place-items-center rounded-full border border-white/15 bg-accent/15 font-display text-3xl tracking-[0.08em] text-white">
-                            ${step.id}
-                          </div>
-                          <h3 class="font-display text-3xl tracking-[0.08em] text-white">${step.title}</h3>
-                        </div>
-                        <p class="mt-5 text-sm leading-7 text-muted">${step.description}</p>
-                      </article>
-                    `,
-                  )
-                  .join("")}
-              </div>
-            </div>
           </div>
         </div>
       </section>
