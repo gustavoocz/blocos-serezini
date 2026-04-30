@@ -133,10 +133,22 @@ const products: Product[] = [
   },
 ];
 
+const factoryAddress = "R. José Dias Lobato, 155 - Otton Marins, Cachoeiro de Itapemirim - ES, 29301-816";
+const googleMapsUrl = "https://share.google/WKNEyn6HIj3eceY6j";
+const routeSections: Record<string, string> = {
+  "/": "hero",
+  "/sobre": "sobre",
+  "/produtos": "produtos",
+  "/calculadora": "calculadora",
+  "/diferenciais": "diferenciais",
+  "/contato": "contato",
+};
+
 const contactItems: ContactItem[] = [
   {
     label: "Localização",
-    value: "Cachoeiro de Itapemirim, Espírito Santo",
+    value: factoryAddress,
+    href: googleMapsUrl,
   },
   {
     label: "Telefone / WhatsApp",
@@ -263,7 +275,7 @@ app.innerHTML = `
 
     <header id="topo" class="sticky top-0 z-50 border-b border-transparent bg-surface/80 backdrop-blur transition-colors duration-300">
       <div class="shell flex items-center justify-between py-4">
-        <a href="#hero" class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-3">
           <img src="/brand/logo.png" alt="Blocos Serezini" class="h-12 w-auto object-contain sm:h-14" />
         </a>
 
@@ -287,16 +299,16 @@ app.innerHTML = `
         >
           <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
             ${[
-                { href: "sobre", label: "Sobre" },
-                { href: "produtos", label: "Produtos" },
-                { href: "calculadora", label: "Calculadora" },
-                { href: "diferenciais", label: "Diferenciais" },
-                { href: "contato", label: "Contato" },
+                { href: "/sobre", label: "Sobre" },
+                { href: "/produtos", label: "Produtos" },
+                { href: "/calculadora", label: "Calculadora" },
+                { href: "/diferenciais", label: "Diferenciais" },
+                { href: "/contato", label: "Contato" },
               ]
               .map(
                 (item) => `
                   <a
-                    href="#${item.href}"
+                    href="${item.href}"
                     data-nav-link
                     class="text-sm font-semibold uppercase tracking-[0.22em] text-muted transition hover:text-white"
                   >
@@ -307,7 +319,7 @@ app.innerHTML = `
               .join("")}
           </div>
           <a
-            href="#contato"
+            href="/contato"
             data-nav-link
             class="mt-5 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft lg:mt-0"
           >
@@ -329,10 +341,10 @@ app.innerHTML = `
           </p>
 
           <div class="reveal mt-10 flex flex-col gap-4 sm:flex-row" data-reveal>
-            <a href="#produtos" class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
+            <a href="/produtos" class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
               Ver medidas
             </a>
-            <a href="#contato" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/30 hover:bg-white/10">
+            <a href="/contato" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/30 hover:bg-white/10">
               Pedir orçamento
             </a>
           </div>
@@ -401,7 +413,7 @@ app.innerHTML = `
         </div>
       </section>
 
-      <section id="sobre" class="shell py-20 lg:py-28">
+      <section id="sobre" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div class="reveal" data-reveal>
             <p class="section-kicker">Nossa história</p>
@@ -453,7 +465,7 @@ app.innerHTML = `
         </div>
       </section>
 
-      <section id="produtos" class="shell py-20 lg:py-28">
+      <section id="produtos" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div class="reveal" data-reveal>
             <p class="section-kicker">Linha de produtos</p>
@@ -502,7 +514,7 @@ app.innerHTML = `
         </div>
       </section>
 
-      <section id="calculadora" class="shell py-20 lg:py-28">
+      <section id="calculadora" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div class="reveal" data-reveal>
             <p class="section-kicker">Calculadora de blocos</p>
@@ -574,7 +586,7 @@ app.innerHTML = `
                   Usar no orçamento
                 </button>
                 <a
-                  href="#contato"
+                  href="/contato"
                   class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08]"
                 >
                   Ir para contato
@@ -585,7 +597,7 @@ app.innerHTML = `
         </div>
       </section>
 
-      <section id="diferenciais" class="shell py-20 lg:py-28">
+      <section id="diferenciais" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div class="reveal" data-reveal>
             <p class="section-kicker">Por que comprar aqui</p>
@@ -593,7 +605,7 @@ app.innerHTML = `
             <p class="section-copy mt-6">
               A compra de bloco precisa ser simples: medida correta, quantidade alinhada e entrega combinada.
             </p>
-            <a href="#contato" class="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
+            <a href="/contato" class="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
               Pedir orçamento
             </a>
           </div>
@@ -614,7 +626,7 @@ app.innerHTML = `
         </div>
       </section>
 
-      <section id="contato" class="shell py-20 lg:py-28">
+      <section id="contato" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
           <div class="frame reveal p-8 sm:p-10" data-reveal>
             <p class="section-kicker">Fale com a equipe</p>
@@ -744,7 +756,7 @@ app.innerHTML = `
               <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a
                   id="modal-cta"
-                  href="#contato"
+                  href="/contato"
                   class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft"
                 >
                   Pedir orçamento deste modelo
@@ -763,12 +775,117 @@ app.innerHTML = `
       </div>
     </div>
 
-    <footer class="shell border-t border-white/10 py-8">
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div class="flex items-center gap-3">
-          <img src="/brand/logo.png" alt="Blocos Serezini" class="h-14 w-auto object-contain" />
+    <footer class="border-t border-white/10 bg-panel/80">
+      <div class="shell py-12 lg:py-16">
+        <div class="grid gap-10 md:grid-cols-2 xl:grid-cols-[0.75fr_0.9fr_1fr_1.2fr_0.8fr]">
+          <div>
+            <p class="font-display text-3xl tracking-[0.08em] text-white">Páginas</p>
+            <nav class="mt-6 grid gap-3 text-sm text-muted">
+              ${[
+                { href: "/", label: "Home" },
+                { href: "/sobre", label: "Sobre" },
+                { href: "/produtos", label: "Produtos" },
+                { href: "/calculadora", label: "Calculadora" },
+                { href: "/diferenciais", label: "Diferenciais" },
+                { href: "/contato", label: "Contato" },
+              ]
+                .map(
+                  (item) => `
+                    <a href="${item.href}" class="transition hover:text-accent-soft">${item.label}</a>
+                  `,
+                )
+                .join("")}
+            </nav>
+          </div>
+
+          <div>
+            <p class="font-display text-3xl tracking-[0.08em] text-white">Produtos</p>
+            <nav class="mt-6 grid gap-3 text-sm text-muted">
+              ${products
+                .map(
+                  (product) => `
+                    <a href="/produtos" class="transition hover:text-accent-soft">${product.name}</a>
+                  `,
+                )
+                .join("")}
+            </nav>
+          </div>
+
+          <div>
+            <p class="font-display text-3xl tracking-[0.08em] text-white">Contato</p>
+            <div class="mt-6 grid gap-3 text-sm text-muted">
+              <a href="https://wa.me/5528999822728" target="_blank" rel="noreferrer" class="transition hover:text-accent-soft">(28) 99982-2728</a>
+              <a href="mailto:blocosserezini@gmail.com" class="break-words transition hover:text-accent-soft">blocosserezini@gmail.com</a>
+              <p>Segunda a sexta: 7h às 17h</p>
+              <p>Sábado: 7h às 11h</p>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-display text-3xl tracking-[0.08em] text-white">Onde nos encontrar</p>
+            <div class="mt-6 text-sm leading-7 text-muted">
+              <p class="font-semibold text-white">Fábrica</p>
+              <p class="mt-1 max-w-xs">${factoryAddress}</p>
+              <a
+                href="${googleMapsUrl}"
+                target="_blank"
+                rel="noreferrer"
+                class="mt-4 inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:border-accent/60 hover:text-accent-soft"
+              >
+                Abrir no Google Maps
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <p class="font-display text-3xl tracking-[0.08em] text-white">Redes sociais</p>
+            <div class="mt-6 flex gap-3">
+              <a
+                href="https://www.instagram.com/blocosserezini/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Abrir Instagram"
+                class="grid h-12 w-12 place-items-center rounded-[1rem] bg-accent text-white transition hover:bg-accent-soft"
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                  <rect x="4" y="4" width="16" height="16" rx="4" />
+                  <circle cx="12" cy="12" r="3.5" />
+                  <path stroke-linecap="round" d="M16.8 7.2h.01" />
+                </svg>
+              </a>
+              <a
+                href="https://wa.me/5528999822728"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Abrir WhatsApp"
+                class="grid h-12 w-12 place-items-center rounded-[1rem] bg-accent text-white transition hover:bg-accent-soft"
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M17.47 14.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.18.2-.35.22-.65.08-.29-.15-1.25-.47-2.38-1.48-.89-.78-1.49-1.76-1.66-2.06-.17-.29-.01-.45.13-.6.13-.14.3-.35.45-.52.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.29-1.04 1.02-1.04 2.49 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z" />
+                  <path d="M12.06 21.8h-.01a9.94 9.94 0 0 1-5.04-1.38l-.36-.22-3.73.98.99-3.64-.24-.37A9.9 9.9 0 0 1 2.15 11.9c0-5.46 4.44-9.9 9.9-9.9 2.64 0 5.13 1.03 7 2.9a9.83 9.83 0 0 1 2.9 7c0 5.46-4.44 9.9-9.89 9.9Zm8.4-18.29A11.82 11.82 0 0 0 12.06 0C5.5 0 .16 5.34.16 11.9c0 2.09.54 4.14 1.59 5.94L.05 24l6.3-1.65a11.9 11.9 0 0 0 5.7 1.45h.01c6.55 0 11.89-5.33 11.89-11.89a11.8 11.8 0 0 0-3.49-8.4Z" />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
-        <p class="text-sm text-muted">© <span id="year"></span> Blocos Serezini. Todos os direitos reservados.</p>
+
+        <div class="mt-12 border-t border-white/10 pt-8">
+          <button
+            type="button"
+            id="back-to-top"
+            class="mx-auto flex items-center gap-3 rounded-full border border-accent/70 px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent hover:text-white"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m12 19 0-14M6 11l6-6 6 6" />
+            </svg>
+            Voltar ao topo
+          </button>
+        </div>
+
+        <div class="mt-8 flex flex-col gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <img src="/brand/logo.png" alt="Blocos Serezini" class="h-14 w-auto object-contain" />
+          <p class="text-sm text-muted">© <span id="year"></span> Blocos Serezini. Todos os direitos reservados.</p>
+        </div>
       </div>
     </footer>
 
@@ -818,6 +935,7 @@ const formFeedback = document.querySelector<HTMLParagraphElement>("#form-feedbac
 const productField = document.querySelector<HTMLSelectElement>('select[name="product"]');
 const messageField = document.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
 const year = document.querySelector<HTMLSpanElement>("#year");
+const backToTop = document.querySelector<HTMLButtonElement>("#back-to-top");
 
 let activeProduct: Product | null = null;
 let activeVariantIndex = 0;
@@ -836,6 +954,48 @@ let cameraDistance = 7.2;
 let calculatorWallCount = 1;
 
 year!.textContent = new Date().getFullYear().toString();
+
+if ("scrollRestoration" in window.history) {
+  window.history.scrollRestoration = "manual";
+}
+
+backToTop?.addEventListener("click", () => {
+  navigateToRoute("/");
+});
+
+document.addEventListener("click", (event) => {
+  if (!(event instanceof MouseEvent) || event.defaultPrevented || event.button !== 0) {
+    return;
+  }
+
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    return;
+  }
+
+  const target = event.target as HTMLElement | null;
+  const link = target?.closest<HTMLAnchorElement>("a[href]");
+
+  if (!link || (link.target && link.target !== "_self") || link.hasAttribute("download")) {
+    return;
+  }
+
+  const url = new URL(link.href, window.location.href);
+
+  if (url.origin !== window.location.origin || !getRouteSection(url.pathname)) {
+    return;
+  }
+
+  event.preventDefault();
+  navigateToRoute(url.pathname);
+});
+
+window.addEventListener("popstate", () => {
+  scrollToRoute(window.location.pathname);
+});
+
+requestAnimationFrame(() => {
+  scrollToRoute(window.location.pathname, "auto");
+});
 
 const observer = new IntersectionObserver(
   (entries) => {
@@ -943,7 +1103,7 @@ calculatorQuote?.addEventListener("click", () => {
     ].join("\n");
   }
 
-  document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
+  navigateToRoute("/contato");
 });
 
 productButtons.forEach((button) => {
@@ -989,7 +1149,7 @@ modalCta?.addEventListener("click", (event) => {
   }
 
   closeProductModal();
-  document.getElementById("contato")?.scrollIntoView({ behavior: "smooth" });
+  navigateToRoute("/contato");
 });
 
 productModalBackdrop?.addEventListener("click", closeProductModal);
@@ -1047,6 +1207,47 @@ form?.addEventListener("submit", (event) => {
 
 syncCalculatorWallLabels();
 updateBlockCalculator();
+
+function normalizeRoutePath(pathname: string): string {
+  const normalized = pathname.replace(/\/+$/, "");
+  return normalized || "/";
+}
+
+function getRouteSection(pathname: string): string | null {
+  return routeSections[normalizeRoutePath(pathname)] ?? null;
+}
+
+function navigateToRoute(pathname: string, behavior: ScrollBehavior = "smooth"): void {
+  const normalizedPath = normalizeRoutePath(pathname);
+
+  if (normalizeRoutePath(window.location.pathname) !== normalizedPath) {
+    window.history.pushState({}, "", normalizedPath);
+  }
+
+  scrollToRoute(normalizedPath, behavior);
+}
+
+function scrollToRoute(pathname: string, behavior: ScrollBehavior = "smooth"): boolean {
+  const sectionId = getRouteSection(pathname);
+
+  if (!sectionId) {
+    return false;
+  }
+
+  if (sectionId === "hero") {
+    window.scrollTo({ top: 0, behavior });
+    return true;
+  }
+
+  const section = document.getElementById(sectionId);
+
+  if (!section) {
+    return false;
+  }
+
+  section.scrollIntoView({ behavior, block: "start" });
+  return true;
+}
 
 function updateBlockCalculator(): CalculatorResult | null {
   if (!calculatorForm) {

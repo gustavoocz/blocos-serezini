@@ -1,0 +1,4 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(sobre|produtos|calculadora|diferenciais|contato)/?$ /index.html [L]
+</IfModule>
