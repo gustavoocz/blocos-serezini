@@ -36,7 +36,6 @@ type ProductCardSlide = {
   src: string;
   alt: string;
   label: string;
-  dimensions: string;
   variantIndex: number;
   position?: string;
 };
@@ -901,7 +900,7 @@ app.innerHTML = `
 
               <p id="modal-description" class="section-copy max-w-none text-sm leading-6 sm:text-base lg:text-lg"></p>
 
-              <div class="mt-5 lg:mt-8">
+              <div class="mt-5 pb-5 lg:mt-8 lg:pb-0">
                 <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Escolha a medida</p>
                 <div id="modal-variants" class="mt-4 flex flex-wrap gap-3"></div>
               </div>
@@ -1476,7 +1475,6 @@ function setupProductCarousel(carousel: HTMLElement): void {
     activeIndex = (nextIndex + slides.length) % slides.length;
     const activeSlide = slides[activeIndex];
     const label = carousel.querySelector<HTMLElement>("[data-carousel-label]");
-    const dimensions = carousel.querySelector<HTMLElement>("[data-carousel-dimensions]");
     const dots = carousel.querySelectorAll<HTMLElement>("[data-carousel-dot]");
     const productButtons = carousel.closest("article")?.querySelectorAll<HTMLButtonElement>("[data-product-trigger]");
 
@@ -1492,10 +1490,6 @@ function setupProductCarousel(carousel: HTMLElement): void {
 
     if (label) {
       label.textContent = activeSlide.dataset.slideLabel || "";
-    }
-
-    if (dimensions) {
-      dimensions.textContent = activeSlide.dataset.slideDimensions || "";
     }
 
     productButtons?.forEach((button) => {
@@ -2405,20 +2399,15 @@ function productCardMedia(product: Product): string {
                   data-carousel-slide
                   data-variant-index="${slide.variantIndex}"
                   data-slide-label="${slide.label}"
-                  data-slide-dimensions="${slide.dimensions}"
                   loading="lazy"
                   decoding="async"
                 />
               `,
             )
             .join("")}
-          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-surface/95 via-surface/60 to-transparent p-3 lg:p-4">
-            <p class="text-xs font-semibold text-white lg:text-sm" data-carousel-label>${firstSlide.label}</p>
-            <p class="mt-1 font-display text-2xl tracking-[0.06em] text-accent-soft lg:text-3xl" data-carousel-dimensions>${firstSlide.dimensions}</p>
-          </div>
         </div>
-        <div class="flex items-center justify-between gap-4 px-3 py-2 lg:px-4 lg:py-3">
-          <p class="text-[0.68rem] uppercase tracking-[0.14em] text-muted lg:text-xs lg:tracking-[0.18em]">Medidas</p>
+        <div class="grid gap-3 border-t border-white/10 px-3 py-3 lg:px-4">
+          <p class="break-words text-sm font-semibold leading-5 text-accent-soft sm:font-display sm:text-2xl sm:tracking-[0.06em]" data-carousel-label>${firstSlide.label}</p>
           <div class="flex gap-2" aria-hidden="true">
             ${slides
               .map(
@@ -2494,13 +2483,26 @@ function getProductCardSlides(product: Product): ProductCardSlide[] {
       {
         src: photo.src,
         alt: photo.alt,
-        label: product.name === "Bloco de Vedação" ? `Vedação ${variant.label}` : `${product.name} ${variant.label}`,
-        dimensions: variant.dimensions,
+        label: getProductCardSlideLabel(product.name, variant.label),
         variantIndex,
         position: photo.position,
       },
     ];
   });
+}
+
+function getProductCardSlideLabel(productName: string, variantLabel: string): string {
+  const size = variantLabel.replace(/\s+/g, "");
+
+  if (productName === "Bloco de Vedação") {
+    return `Vedação ${size}`;
+  }
+
+  if (productName === "Bloco Estrutural") {
+    return `Estrutural ${size}`;
+  }
+
+  return `${productName} ${size}`;
 }
 
 function inputField(name: string, label: string, placeholder: string, type = "text"): string {
