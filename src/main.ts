@@ -13,6 +13,7 @@ type Product = {
   description: string;
   specs: Array<[string, string]>;
   icon: string;
+  cardPhoto?: ProductPhoto;
   modelKind: "vedacao" | "estrutural" | "canaleta";
   variants: ProductVariant[];
 };
@@ -21,7 +22,26 @@ type ProductVariant = {
   label: string;
   widthCm: number;
   dimensions: string;
+  photos?: ProductPhoto[];
 };
+
+type ProductPhoto = {
+  src: string;
+  alt: string;
+  label: string;
+  position?: string;
+};
+
+type ProductCardSlide = {
+  src: string;
+  alt: string;
+  label: string;
+  dimensions: string;
+  variantIndex: number;
+  position?: string;
+};
+
+type MobileProductView = "photos" | "viewer";
 
 type ConcreteTextureKit = {
   map: import("three").CanvasTexture;
@@ -34,14 +54,6 @@ type Highlight = {
   description: string;
 };
 
-type CalculatorBlockOption = {
-  value: string;
-  label: string;
-  product: string;
-  dimensions: string;
-  blocksPerSquareMeter: number;
-};
-
 type CalculatorWall = {
   label: string;
   length: number;
@@ -52,13 +64,18 @@ type CalculatorWall = {
 };
 
 type CalculatorResult = {
-  option: CalculatorBlockOption;
   walls: CalculatorWall[];
   waste: number;
   grossArea: number;
   openings: number;
   netArea: number;
   quantity: number;
+};
+
+type CalculatorQuoteOption = {
+  product: string;
+  label: string;
+  dimensions: string;
 };
 
 type ContactItem = {
@@ -73,6 +90,29 @@ const stats: Stat[] = [
   { value: "ABNT", label: "referências técnicas nas especificações" },
   { value: "Zap", label: "orçamento direto pelo WhatsApp" },
 ];
+const blocksPerSquareMeter = 12.5;
+const calculatorQuoteOptions: CalculatorQuoteOption[] = [
+  { product: "Bloco de Vedação", label: "Vedação 9", dimensions: "9x19x39 cm" },
+  { product: "Bloco de Vedação", label: "Vedação 14", dimensions: "14x19x39 cm" },
+  { product: "Bloco de Vedação", label: "Vedação 19", dimensions: "19x19x39 cm" },
+  { product: "Bloco Estrutural", label: "Estrutural 12", dimensions: "12x19x39 cm" },
+  { product: "Bloco Estrutural", label: "Estrutural 14", dimensions: "14x19x39 cm" },
+  { product: "Bloco Estrutural", label: "Estrutural 19", dimensions: "19x19x39 cm" },
+  { product: "Canaleta", label: "Canaleta 14", dimensions: "14x19x39 cm" },
+  { product: "Canaleta", label: "Canaleta 19", dimensions: "19x19x39 cm" },
+];
+
+const productPhotos = {
+  vedacao9Close: "/photos/products/bloco-vedacao-9-close.jpeg",
+  vedacao9Chao: "/photos/products/bloco-vedacao-9-chao.jpeg",
+  vedacao14Close: "/photos/products/bloco-vedacao-14-close.jpeg",
+  vedacao14Chao: "/photos/products/bloco-vedacao-14-chao.jpeg",
+  vedacao19Close: "/photos/products/bloco-vedacao-19-close.jpeg",
+  vedacao19Chao: "/photos/products/bloco-vedacao-19-chao.jpeg",
+  estrutural12Close: "/photos/products/bloco-estrutural-12-close.jpeg",
+  estrutural19Close: "/photos/products/bloco-estrutural-19-close.jpeg",
+  estrutural19Chao: "/photos/products/bloco-estrutural-19-chao.jpeg",
+};
 
 const products: Product[] = [
   {
@@ -87,11 +127,71 @@ const products: Product[] = [
       ["Aplicação", "Vedações e fechamentos"],
     ],
     icon: blockIcon("flat"),
+    cardPhoto: {
+      src: productPhotos.vedacao14Close,
+      alt: "Bloco de vedação 14 cm segurado na mão",
+      label: "Foto real do bloco 14 cm",
+      position: "center 50%",
+    },
     modelKind: "vedacao",
     variants: [
-      { label: "9 cm", widthCm: 9, dimensions: "9x19x39 cm" },
-      { label: "14 cm", widthCm: 14, dimensions: "14x19x39 cm" },
-      { label: "19 cm", widthCm: 19, dimensions: "19x19x39 cm" },
+      {
+        label: "9 cm",
+        widthCm: 9,
+        dimensions: "9x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.vedacao9Close,
+            alt: "Close do bloco de vedação 9 cm",
+            label: "Close do produto",
+            position: "center 52%",
+          },
+          {
+            src: productPhotos.vedacao9Chao,
+            alt: "Blocos de vedação 9 cm apoiados no chão",
+            label: "Blocos no pátio",
+            position: "center 50%",
+          },
+        ],
+      },
+      {
+        label: "14 cm",
+        widthCm: 14,
+        dimensions: "14x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.vedacao14Close,
+            alt: "Close do bloco de vedação 14 cm",
+            label: "Close do produto",
+            position: "center 50%",
+          },
+          {
+            src: productPhotos.vedacao14Chao,
+            alt: "Blocos de vedação 14 cm apoiados no chão",
+            label: "Blocos no pátio",
+            position: "center 50%",
+          },
+        ],
+      },
+      {
+        label: "19 cm",
+        widthCm: 19,
+        dimensions: "19x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.vedacao19Close,
+            alt: "Close do bloco de vedação 19 cm",
+            label: "Close do produto",
+            position: "center 52%",
+          },
+          {
+            src: productPhotos.vedacao19Chao,
+            alt: "Blocos de vedação 19 cm apoiados no chão",
+            label: "Blocos no pátio",
+            position: "center 50%",
+          },
+        ],
+      },
     ],
   },
   {
@@ -108,9 +208,39 @@ const products: Product[] = [
     icon: blockIcon("structural"),
     modelKind: "estrutural",
     variants: [
-      { label: "12 cm", widthCm: 12, dimensions: "12x19x39 cm" },
+      {
+        label: "12 cm",
+        widthCm: 12,
+        dimensions: "12x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.estrutural12Close,
+            alt: "Close do bloco estrutural 12 cm",
+            label: "Close do produto",
+            position: "center 52%",
+          },
+        ],
+      },
       { label: "14 cm", widthCm: 14, dimensions: "14x19x39 cm" },
-      { label: "19 cm", widthCm: 19, dimensions: "19x19x39 cm" },
+      {
+        label: "19 cm",
+        widthCm: 19,
+        dimensions: "19x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.estrutural19Close,
+            alt: "Close do bloco estrutural 19 cm",
+            label: "Close do produto",
+            position: "center 52%",
+          },
+          {
+            src: productPhotos.estrutural19Chao,
+            alt: "Blocos estruturais 19 cm apoiados no chão",
+            label: "Blocos no pátio",
+            position: "center 50%",
+          },
+        ],
+      },
     ],
   },
   {
@@ -135,6 +265,11 @@ const products: Product[] = [
 
 const factoryAddress = "R. José Dias Lobato, 155 - Otton Marins, Cachoeiro de Itapemirim - ES, 29301-816";
 const googleMapsUrl = "https://share.google/WKNEyn6HIj3eceY6j";
+const factoryPhotos = {
+  patio: "/photos/patio-fabrica.jpeg",
+  fachada: "/photos/fachada-fabrica.jpeg",
+  caminhao: "/photos/caminhao-entrega.jpeg",
+};
 const routeSections: Record<string, string> = {
   "/": "hero",
   "/sobre": "sobre",
@@ -168,51 +303,6 @@ const contactItems: ContactItem[] = [
   {
     label: "Atendimento",
     value: "Segunda a sexta: 7h às 17h | Sábado: 7h às 11h",
-  },
-];
-
-const calculatorBlockOptions: CalculatorBlockOption[] = [
-  {
-    value: "vedacao-9",
-    label: "Vedação 9x19x39 cm",
-    product: "Bloco de Vedação",
-    dimensions: "9x19x39 cm",
-    blocksPerSquareMeter: 12.5,
-  },
-  {
-    value: "vedacao-14",
-    label: "Vedação 14x19x39 cm",
-    product: "Bloco de Vedação",
-    dimensions: "14x19x39 cm",
-    blocksPerSquareMeter: 12.5,
-  },
-  {
-    value: "vedacao-19",
-    label: "Vedação 19x19x39 cm",
-    product: "Bloco de Vedação",
-    dimensions: "19x19x39 cm",
-    blocksPerSquareMeter: 12.5,
-  },
-  {
-    value: "estrutural-12",
-    label: "Estrutural 12x19x39 cm",
-    product: "Bloco Estrutural",
-    dimensions: "12x19x39 cm",
-    blocksPerSquareMeter: 12.5,
-  },
-  {
-    value: "estrutural-14",
-    label: "Estrutural 14x19x39 cm",
-    product: "Bloco Estrutural",
-    dimensions: "14x19x39 cm",
-    blocksPerSquareMeter: 12.5,
-  },
-  {
-    value: "estrutural-19",
-    label: "Estrutural 19x19x39 cm",
-    product: "Bloco Estrutural",
-    dimensions: "19x19x39 cm",
-    blocksPerSquareMeter: 12.5,
   },
 ];
 
@@ -270,7 +360,7 @@ if (!app) {
 
 app.innerHTML = `
   <div class="relative isolate overflow-hidden">
-    <div class="pointer-events-none absolute inset-x-0 top-0 h-[42rem] bg-[radial-gradient(circle_at_top_right,_rgba(255,118,90,0.20),_transparent_42%)]"></div>
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10"></div>
     <div class="pointer-events-none absolute inset-0 opacity-35 ghost-grid"></div>
 
     <header id="topo" class="sticky top-0 z-50 border-b border-transparent bg-surface/80 backdrop-blur transition-colors duration-300">
@@ -349,13 +439,13 @@ app.innerHTML = `
             </a>
           </div>
 
-          <dl class="mt-14 grid gap-px overflow-hidden rounded-[2rem] border border-white/8 bg-white/6 shadow-[var(--shadow-frame)] sm:grid-cols-2 xl:grid-cols-4">
+          <dl class="mt-14 grid border-y border-white/10 sm:grid-cols-2 xl:grid-cols-4">
             ${stats
               .map(
-                (stat) => `
-                  <div class="reveal bg-panel/95 p-6" data-reveal>
-                    <dt class="font-display text-5xl leading-none tracking-[0.08em] text-accent">${stat.value}</dt>
-                    <dd class="mt-2 text-sm uppercase tracking-[0.14em] text-muted">${stat.label}</dd>
+                (stat, index) => `
+                  <div class="reveal border-b border-white/10 py-5 sm:px-5 ${index % 2 === 0 ? "sm:border-r" : ""} ${index < 2 ? "sm:border-b" : "sm:border-b-0"} ${index < 3 ? "xl:border-r" : ""} xl:border-b-0" data-reveal>
+                    <dt class="font-display text-5xl leading-none tracking-[0.06em] text-accent">${stat.value}</dt>
+                    <dd class="mt-2 max-w-[12rem] text-sm leading-5 text-muted">${stat.label}</dd>
                   </div>
                 `,
               )
@@ -364,49 +454,23 @@ app.innerHTML = `
         </div>
 
         <div class="relative reveal" data-reveal>
-          <div class="frame relative overflow-hidden px-7 py-8 sm:px-10 sm:py-12">
-            <div class="absolute right-0 top-0 h-40 w-40 translate-x-1/3 -translate-y-1/3 rounded-full bg-accent/30 blur-3xl"></div>
-            <div class="absolute inset-0 bg-[linear-gradient(135deg,_rgba(255,255,255,0.04),_transparent_45%,_rgba(255,118,90,0.08))]"></div>
-            <div class="relative">
-              <div class="mb-10 flex items-center justify-between gap-4 border-b border-white/10 pb-5">
-                <div class="flex items-center gap-4">
-                  <div class="rounded-[1.6rem] border border-white/10 bg-white/[0.04] p-2 shadow-[var(--shadow-glow)]">
-                    <img src="/brand/logo.png" alt="Blocos Serezini" class="h-16 w-auto max-w-[11rem] object-contain sm:h-20 sm:max-w-[13rem]" />
-                  </div>
-                  <div>
-                    <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Pedido direto</p>
-                    <p class="mt-2 font-display text-4xl tracking-[0.14em] text-white">BLOCOS SEREZINI</p>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <p class="text-xs uppercase tracking-[0.24em] text-muted">Base</p>
-                  <p class="mt-2 font-display text-3xl tracking-[0.1em] text-outline">ES</p>
-                </div>
-              </div>
-
-              <div class="grid gap-4 sm:grid-cols-2">
-                ${[
-                  "Vedação",
-                  "Estrutural",
-                  "Canaletas",
-                  "Entrega",
-                ]
-                  .map(
-                    (item, index) => `
-                      <article class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                        <p class="text-xs uppercase tracking-[0.28em] text-muted">0${index + 1}</p>
-                        <h2 class="mt-8 font-display text-3xl tracking-[0.08em] text-white">${item}</h2>
-                      </article>
-                    `,
-                  )
-                  .join("")}
-              </div>
-
-              <div class="mt-8 rounded-[1.75rem] border border-accent/25 bg-accent/10 p-6">
-                <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Para cotar mais rápido</p>
-                <p class="mt-4 max-w-md text-base leading-7 text-copy/85">
-                  Informe medida, quantidade aproximada e local de entrega. A equipe responde com orientação, prazo e valor.
-                </p>
+          <div class="relative overflow-hidden border-l border-white/10 pl-5 lg:pl-8">
+            <div class="relative h-[30rem] overflow-hidden sm:h-[34rem] lg:h-[42rem]">
+              <img
+                src="${factoryPhotos.patio}"
+                width="1200"
+                height="1600"
+                alt="Pátio da Blocos Serezini com blocos de concreto organizados"
+                class="h-full w-full object-cover"
+                style="object-position: center 72%;"
+                decoding="async"
+                fetchpriority="high"
+              />
+              <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,21,26,0.08)_0%,rgba(17,21,26,0.18)_42%,rgba(17,21,26,0.92)_100%)]"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                <p class="text-xs font-semibold uppercase tracking-[0.28em] text-accent-soft">Foto real da fábrica</p>
+                <p class="mt-2 font-display text-5xl tracking-[0.08em] text-white">Pátio de produção</p>
+                <p class="mt-3 max-w-md text-base leading-7 text-copy/80">Produto no chão, equipe perto e carregamento combinado antes da entrega.</p>
               </div>
             </div>
           </div>
@@ -414,103 +478,150 @@ app.innerHTML = `
       </section>
 
       <section id="sobre" class="shell scroll-mt-24 py-20 lg:py-28">
-        <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div class="reveal" data-reveal>
+        <div class="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div class="reveal lg:sticky lg:top-28" data-reveal>
             <p class="section-kicker">Nossa história</p>
-            <h2 class="section-title max-w-2xl">De Zé do Bloco para a família Serezini.</h2>
-          </div>
+            <h2 class="section-title max-w-2xl">Uma fábrica de família, no mesmo endereço.</h2>
 
-          <div class="reveal space-y-6" data-reveal>
-            <p class="section-copy">
-              A Blocos Serezini começou em 1995, em Cachoeiro de Itapemirim, fundada pelo avô da família, conhecido na cidade como Zé do Bloco.
-            </p>
-            <p class="section-copy">
-              Depois, a fábrica passou para a próxima geração. Hoje o pai está à frente do negócio, e Zé do Bloco continua trabalhando junto, no mesmo lugar onde tudo começou.
-            </p>
-            <p class="section-copy">
-              O nome Serezini vem do sobrenome da família. A empresa atende de pequenas obras a construtoras, lojas e clientes que precisam comprar bloco com orientação direta.
-            </p>
-          </div>
-        </div>
-
-        <div class="mt-12 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div class="frame reveal p-8 sm:p-10" data-reveal>
-            <div class="grid gap-4 sm:grid-cols-2">
-              ${highlights
-                .map(
-                  (item) => `
-                    <article class="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
-                      <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">História real</p>
-                      <h3 class="mt-5 font-display text-3xl tracking-[0.06em] text-white">${item.title}</h3>
-                      <p class="mt-3 text-sm leading-6 text-muted">${item.description}</p>
-                    </article>
-                  `,
-                )
-                .join("")}
+            <div class="mt-8 space-y-6">
+              <p class="section-copy">
+                A Blocos Serezini começou em 1995, em Cachoeiro de Itapemirim, fundada pelo avô da família, conhecido na cidade como Zé do Bloco.
+              </p>
+              <p class="section-copy">
+                A produção passou para a próxima geração sem perder a rotina de atendimento direto. O cliente fala com quem conhece o bloco, a medida e a entrega.
+              </p>
+              <p class="section-copy">
+                O sobrenome virou marca porque o trabalho continuou no mesmo lugar: fabricar bloco de concreto para obras da região, com orientação simples e prazo combinado.
+              </p>
             </div>
           </div>
 
-          <aside class="frame reveal flex flex-col justify-between gap-10 overflow-hidden p-8 sm:p-10" data-reveal>
-            <div>
-              <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Raiz local</p>
-              <h3 class="mt-4 font-display text-5xl tracking-[0.08em] text-white">Três décadas fabricando bloco em Cachoeiro.</h3>
+          <div class="reveal" data-reveal>
+            <div class="relative overflow-hidden border-y border-white/10 py-6">
+              <img
+                src="${factoryPhotos.fachada}"
+                width="1600"
+                height="1200"
+                alt="Entrada da fábrica Blocos Serezini em Cachoeiro de Itapemirim"
+                class="h-[24rem] w-full object-cover sm:h-[32rem]"
+                style="object-position: center 55%;"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="mt-6 grid gap-0 border-t border-white/10">
+                ${highlights
+                  .map(
+                    (item, index) => `
+                      <article class="grid gap-3 border-b border-white/10 py-5 sm:grid-cols-[7rem_1fr]">
+                        <p class="font-display text-4xl leading-none tracking-[0.06em] text-accent">${String(index + 1).padStart(2, "0")}</p>
+                        <div>
+                          <h3 class="text-lg font-semibold text-white">${item.title}</h3>
+                          <p class="mt-2 text-sm leading-6 text-muted">${item.description}</p>
+                        </div>
+                      </article>
+                    `,
+                  )
+                  .join("")}
+              </div>
             </div>
-            <ul class="space-y-4 text-sm uppercase tracking-[0.2em] text-muted">
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Fundação</span><strong class="font-semibold text-white">1995</strong></li>
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Origem</span><strong class="font-semibold text-white">familiar</strong></li>
-              <li class="flex items-center justify-between border-b border-white/10 pb-3"><span>Cidade</span><strong class="font-semibold text-white">Cachoeiro</strong></li>
-              <li class="flex items-center justify-between"><span>Fundador</span><strong class="font-semibold text-white">Zé do Bloco</strong></li>
-            </ul>
-          </aside>
+          </div>
         </div>
       </section>
 
-      <section id="produtos" class="shell scroll-mt-24 py-20 lg:py-28">
+      <section id="produtos" class="shell scroll-mt-24 py-14 lg:py-28">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div class="reveal" data-reveal>
             <p class="section-kicker">Linha de produtos</p>
-            <h2 class="section-title max-w-3xl">Escolha o produto e confira as medidas.</h2>
+            <h2 class="section-title max-w-3xl">Escolha o bloco e peça orçamento.</h2>
           </div>
-          <p class="section-copy reveal max-w-md text-sm uppercase tracking-[0.16em]" data-reveal>
-            Clique no modelo 3D para ver o formato antes de chamar no WhatsApp.
+          <p class="section-copy reveal max-w-md text-sm leading-6 lg:uppercase lg:tracking-[0.16em]" data-reveal>
+            No celular, toque no produto para ver fotos, medidas e 3D. Se já souber a medida, peça orçamento direto.
           </p>
         </div>
 
-        <div class="mt-12 grid gap-6 xl:grid-cols-3">
+        <div class="mt-8 grid border-y border-white/10 lg:mt-12">
           ${products
             .map(
               (product) => `
-                <article class="frame reveal group relative overflow-hidden p-8" data-reveal>
-                  <div class="absolute right-6 top-5 font-display text-6xl leading-none tracking-[0.08em] text-white/6">${product.id}</div>
-                  <div class="inline-flex h-16 w-16 items-center justify-center rounded-[1.35rem] border border-accent/25 bg-accent/10 text-accent-soft">
-                    ${product.icon}
+                <article class="reveal group relative overflow-hidden border-b border-white/10 py-5 last:border-b-0 lg:py-7" data-reveal>
+                  <div class="absolute right-5 top-4 hidden font-display text-5xl leading-none tracking-[0.08em] text-white/6 lg:block">${product.id}</div>
+                  <div class="grid grid-cols-[6.75rem_1fr] gap-4 lg:grid-cols-[17rem_1fr] lg:items-center lg:gap-8">
+                    ${productCardMedia(product)}
+                    <div class="min-w-0">
+                      <div class="hidden h-12 w-12 items-center justify-center rounded-[1rem] border border-accent/25 bg-accent/10 text-accent-soft lg:inline-flex">
+                        ${product.icon}
+                      </div>
+                      <h3 class="font-display text-3xl tracking-[0.06em] text-white lg:mt-5">${product.name}</h3>
+                      <p class="mt-2 text-sm leading-6 text-muted lg:mt-4">${product.description}</p>
+                      ${productCardDetails(product)}
+                      <div class="mt-4 flex flex-col gap-2 sm:flex-row lg:mt-6">
+                        <button
+                          type="button"
+                          data-product-trigger="${product.id}"
+                          data-product-variant="0"
+                          class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-accent-soft"
+                        >
+                          Ver produto
+                          <span aria-hidden="true">→</span>
+                        </button>
+                        <button
+                          type="button"
+                          data-product-trigger="${product.id}"
+                          data-product-variant="0"
+                          data-product-quote
+                          class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-white transition hover:border-accent/40 hover:bg-accent/10"
+                        >
+                          Orçar
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <h3 class="mt-8 font-display text-4xl tracking-[0.08em] text-white">${product.name}</h3>
-                  <p class="mt-4 text-base leading-7 text-muted">${product.description}</p>
-                  <dl class="mt-8 space-y-3 text-sm">
-                    ${product.specs
-                      .map(
-                        ([label, value]) => `
-                          <div class="flex items-start justify-between gap-5 border-b border-white/8 pb-3">
-                            <dt class="uppercase tracking-[0.16em] text-muted">${label}</dt>
-                            <dd class="text-right font-medium text-white">${value}</dd>
-                          </div>
-                        `,
-                      )
-                      .join("")}
-                  </dl>
-                  <button
-                    type="button"
-                    data-product-trigger="${product.id}"
-                    class="mt-8 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:border-accent/40 hover:bg-accent/10"
-                  >
-                    Ver medidas em 3D
-                    <span class="text-accent-soft">→</span>
-                  </button>
                 </article>
               `,
             )
             .join("")}
+        </div>
+      </section>
+
+      <section class="shell hidden pb-20 lg:block lg:pb-28">
+        <div class="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
+          <div class="reveal" data-reveal>
+            <p class="section-kicker">Fotos reais</p>
+            <h2 class="section-title max-w-3xl">Produção real, carregamento visível e endereço conhecido.</h2>
+          </div>
+          <p class="section-copy reveal max-w-xl" data-reveal>
+            Pátio, carga e acesso da fábrica aparecem como parte da compra: o cliente vê de onde vem o bloco antes de fechar o pedido.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 border-y border-white/10 py-8 lg:grid-cols-[1.2fr_0.8fr]">
+          <div class="reveal" data-reveal>
+            <img
+              src="${factoryPhotos.patio}"
+              alt="Pátio de produção da Blocos Serezini"
+              class="h-[34rem] w-full object-cover"
+              style="object-position: center 72%;"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="reveal grid gap-6" data-reveal>
+            <img
+              src="${factoryPhotos.caminhao}"
+              alt="Caminhão carregado com blocos de concreto"
+              class="h-64 w-full object-cover"
+              style="object-position: center 58%;"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="border-t border-white/10 pt-6">
+              <p class="text-xs font-semibold uppercase tracking-[0.28em] text-accent-soft">Rotina de fábrica</p>
+              <h3 class="mt-4 font-display text-5xl tracking-[0.06em] text-white">Bloco produzido, separado e carregado.</h3>
+              <p class="mt-4 text-base leading-7 text-muted">
+                Da fabricação ao caminhão, o atendimento combina quantidade, medida e entrega para reduzir surpresa no canteiro.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -526,19 +637,22 @@ app.innerHTML = `
 
           <div class="frame reveal p-6 sm:p-8 lg:p-10" data-reveal>
             <form id="block-calculator-form" class="grid gap-6">
-              <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
-                <span>Tipo de bloco</span>
-                <select
-                  name="calculator-block"
-                  class="rounded-[1.25rem] border border-white/10 bg-surface px-4 py-4 text-base normal-case tracking-normal text-white outline-none transition focus:border-accent"
-                >
-                  ${calculatorBlockOptions
-                    .map((option) => `<option value="${option.value}">${option.label}</option>`)
-                    .join("")}
-                </select>
-              </label>
+              <div class="order-3 grid gap-4 rounded-lg border border-white/10 bg-white/[0.03] p-4 sm:grid-cols-3 sm:p-5">
+                <div>
+                  <p class="text-xs uppercase tracking-[0.18em] text-muted">Área líquida</p>
+                  <p id="calculator-area" class="mt-1 font-display text-4xl tracking-[0.06em] text-white">0 m²</p>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-[0.18em] text-muted">Blocos</p>
+                  <p id="calculator-quantity" class="mt-1 font-display text-5xl tracking-[0.06em] text-accent">0</p>
+                </div>
+                <div>
+                  <p class="text-xs uppercase tracking-[0.18em] text-muted">Base</p>
+                  <p id="calculator-rate" class="mt-1 font-display text-4xl tracking-[0.06em] text-white">12,5/m²</p>
+                </div>
+              </div>
 
-              <div class="grid gap-3">
+              <div class="order-1 grid gap-3">
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Paredes / trechos</p>
                   <button
@@ -554,36 +668,21 @@ app.innerHTML = `
                 </div>
               </div>
 
-              <div class="grid gap-5 sm:grid-cols-2">
+              <div class="order-2 grid gap-5 sm:grid-cols-2">
                 ${calculatorInputField("calculator-waste", "Perda", "%", "0")}
               </div>
 
-              <div class="grid gap-4 rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-5 sm:grid-cols-3">
-                <div>
-                  <p class="text-xs uppercase tracking-[0.22em] text-muted">Área líquida total</p>
-                  <p id="calculator-area" class="mt-2 font-display text-4xl tracking-[0.08em] text-white">0 m²</p>
-                </div>
-                <div>
-                  <p class="text-xs uppercase tracking-[0.22em] text-muted">Blocos estimados</p>
-                  <p id="calculator-quantity" class="mt-2 font-display text-4xl tracking-[0.08em] text-accent">0</p>
-                </div>
-                <div>
-                  <p class="text-xs uppercase tracking-[0.22em] text-muted">Base do cálculo</p>
-                  <p id="calculator-rate" class="mt-2 font-display text-4xl tracking-[0.08em] text-white">12,5/m²</p>
-                </div>
-              </div>
-
-              <p id="calculator-note" class="text-sm leading-6 text-muted">
-                Estimativa para compra inicial. Lance cada parede separadamente quando a obra tiver medidas diferentes.
+              <p id="calculator-note" class="order-4 text-sm leading-6 text-muted">
+                Estimativa para blocos 39x19 cm, com base em 12,5 blocos por m². A medida da largura pode ser confirmada no orçamento.
               </p>
 
-              <div class="flex flex-col gap-3 sm:flex-row">
+              <div class="order-5 flex flex-col gap-3 sm:flex-row">
                 <button
                   type="button"
                   id="calculator-quote"
                   class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft"
                 >
-                  Usar no orçamento
+                  Escolher medida para orçamento
                 </button>
                 <a
                   href="/contato"
@@ -592,15 +691,38 @@ app.innerHTML = `
                   Ir para contato
                 </a>
               </div>
+
+              <div id="calculator-quote-options" class="order-6 hidden border-t border-white/10 pt-5">
+                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-accent-soft">Escolha a medida do orçamento</p>
+                <div class="mt-4 grid gap-2 sm:grid-cols-2">
+                  ${calculatorQuoteOptions
+                    .map(
+                      (option) => `
+                        <button
+                          type="button"
+                          data-calculator-quote-option
+                          data-product="${option.product}"
+                          data-label="${option.label}"
+                          data-dimensions="${option.dimensions}"
+                          class="flex items-center justify-between gap-3 border border-white/10 bg-white/[0.03] px-4 py-3 text-left transition hover:border-accent/50 hover:bg-accent/10"
+                        >
+                          <span class="text-sm font-semibold text-white">${option.label}</span>
+                          <span class="text-xs uppercase tracking-[0.14em] text-muted">${option.dimensions}</span>
+                        </button>
+                      `,
+                    )
+                    .join("")}
+                </div>
+              </div>
             </form>
           </div>
         </div>
       </section>
 
       <section id="diferenciais" class="shell scroll-mt-24 py-20 lg:py-28">
-        <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <div class="reveal" data-reveal>
-            <p class="section-kicker">Por que comprar aqui</p>
+            <p class="section-kicker">Como funciona</p>
             <h2 class="section-title max-w-xl">Menos dúvida no pedido. Menos atraso na obra.</h2>
             <p class="section-copy mt-6">
               A compra de bloco precisa ser simples: medida correta, quantidade alinhada e entrega combinada.
@@ -610,14 +732,16 @@ app.innerHTML = `
             </a>
           </div>
 
-          <div class="grid gap-5 sm:grid-cols-2">
+          <div class="reveal border-y border-white/10" data-reveal>
             ${differentials
               .map(
                 (item, index) => `
-                  <article class="frame reveal p-6" data-reveal>
-                    <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Diferencial 0${index + 1}</p>
-                    <h3 class="mt-5 font-display text-3xl tracking-[0.06em] text-white">${item.title}</h3>
-                    <p class="mt-3 text-sm leading-7 text-muted">${item.description}</p>
+                  <article class="grid gap-4 border-b border-white/10 py-6 last:border-b-0 sm:grid-cols-[5rem_1fr]">
+                    <p class="font-display text-5xl leading-none tracking-[0.06em] text-accent-soft">0${index + 1}</p>
+                    <div>
+                      <h3 class="font-display text-4xl tracking-[0.06em] text-white">${item.title}</h3>
+                      <p class="mt-2 max-w-xl text-base leading-7 text-muted">${item.description}</p>
+                    </div>
                   </article>
                 `,
               )
@@ -628,12 +752,25 @@ app.innerHTML = `
 
       <section id="contato" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
-          <div class="frame reveal p-8 sm:p-10" data-reveal>
+          <div class="reveal border-y border-white/10 py-8 sm:py-10" data-reveal>
             <p class="section-kicker">Fale com a equipe</p>
             <h2 class="section-title max-w-xl">Passe sua lista de blocos pelo WhatsApp.</h2>
             <p class="section-copy mt-6">
               Preencha produto, quantidade estimada e local de entrega. A mensagem já sai pronta para atendimento.
             </p>
+
+            <div class="mt-8 overflow-hidden">
+              <img
+                src="${factoryPhotos.fachada}"
+                width="1600"
+                height="1200"
+                alt="Entrada da fábrica Blocos Serezini em Cachoeiro de Itapemirim"
+                class="h-64 w-full object-cover"
+                style="object-position: center 55%;"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
 
             <div class="mt-10 space-y-6">
               ${contactItems
@@ -654,7 +791,7 @@ app.innerHTML = `
           </div>
 
           <div class="frame reveal p-8 sm:p-10" data-reveal>
-            <form id="contact-form" class="grid gap-5">
+            <form id="contact-form" class="grid scroll-mt-24 gap-5">
               <div class="grid gap-5 sm:grid-cols-2">
                 ${inputField("name", "Nome", "Seu nome completo")}
                 ${inputField("phone", "Telefone / WhatsApp", "(28) 99982-2728", "tel")}
@@ -717,43 +854,70 @@ app.innerHTML = `
           </button>
 
           <div class="grid max-h-[92vh] overflow-y-auto lg:grid-cols-[1.15fr_0.85fr]">
-            <div class="relative border-b border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,118,90,0.16),_transparent_35%),linear-gradient(180deg,#151a20_0%,#11151a_100%)] p-5 sm:p-8 lg:border-b-0 lg:border-r">
+            <div id="product-viewer-panel" class="relative order-2 border-t border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,118,90,0.16),_transparent_35%),linear-gradient(180deg,#151a20_0%,#11151a_100%)] p-4 sm:p-8 lg:order-none lg:block lg:border-r lg:border-t-0">
               <div class="mb-4 flex items-center justify-between gap-4">
-                <div>
+                <div class="hidden lg:block">
                   <p id="modal-kicker" class="text-xs uppercase tracking-[0.28em] text-accent-soft">Medidas do produto</p>
                   <h3 id="modal-title" class="mt-3 font-display text-4xl tracking-[0.08em] text-white sm:text-5xl"></h3>
                 </div>
-                <span class="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-muted">
+                <div class="lg:hidden">
+                  <p class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-accent-soft">Visualização</p>
+                  <p id="modal-mobile-media-label" class="mt-1 text-sm font-medium text-white"></p>
+                </div>
+                <span class="hidden rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-muted lg:inline-flex">
                   3D interativo
                 </span>
+                <button
+                  type="button"
+                  id="mobile-media-toggle"
+                  class="hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:border-accent/40 hover:bg-accent/10 lg:hidden"
+                >
+                  Ver fotos reais
+                </button>
               </div>
 
-              <div id="product-viewer" class="h-[24rem] rounded-[1.8rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.10),_transparent_35%),linear-gradient(180deg,#0e1318_0%,#121820_100%)] shadow-[var(--shadow-frame)] sm:h-[30rem]"></div>
+              <div id="product-viewer" class="h-72 rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.10),_transparent_35%),linear-gradient(180deg,#0e1318_0%,#121820_100%)] shadow-[var(--shadow-frame)] sm:h-[30rem] lg:h-[24rem] lg:rounded-[1.8rem]"></div>
+              <div id="modal-mobile-photos" class="hidden lg:hidden"></div>
 
               <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
-                <p class="text-sm text-muted">Arraste para girar. O modelo muda conforme a medida selecionada.</p>
+                <p id="modal-media-help" class="text-sm text-muted">Arraste para girar. O modelo muda conforme a medida selecionada.</p>
                 <div id="modal-variant-meta" class="text-xs uppercase tracking-[0.22em] text-accent-soft"></div>
               </div>
+
+              <a
+                id="modal-mobile-cta"
+                href="/contato"
+                class="mt-5 inline-flex w-full items-center justify-center rounded-full bg-accent px-6 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white transition hover:bg-accent-soft lg:hidden"
+              >
+                Pedir orçamento
+              </a>
             </div>
 
-            <div class="p-6 sm:p-8 lg:p-10">
-              <p id="modal-description" class="section-copy max-w-none"></p>
+            <div class="order-1 p-4 pb-0 sm:p-8 lg:order-none lg:p-10">
+              <div class="mb-4 pr-12 lg:hidden">
+                <p id="modal-mobile-kicker" class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-accent-soft">Produto</p>
+                <h3 id="modal-mobile-title" class="mt-2 font-display text-2xl tracking-[0.06em] text-white"></h3>
+              </div>
 
-              <div class="mt-8">
+              <p id="modal-description" class="section-copy max-w-none text-sm leading-6 sm:text-base lg:text-lg"></p>
+
+              <div class="mt-5 lg:mt-8">
                 <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Escolha a medida</p>
                 <div id="modal-variants" class="mt-4 flex flex-wrap gap-3"></div>
               </div>
 
-              <dl id="modal-specs" class="mt-8 space-y-3 text-sm"></dl>
+              <div id="modal-photos" class="mt-5 hidden lg:mt-8"></div>
 
-              <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5">
+              <dl id="modal-specs" class="mt-8 hidden space-y-3 text-sm lg:block"></dl>
+
+              <div class="mt-8 hidden rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5 lg:block">
                 <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Antes do orçamento</p>
                 <p class="mt-3 text-sm leading-7 text-muted">
                   Use o modelo 3D para conferir formato, vazados e proporção antes de pedir preço.
                 </p>
               </div>
 
-              <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div class="mt-8 hidden flex-col gap-3 lg:flex lg:flex-row">
                 <a
                   id="modal-cta"
                   href="/contato"
@@ -764,7 +928,7 @@ app.innerHTML = `
                 <button
                   type="button"
                   id="modal-close-secondary"
-                  class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08]"
+                  class="hidden items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08] sm:inline-flex"
                 >
                   Continuar navegando
                 </button>
@@ -910,17 +1074,27 @@ const nav = document.querySelector<HTMLElement>("#primary-nav");
 const navLinks = document.querySelectorAll<HTMLElement>("[data-nav-link]");
 const productMap = new Map(products.map((product) => [product.id, product]));
 const productButtons = document.querySelectorAll<HTMLButtonElement>("[data-product-trigger]");
+const productCarousels = document.querySelectorAll<HTMLElement>("[data-product-carousel]");
 const productModal = document.querySelector<HTMLDivElement>("#product-modal");
 const productModalBackdrop = document.querySelector<HTMLDivElement>("[data-modal-backdrop]");
 const productModalClose = document.querySelector<HTMLButtonElement>("#product-modal-close");
 const productModalCloseSecondary = document.querySelector<HTMLButtonElement>("#modal-close-secondary");
 const modalKicker = document.querySelector<HTMLParagraphElement>("#modal-kicker");
 const modalTitle = document.querySelector<HTMLHeadingElement>("#modal-title");
+const modalMobileKicker = document.querySelector<HTMLParagraphElement>("#modal-mobile-kicker");
+const modalMobileTitle = document.querySelector<HTMLHeadingElement>("#modal-mobile-title");
+const modalMobileMediaLabel = document.querySelector<HTMLParagraphElement>("#modal-mobile-media-label");
 const modalDescription = document.querySelector<HTMLParagraphElement>("#modal-description");
+const modalPhotos = document.querySelector<HTMLDivElement>("#modal-photos");
+const modalMobilePhotos = document.querySelector<HTMLDivElement>("#modal-mobile-photos");
 const modalSpecs = document.querySelector<HTMLDListElement>("#modal-specs");
 const modalVariants = document.querySelector<HTMLDivElement>("#modal-variants");
 const modalVariantMeta = document.querySelector<HTMLDivElement>("#modal-variant-meta");
+const modalMediaHelp = document.querySelector<HTMLParagraphElement>("#modal-media-help");
 const modalCta = document.querySelector<HTMLAnchorElement>("#modal-cta");
+const modalMobileCta = document.querySelector<HTMLAnchorElement>("#modal-mobile-cta");
+const productViewerPanel = document.querySelector<HTMLDivElement>("#product-viewer-panel");
+const mobileMediaToggle = document.querySelector<HTMLButtonElement>("#mobile-media-toggle");
 const viewerHost = document.querySelector<HTMLDivElement>("#product-viewer");
 const revealElements = document.querySelectorAll<HTMLElement>("[data-reveal]");
 const calculatorForm = document.querySelector<HTMLFormElement>("#block-calculator-form");
@@ -930,6 +1104,7 @@ const calculatorArea = document.querySelector<HTMLParagraphElement>("#calculator
 const calculatorQuantity = document.querySelector<HTMLParagraphElement>("#calculator-quantity");
 const calculatorRate = document.querySelector<HTMLParagraphElement>("#calculator-rate");
 const calculatorQuote = document.querySelector<HTMLButtonElement>("#calculator-quote");
+const calculatorQuoteOptionsPanel = document.querySelector<HTMLDivElement>("#calculator-quote-options");
 const form = document.querySelector<HTMLFormElement>("#contact-form");
 const formFeedback = document.querySelector<HTMLParagraphElement>("#form-feedback");
 const productField = document.querySelector<HTMLSelectElement>('select[name="product"]');
@@ -952,6 +1127,7 @@ let targetRotation = { x: -0.38, y: 0.72 };
 let autoSpinVelocity = 0.0035;
 let cameraDistance = 7.2;
 let calculatorWallCount = 1;
+let mobileProductView: MobileProductView = "photos";
 
 year!.textContent = new Date().getFullYear().toString();
 
@@ -1014,6 +1190,8 @@ revealElements.forEach((element, index) => {
   element.style.transitionDelay = `${Math.min(index * 55, 220)}ms`;
   observer.observe(element);
 });
+
+productCarousels.forEach(setupProductCarousel);
 
 window.addEventListener("scroll", () => {
   if (!header) {
@@ -1081,13 +1259,37 @@ calculatorQuote?.addEventListener("click", () => {
     return;
   }
 
+  calculatorQuoteOptionsPanel?.classList.remove("hidden");
+  calculatorQuoteOptionsPanel?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+
+calculatorQuoteOptionsPanel?.addEventListener("click", (event) => {
+  const target = event.target as HTMLElement;
+  const button = target.closest<HTMLButtonElement>("[data-calculator-quote-option]");
+
+  if (!button) {
+    return;
+  }
+
+  const result = updateBlockCalculator();
+
+  if (!result) {
+    return;
+  }
+
+  const product = button.dataset.product || "";
+  const label = button.dataset.label || product;
+  const dimensions = button.dataset.dimensions || "";
+
   if (productField) {
-    productField.value = result.option.product;
+    productField.value = product;
   }
 
   if (messageField) {
     messageField.value = [
-      `Olá, gostaria de orçamento para ${result.quantity} unidades de ${result.option.product} ${result.option.dimensions}.`,
+      `Olá, gostaria de orçamento para ${label} ${dimensions}.`,
+      `Quantidade estimada pela calculadora: aproximadamente ${result.quantity} blocos.`,
+      `Cálculo base: bloco 39x19 cm, ${formatDecimal(blocksPerSquareMeter)} blocos por m².`,
       `Paredes calculadas: ${result.walls.length}.`,
       `Área bruta: ${formatDecimal(result.grossArea)} m².`,
       `Aberturas: ${formatDecimal(result.openings)} m².`,
@@ -1114,7 +1316,12 @@ productButtons.forEach((button) => {
       return;
     }
 
-    openProductModal(productId);
+    if (button.hasAttribute("data-product-quote")) {
+      prepareProductQuote(productId, Number(button.dataset.productVariant || 0));
+      return;
+    }
+
+    openProductModal(productId, Number(button.dataset.productVariant || 0));
   });
 });
 
@@ -1131,26 +1338,24 @@ modalVariants?.addEventListener("click", (event) => {
   renderActiveProductModel();
 });
 
-modalCta?.addEventListener("click", (event) => {
+mobileMediaToggle?.addEventListener("click", () => {
+  setMobileProductView(mobileProductView === "viewer" ? "photos" : "viewer");
+});
+
+modalCta?.addEventListener("click", handleModalQuoteClick);
+modalMobileCta?.addEventListener("click", handleModalQuoteClick);
+
+function handleModalQuoteClick(event: Event): void {
   event.preventDefault();
 
   if (!activeProduct) {
     return;
   }
 
-  const variant = activeProduct.variants[activeVariantIndex];
-
-  if (productField) {
-    productField.value = activeProduct.name;
-  }
-
-  if (messageField) {
-    messageField.value = `Olá, gostaria de um orçamento para ${activeProduct.name} na medida ${variant.dimensions}.`;
-  }
-
+  prepareProductQuote(activeProduct.id, activeVariantIndex, false);
   closeProductModal();
   navigateToRoute("/contato");
-});
+}
 
 productModalBackdrop?.addEventListener("click", closeProductModal);
 productModalClose?.addEventListener("click", closeProductModal);
@@ -1164,6 +1369,13 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("resize", () => {
   if (!productModal?.classList.contains("hidden")) {
+    applyMobileProductView();
+
+    if (isDesktopViewport()) {
+      void initializeProductViewer();
+      return;
+    }
+
     setViewerSize();
   }
 });
@@ -1245,8 +1457,62 @@ function scrollToRoute(pathname: string, behavior: ScrollBehavior = "smooth"): b
     return false;
   }
 
-  section.scrollIntoView({ behavior, block: "start" });
+  const target = sectionId === "contato" && !isDesktopViewport() ? form ?? section : section;
+  target.scrollIntoView({ behavior, block: "start" });
   return true;
+}
+
+function setupProductCarousel(carousel: HTMLElement): void {
+  const slides = Array.from(carousel.querySelectorAll<HTMLImageElement>("[data-carousel-slide]"));
+
+  if (slides.length <= 1) {
+    return;
+  }
+
+  let activeIndex = 0;
+  let timer = 0;
+
+  const activate = (nextIndex: number) => {
+    activeIndex = (nextIndex + slides.length) % slides.length;
+    const activeSlide = slides[activeIndex];
+    const label = carousel.querySelector<HTMLElement>("[data-carousel-label]");
+    const dimensions = carousel.querySelector<HTMLElement>("[data-carousel-dimensions]");
+    const dots = carousel.querySelectorAll<HTMLElement>("[data-carousel-dot]");
+    const productButtons = carousel.closest("article")?.querySelectorAll<HTMLButtonElement>("[data-product-trigger]");
+
+    slides.forEach((slide, index) => {
+      slide.classList.toggle("opacity-100", index === activeIndex);
+      slide.classList.toggle("opacity-0", index !== activeIndex);
+    });
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("bg-accent-soft", index === activeIndex);
+      dot.classList.toggle("bg-white/25", index !== activeIndex);
+    });
+
+    if (label) {
+      label.textContent = activeSlide.dataset.slideLabel || "";
+    }
+
+    if (dimensions) {
+      dimensions.textContent = activeSlide.dataset.slideDimensions || "";
+    }
+
+    productButtons?.forEach((button) => {
+      button.dataset.productVariant = activeSlide.dataset.variantIndex || "0";
+    });
+  };
+
+  const start = () => {
+    window.clearInterval(timer);
+    timer = window.setInterval(() => activate(activeIndex + 1), 3800);
+  };
+
+  carousel.addEventListener("mouseenter", () => window.clearInterval(timer));
+  carousel.addEventListener("mouseleave", start);
+
+  activate(0);
+  start();
 }
 
 function updateBlockCalculator(): CalculatorResult | null {
@@ -1255,15 +1521,12 @@ function updateBlockCalculator(): CalculatorResult | null {
   }
 
   const data = new FormData(calculatorForm);
-  const selectedOption =
-    calculatorBlockOptions.find((option) => option.value === String(data.get("calculator-block"))) ??
-    calculatorBlockOptions[0];
   const waste = clamp(readCalculatorNumber(data, "calculator-waste", 10), 0, 30);
   const walls = readCalculatorWalls();
   const grossArea = walls.reduce((sum, wall) => sum + wall.grossArea, 0);
   const openings = walls.reduce((sum, wall) => sum + wall.openings, 0);
   const netArea = walls.reduce((sum, wall) => sum + wall.netArea, 0);
-  const quantity = Math.ceil(netArea * selectedOption.blocksPerSquareMeter * (1 + waste / 100));
+  const quantity = Math.ceil(netArea * blocksPerSquareMeter * (1 + waste / 100));
 
   if (calculatorArea) {
     calculatorArea.textContent = `${formatDecimal(netArea)} m²`;
@@ -1274,11 +1537,10 @@ function updateBlockCalculator(): CalculatorResult | null {
   }
 
   if (calculatorRate) {
-    calculatorRate.textContent = `${formatDecimal(selectedOption.blocksPerSquareMeter)}/m²`;
+    calculatorRate.textContent = `${formatDecimal(blocksPerSquareMeter)}/m²`;
   }
 
   return {
-    option: selectedOption,
     walls,
     waste,
     grossArea,
@@ -1354,7 +1616,7 @@ function formatDecimal(value: number): string {
   });
 }
 
-function openProductModal(productId: string): void {
+function openProductModal(productId: string, variantIndex = 0): void {
   const product = productMap.get(productId);
 
   if (!product || !productModal) {
@@ -1362,18 +1624,43 @@ function openProductModal(productId: string): void {
   }
 
   activeProduct = product;
-  activeVariantIndex = 0;
+  activeVariantIndex = clamp(variantIndex, 0, product.variants.length - 1);
   targetRotation = { x: -0.38, y: 0.72 };
   cameraDistance = 7.2;
   autoSpinVelocity = 0.0035;
   isDragging = false;
   productModal.classList.remove("hidden");
   document.body.classList.add("overflow-hidden");
+  resetMobileProductViewer();
   renderModalContent();
 
-  requestAnimationFrame(() => {
-    void initializeProductViewer();
-  });
+  if (isDesktopViewport() || mobileProductView === "viewer") {
+    requestAnimationFrame(() => {
+      void initializeProductViewer();
+    });
+  }
+}
+
+function prepareProductQuote(productId: string, variantIndex = 0, scroll = true): void {
+  const product = productMap.get(productId);
+
+  if (!product) {
+    return;
+  }
+
+  const variant = product.variants[clamp(variantIndex, 0, product.variants.length - 1)];
+
+  if (productField) {
+    productField.value = product.name;
+  }
+
+  if (messageField) {
+    messageField.value = `Olá, gostaria de um orçamento para ${product.name} na medida ${variant.dimensions}.`;
+  }
+
+  if (scroll) {
+    navigateToRoute("/contato");
+  }
 }
 
 function closeProductModal(): void {
@@ -1387,12 +1674,84 @@ function closeProductModal(): void {
   stopRenderLoop();
 }
 
+function resetMobileProductViewer(): void {
+  if (isDesktopViewport()) {
+    return;
+  }
+
+  mobileProductView = activeVariantHasPhotos() ? "photos" : "viewer";
+  applyMobileProductView();
+}
+
+function isDesktopViewport(): boolean {
+  return window.matchMedia("(min-width: 1024px)").matches;
+}
+
+function activeVariantHasPhotos(): boolean {
+  return Boolean(activeProduct?.variants[activeVariantIndex]?.photos?.length);
+}
+
+function setMobileProductView(view: MobileProductView): void {
+  if (isDesktopViewport()) {
+    return;
+  }
+
+  mobileProductView = activeVariantHasPhotos() ? view : "viewer";
+  applyMobileProductView();
+
+  if (mobileProductView === "viewer") {
+    requestAnimationFrame(() => {
+      void initializeProductViewer();
+    });
+    return;
+  }
+
+  isDragging = false;
+  stopRenderLoop();
+}
+
+function applyMobileProductView(): void {
+  if (isDesktopViewport()) {
+    productViewerPanel?.classList.remove("hidden");
+    viewerHost?.classList.remove("hidden");
+    modalMobilePhotos?.classList.add("hidden");
+    mobileMediaToggle?.classList.add("hidden");
+    if (modalMediaHelp) {
+      modalMediaHelp.textContent = "Arraste para girar. O modelo muda conforme a medida selecionada.";
+    }
+    return;
+  }
+
+  const hasPhotos = activeVariantHasPhotos();
+  const showViewer = mobileProductView === "viewer" || !hasPhotos;
+
+  productViewerPanel?.classList.remove("hidden");
+  viewerHost?.classList.toggle("hidden", !showViewer);
+  modalMobilePhotos?.classList.toggle("hidden", showViewer || !hasPhotos);
+  mobileMediaToggle?.classList.toggle("hidden", !hasPhotos);
+
+  if (mobileMediaToggle) {
+    mobileMediaToggle.textContent = showViewer ? "Ver fotos reais" : "Ver 3D interativo";
+  }
+
+  if (modalMobileMediaLabel) {
+    modalMobileMediaLabel.textContent = showViewer ? "Modelo 3D interativo" : "Fotos reais do produto";
+  }
+
+  if (modalMediaHelp) {
+    modalMediaHelp.textContent = showViewer
+      ? "Arraste para girar. O modelo muda conforme a medida selecionada."
+      : "Arraste para o lado para ver as fotos desta medida.";
+  }
+}
+
 function renderModalContent(): void {
   if (!activeProduct) {
     return;
   }
 
   const variant = activeProduct.variants[activeVariantIndex];
+  const variantPhotos = variant.photos ?? [];
   const specs = activeProduct.specs.map(([label, value]) =>
     label === "Dimensões" ? [label, variant.dimensions] : [label, value],
   );
@@ -1405,12 +1764,31 @@ function renderModalContent(): void {
     modalTitle.textContent = activeProduct.name;
   }
 
+  if (modalMobileKicker) {
+    modalMobileKicker.textContent = variant.label;
+  }
+
+  if (modalMobileTitle) {
+    modalMobileTitle.textContent = activeProduct.name;
+  }
+
   if (modalDescription) {
     modalDescription.textContent = activeProduct.description;
   }
 
+  if (modalPhotos) {
+    modalPhotos.classList.toggle("lg:block", variantPhotos.length > 0);
+    modalPhotos.innerHTML = variantPhotos.length ? renderVariantPhotos(variantPhotos, "desktop") : "";
+  }
+
+  if (modalMobilePhotos) {
+    modalMobilePhotos.innerHTML = variantPhotos.length ? renderVariantPhotos(variantPhotos, "mobile") : "";
+  }
+
   if (modalVariantMeta) {
-    modalVariantMeta.textContent = `${variant.dimensions} · arraste para girar`;
+    modalVariantMeta.textContent = variantPhotos.length
+      ? `${variant.dimensions} · fotos reais + 3D`
+      : `${variant.dimensions} · arraste para girar`;
   }
 
   if (modalVariants) {
@@ -1420,7 +1798,7 @@ function renderModalContent(): void {
           <button
             type="button"
             data-variant-index="${index}"
-            class="rounded-full border px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] transition ${
+            class="rounded-full border px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition sm:px-4 sm:py-3 sm:text-sm sm:tracking-[0.18em] ${
               index === activeVariantIndex
                 ? "border-accent bg-accent text-white"
                 : "border-white/10 bg-white/[0.03] text-white hover:border-white/25 hover:bg-white/[0.08]"
@@ -1449,6 +1827,43 @@ function renderModalContent(): void {
   if (modalCta) {
     modalCta.textContent = `Pedir orçamento de ${activeProduct.name}`;
   }
+  applyMobileProductView();
+}
+
+function renderVariantPhotos(photos: ProductPhoto[], layout: "mobile" | "desktop"): string {
+  const isMobile = layout === "mobile";
+  const listClass = isMobile
+    ? "mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1"
+    : "mt-3 flex gap-3 overflow-x-auto pb-1 sm:mt-4 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0";
+  const figureClass = isMobile
+    ? "min-w-full snap-center overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.03]"
+    : "min-w-[11rem] overflow-hidden rounded-[1.1rem] border border-white/10 bg-white/[0.03] sm:min-w-0 sm:rounded-[1.25rem]";
+  const imageClass = isMobile ? "h-72 w-full object-cover sm:h-[30rem]" : "h-32 w-full object-cover sm:h-52";
+
+  return `
+    <div>
+      <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">Fotos reais desta medida</p>
+      <div class="${listClass}">
+        ${photos
+          .map(
+            (photo) => `
+              <figure class="${figureClass}">
+                <img
+                  src="${photo.src}"
+                  alt="${photo.alt}"
+                  class="${imageClass}"
+                  style="object-position: ${photo.position ?? "center"};"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted sm:px-4 sm:py-3 sm:text-xs sm:tracking-[0.18em]">${photo.label}</figcaption>
+              </figure>
+            `,
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
 }
 
 async function initializeProductViewer(): Promise<void> {
@@ -1647,6 +2062,7 @@ function buildProductModel(kind: Product["modelKind"], widthCm: number): import(
   const height = 1.9;
   const depth = widthCm / 10;
   const profile = getBlockProfile(kind, widthCm);
+  const openingCount = getBlockOpeningCount(kind, widthCm);
 
   if (kind === "canaleta") {
     buildCanaleta(group, material, edgeMaterial, { length, height, depth, profile });
@@ -1656,6 +2072,7 @@ function buildProductModel(kind: Product["modelKind"], widthCm: number): import(
       height,
       depth,
       structural: kind === "estrutural",
+      openingCount,
       profile,
     });
   }
@@ -1672,14 +2089,16 @@ function buildHollowBlock(
     height: number;
     depth: number;
     structural: boolean;
+    openingCount: number;
     profile: ReturnType<typeof getBlockProfile>;
   },
 ): void {
-  const { length, height, depth, structural, profile } = options;
+  const { length, height, depth, structural, openingCount, profile } = options;
   const { shell, end, web, baseThickness } = profile;
   const innerDepth = Math.max(depth - shell * 2, 0.2);
   const wallHeight = Math.max(height - baseThickness, 0.3);
   const wallCenterY = structural ? 0 : baseThickness / 2;
+  const clearLength = Math.max(length - end * 2, 0.8);
 
   if (!structural && baseThickness > 0) {
     addBlockPart(group, material, edgeMaterial, [length, baseThickness, depth], [0, -height / 2 + baseThickness / 2, 0]);
@@ -1689,7 +2108,11 @@ function buildHollowBlock(
   addBlockPart(group, material, edgeMaterial, [length, wallHeight, shell], [0, wallCenterY, -depth / 2 + shell / 2]);
   addBlockPart(group, material, edgeMaterial, [end, wallHeight, innerDepth], [-length / 2 + end / 2, wallCenterY, 0]);
   addBlockPart(group, material, edgeMaterial, [end, wallHeight, innerDepth], [length / 2 - end / 2, wallCenterY, 0]);
-  addBlockPart(group, material, edgeMaterial, [web, wallHeight, innerDepth], [0, wallCenterY, 0]);
+
+  for (let index = 1; index < openingCount; index += 1) {
+    const x = -clearLength / 2 + (clearLength / openingCount) * index;
+    addBlockPart(group, material, edgeMaterial, [web, wallHeight, innerDepth], [x, wallCenterY, 0]);
+  }
 }
 
 function buildCanaleta(
@@ -1805,6 +2228,18 @@ function getBlockProfile(kind: Product["modelKind"], widthCm: number): {
   };
 
   return byWidth[widthCm] ?? byWidth[14];
+}
+
+function getBlockOpeningCount(kind: Product["modelKind"], widthCm: number): number {
+  if (kind === "vedacao" && (widthCm === 9 || widthCm === 14)) {
+    return 3;
+  }
+
+  if (kind === "estrutural" && widthCm === 12) {
+    return 3;
+  }
+
+  return 2;
 }
 
 function getConcreteTextureKit(): ConcreteTextureKit {
@@ -1946,6 +2381,126 @@ function disposeGroup(group: import("three").Group): void {
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
+}
+
+function productCardMedia(product: Product): string {
+  const slides = getProductCardSlides(product);
+
+  if (slides.length > 1) {
+    const firstSlide = slides[0];
+
+    return `
+      <div class="overflow-hidden border border-white/10 bg-white/[0.03] lg:rounded-[1.25rem]" data-product-carousel>
+        <div class="relative h-36 overflow-hidden lg:h-52">
+          ${slides
+            .map(
+              (slide, index) => `
+                <img
+                  src="${slide.src}"
+                  alt="${slide.alt}"
+                  class="absolute inset-0 h-full w-full object-cover transition duration-700 ${
+                    index === 0 ? "opacity-100" : "opacity-0"
+                  }"
+                  style="object-position: ${slide.position ?? "center"};"
+                  data-carousel-slide
+                  data-variant-index="${slide.variantIndex}"
+                  data-slide-label="${slide.label}"
+                  data-slide-dimensions="${slide.dimensions}"
+                  loading="lazy"
+                  decoding="async"
+                />
+              `,
+            )
+            .join("")}
+          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-surface/95 via-surface/60 to-transparent p-3 lg:p-4">
+            <p class="text-xs font-semibold text-white lg:text-sm" data-carousel-label>${firstSlide.label}</p>
+            <p class="mt-1 font-display text-2xl tracking-[0.06em] text-accent-soft lg:text-3xl" data-carousel-dimensions>${firstSlide.dimensions}</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between gap-4 px-3 py-2 lg:px-4 lg:py-3">
+          <p class="text-[0.68rem] uppercase tracking-[0.14em] text-muted lg:text-xs lg:tracking-[0.18em]">Medidas</p>
+          <div class="flex gap-2" aria-hidden="true">
+            ${slides
+              .map(
+                (_, index) => `
+                  <span
+                    class="h-2 w-2 rounded-full transition ${index === 0 ? "bg-accent-soft" : "bg-white/25"}"
+                    data-carousel-dot
+                  ></span>
+                `,
+              )
+              .join("")}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (product.cardPhoto) {
+    return `
+      <div class="h-36 overflow-hidden border border-white/10 bg-white/[0.03] lg:h-52 lg:rounded-[1.25rem]">
+        <img
+          src="${product.cardPhoto.src}"
+          alt="${product.cardPhoto.alt}"
+          class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+          style="object-position: ${product.cardPhoto.position ?? "center"};"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    `;
+  }
+
+  return "";
+}
+
+function productCardDetails(product: Product): string {
+  const dimensions = product.specs.find(([label]) => label === "Dimensões")?.[1];
+  const use = product.specs.find(([label]) => label === "Aplicação" || label === "Uso")?.[1];
+  const details = [
+    dimensions ? ["Medidas", dimensions] : null,
+    use ? ["Uso", use] : null,
+  ].filter(Boolean) as Array<[string, string]>;
+
+  if (!details.length) {
+    return "";
+  }
+
+  return `
+    <dl class="mt-3 hidden border-t border-white/10 text-sm lg:grid lg:mt-5">
+      ${details
+        .map(
+          ([label, value]) => `
+            <div class="grid gap-2 border-b border-white/10 py-3 sm:grid-cols-[5.5rem_1fr]">
+              <dt class="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-accent-soft">${label}</dt>
+              <dd class="text-sm leading-5 text-white">${value}</dd>
+            </div>
+          `,
+        )
+        .join("")}
+    </dl>
+  `;
+}
+
+function getProductCardSlides(product: Product): ProductCardSlide[] {
+  return product.variants.flatMap((variant, variantIndex) => {
+    const photo = variant.photos?.[0];
+
+    if (!photo) {
+      return [];
+    }
+
+    return [
+      {
+        src: photo.src,
+        alt: photo.alt,
+        label: product.name === "Bloco de Vedação" ? `Vedação ${variant.label}` : `${product.name} ${variant.label}`,
+        dimensions: variant.dimensions,
+        variantIndex,
+        position: photo.position,
+      },
+    ];
+  });
 }
 
 function inputField(name: string, label: string, placeholder: string, type = "text"): string {

@@ -11,7 +11,7 @@
   --color-accent-soft: #ff765a;
   --font-display: "Bebas Neue", sans-serif;
   --font-body: "Barlow", sans-serif;
-  --shadow-frame: 0 30px 80px rgba(0, 0, 0, 0.32);
+  --shadow-frame: 0 18px 48px rgba(0, 0, 0, 0.24);
   --shadow-glow: 0 24px 80px rgba(212, 45, 32, 0.2);
 }
 
@@ -23,9 +23,7 @@
   body {
     min-height: 100vh;
     font-family: var(--font-body);
-    background:
-      radial-gradient(circle at top right, rgba(212, 45, 32, 0.18), transparent 28%),
-      linear-gradient(180deg, #0d1116 0%, #11151a 45%, #141a21 100%);
+    background: linear-gradient(180deg, #0d1116 0%, #11151a 45%, #141a21 100%);
     color: var(--color-copy);
   }
 
@@ -57,7 +55,7 @@
   }
 
   .frame {
-    @apply rounded-[2rem] border border-line bg-panel/80 shadow-[var(--shadow-frame)] backdrop-blur;
+    @apply rounded-lg border border-line bg-panel/80 shadow-[var(--shadow-frame)] backdrop-blur;
   }
 
   .ghost-grid {
