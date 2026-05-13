@@ -32,6 +32,11 @@ type ProductPhoto = {
   position?: string;
 };
 
+type GalleryPhoto = ProductPhoto & {
+  category: string;
+  featured?: boolean;
+};
+
 type ProductCardSlide = {
   src: string;
   alt: string;
@@ -269,10 +274,100 @@ const factoryPhotos = {
   fachada: "/photos/fachada-fabrica.jpeg",
   caminhao: "/photos/caminhao-entrega.jpeg",
 };
+
+const galleryPhotos: GalleryPhoto[] = [
+  {
+    src: factoryPhotos.patio,
+    alt: "Pátio da Blocos Serezini com blocos de concreto organizados",
+    label: "Pátio de produção",
+    category: "Fábrica",
+    position: "center 72%",
+    featured: true,
+  },
+  {
+    src: factoryPhotos.fachada,
+    alt: "Entrada da fábrica Blocos Serezini em Cachoeiro de Itapemirim",
+    label: "Fachada da fábrica",
+    category: "Endereço",
+    position: "center 55%",
+  },
+  {
+    src: factoryPhotos.caminhao,
+    alt: "Caminhão carregado com blocos de concreto",
+    label: "Caminhão carregado",
+    category: "Entrega",
+    position: "center 58%",
+  },
+  {
+    src: productPhotos.vedacao9Close,
+    alt: "Close do bloco de vedação 9 cm",
+    label: "Vedação 9 cm",
+    category: "Produtos",
+    position: "center 52%",
+  },
+  {
+    src: productPhotos.vedacao9Chao,
+    alt: "Blocos de vedação 9 cm apoiados no chão",
+    label: "Vedação 9 cm no pátio",
+    category: "Produtos",
+    position: "center 50%",
+  },
+  {
+    src: productPhotos.vedacao14Close,
+    alt: "Close do bloco de vedação 14 cm",
+    label: "Vedação 14 cm",
+    category: "Produtos",
+    position: "center 50%",
+  },
+  {
+    src: productPhotos.vedacao14Chao,
+    alt: "Blocos de vedação 14 cm apoiados no chão",
+    label: "Vedação 14 cm no pátio",
+    category: "Produtos",
+    position: "center 50%",
+  },
+  {
+    src: productPhotos.vedacao19Close,
+    alt: "Close do bloco de vedação 19 cm",
+    label: "Vedação 19 cm",
+    category: "Produtos",
+    position: "center 52%",
+  },
+  {
+    src: productPhotos.vedacao19Chao,
+    alt: "Blocos de vedação 19 cm apoiados no chão",
+    label: "Vedação 19 cm no pátio",
+    category: "Produtos",
+    position: "center 50%",
+  },
+  {
+    src: productPhotos.estrutural12Close,
+    alt: "Close do bloco estrutural 12 cm",
+    label: "Estrutural 12 cm",
+    category: "Produtos",
+    position: "center 52%",
+  },
+  {
+    src: productPhotos.estrutural19Close,
+    alt: "Close do bloco estrutural 19 cm",
+    label: "Estrutural 19 cm",
+    category: "Produtos",
+    position: "center 52%",
+  },
+  {
+    src: productPhotos.estrutural19Chao,
+    alt: "Blocos estruturais 19 cm apoiados no chão",
+    label: "Estrutural 19 cm no pátio",
+    category: "Produtos",
+    position: "center 50%",
+  },
+];
+
 const routeSections: Record<string, string> = {
   "/": "hero",
   "/sobre": "sobre",
   "/produtos": "produtos",
+  "/galeria": "galeria",
   "/calculadora": "calculadora",
   "/diferenciais": "diferenciais",
   "/contato": "contato",
@@ -302,29 +397,6 @@ const contactItems: ContactItem[] = [
   {
     label: "Atendimento",
     value: "Segunda a sexta: 7h às 17h | Sábado: 7h às 11h",
-  },
-];
-
-const highlights: Highlight[] = [
-  {
-    title: "Desde 1995",
-    description:
-      "A fábrica começou com o avô da família, conhecido em Cachoeiro como Zé do Bloco.",
-  },
-  {
-    title: "Família Serezini",
-    description:
-      "O sobrenome virou marca e segue presente no atendimento, na produção e na rotina da empresa.",
-  },
-  {
-    title: "Mesmo lugar",
-    description:
-      "A empresa nasceu e continua no mesmo ponto em Cachoeiro de Itapemirim.",
-  },
-  {
-    title: "Todo tipo de obra",
-    description:
-      "Atendimento para construtoras, lojas, profissionais da obra e clientes finais.",
   },
 ];
 
@@ -390,6 +462,7 @@ app.innerHTML = `
             ${[
                 { href: "/sobre", label: "Sobre" },
                 { href: "/produtos", label: "Produtos" },
+                { href: "/galeria", label: "Galeria" },
                 { href: "/calculadora", label: "Calculadora" },
                 { href: "/diferenciais", label: "Diferenciais" },
                 { href: "/contato", label: "Contato" },
@@ -419,11 +492,12 @@ app.innerHTML = `
     </header>
 
     <main>
+      <div data-page="home">
       <section id="hero" class="shell grid min-h-screen items-center gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
         <div class="relative z-10 max-w-3xl">
           <p class="section-kicker reveal" data-reveal>Blocos de concreto no Espírito Santo</p>
           <h1 class="section-title reveal max-w-3xl text-[4.3rem] sm:text-[5.8rem] lg:text-[7.6rem]" data-reveal>
-            Blocos para obra com <span class="text-accent">entrega combinada</span>
+             Bem-vindo(a) à <span class="text-accent">Blocos serezini</span>
           </h1>
           <p class="section-copy reveal mt-6 max-w-xl text-lg sm:text-xl" data-reveal>
             Blocos de vedação, blocos estruturais e canaletas para construtoras, lojas de material e obras em geral.
@@ -467,8 +541,7 @@ app.innerHTML = `
               />
               <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,21,26,0.08)_0%,rgba(17,21,26,0.18)_42%,rgba(17,21,26,0.92)_100%)]"></div>
               <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <p class="text-xs font-semibold uppercase tracking-[0.28em] text-accent-soft">Foto real da fábrica</p>
-                <p class="mt-2 font-display text-5xl tracking-[0.08em] text-white">Pátio de produção</p>
+                <p class="mt-2 font-display text-5xl tracking-[0.08em] text-accent-soft">Pátio de produção</p>
                 <p class="mt-3 max-w-md text-base leading-7 text-copy/80">Produto no chão, equipe perto e carregamento combinado antes da entrega.</p>
               </div>
             </div>
@@ -507,21 +580,6 @@ app.innerHTML = `
                 loading="lazy"
                 decoding="async"
               />
-              <div class="mt-6 grid gap-0 border-t border-white/10">
-                ${highlights
-                  .map(
-                    (item, index) => `
-                      <article class="grid gap-3 border-b border-white/10 py-5 sm:grid-cols-[7rem_1fr]">
-                        <p class="font-display text-4xl leading-none tracking-[0.06em] text-accent">${String(index + 1).padStart(2, "0")}</p>
-                        <div>
-                          <h3 class="text-lg font-semibold text-white">${item.title}</h3>
-                          <p class="mt-2 text-sm leading-6 text-muted">${item.description}</p>
-                        </div>
-                      </article>
-                    `,
-                  )
-                  .join("")}
-              </div>
             </div>
           </div>
         </div>
@@ -579,48 +637,6 @@ app.innerHTML = `
               `,
             )
             .join("")}
-        </div>
-      </section>
-
-      <section class="shell hidden pb-20 lg:block lg:pb-28">
-        <div class="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
-          <div class="reveal" data-reveal>
-            <p class="section-kicker">Fotos reais</p>
-            <h2 class="section-title max-w-3xl">Produção real, carregamento visível e endereço conhecido.</h2>
-          </div>
-          <p class="section-copy reveal max-w-xl" data-reveal>
-            Pátio, carga e acesso da fábrica aparecem como parte da compra: o cliente vê de onde vem o bloco antes de fechar o pedido.
-          </p>
-        </div>
-
-        <div class="mt-12 grid gap-6 border-y border-white/10 py-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <div class="reveal" data-reveal>
-            <img
-              src="${factoryPhotos.patio}"
-              alt="Pátio de produção da Blocos Serezini"
-              class="h-[34rem] w-full object-cover"
-              style="object-position: center 72%;"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div class="reveal grid gap-6" data-reveal>
-            <img
-              src="${factoryPhotos.caminhao}"
-              alt="Caminhão carregado com blocos de concreto"
-              class="h-64 w-full object-cover"
-              style="object-position: center 58%;"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="border-t border-white/10 pt-6">
-              <p class="text-xs font-semibold uppercase tracking-[0.28em] text-accent-soft">Rotina de fábrica</p>
-              <h3 class="mt-4 font-display text-5xl tracking-[0.06em] text-white">Bloco produzido, separado e carregado.</h3>
-              <p class="mt-4 text-base leading-7 text-muted">
-                Da fabricação ao caminhão, o atendimento combina quantidade, medida e entrega para reduzir surpresa no canteiro.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -835,6 +851,61 @@ app.innerHTML = `
           </div>
         </div>
       </section>
+      </div>
+
+      <section id="galeria" data-page="gallery" class="shell hidden min-h-screen scroll-mt-24 py-14 lg:py-24">
+        <div class="grid gap-8 border-b border-white/10 pb-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div class="reveal" data-reveal>
+            <h1 class="section-title max-w-3xl">Galeria</h1>
+          </div>
+          <div class="reveal lg:justify-self-end" data-reveal>
+            <p class="section-copy max-w-xl">
+              Veja o pátio, a fachada, o carregamento e fotos reais dos blocos disponíveis para orçamento.
+            </p>
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a href="/produtos" class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-accent-soft">
+                Ver produtos
+              </a>
+              <a href="/contato" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:border-white/30 hover:bg-white/10">
+                Pedir orçamento
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 grid auto-rows-[minmax(18rem,_auto)] gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          ${galleryPhotos
+            .map((photo) => {
+              const figureClass = [
+                "reveal group overflow-hidden border border-white/10 bg-white/[0.03]",
+                photo.featured ? "sm:col-span-2 lg:row-span-2" : "",
+              ]
+                .filter(Boolean)
+                .join(" ");
+              const imageClass = photo.featured
+                ? "h-[28rem] w-full object-cover transition duration-700 group-hover:scale-[1.02] lg:h-full lg:min-h-[38rem]"
+                : "h-72 w-full object-cover transition duration-700 group-hover:scale-[1.03] sm:h-80";
+
+              return `
+                <figure class="${figureClass}" data-reveal>
+                  <img
+                    src="${photo.src}"
+                    alt="${photo.alt}"
+                    class="${imageClass}"
+                    style="object-position: ${photo.position ?? "center"};"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption class="grid gap-2 border-t border-white/10 px-4 py-4">
+                    <span class="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-accent-soft">${photo.category}</span>
+                    <span class="text-base font-semibold text-white">${photo.label}</span>
+                  </figcaption>
+                </figure>
+              `;
+            })
+            .join("")}
+        </div>
+      </section>
     </main>
 
     <div id="product-modal" class="fixed inset-0 z-[120] hidden">
@@ -948,6 +1019,7 @@ app.innerHTML = `
                 { href: "/", label: "Home" },
                 { href: "/sobre", label: "Sobre" },
                 { href: "/produtos", label: "Produtos" },
+                { href: "/galeria", label: "Galeria" },
                 { href: "/calculadora", label: "Calculadora" },
                 { href: "/diferenciais", label: "Diferenciais" },
                 { href: "/contato", label: "Contato" },
@@ -1071,6 +1143,8 @@ const header = document.querySelector<HTMLElement>("header");
 const menuToggle = document.querySelector<HTMLButtonElement>("#menu-toggle");
 const nav = document.querySelector<HTMLElement>("#primary-nav");
 const navLinks = document.querySelectorAll<HTMLElement>("[data-nav-link]");
+const homePage = document.querySelector<HTMLElement>('[data-page="home"]');
+const galleryPage = document.querySelector<HTMLElement>('[data-page="gallery"]');
 const productMap = new Map(products.map((product) => [product.id, product]));
 const productButtons = document.querySelectorAll<HTMLButtonElement>("[data-product-trigger]");
 const productCarousels = document.querySelectorAll<HTMLElement>("[data-product-carousel]");
@@ -1135,6 +1209,11 @@ if ("scrollRestoration" in window.history) {
 }
 
 backToTop?.addEventListener("click", () => {
+  if (normalizeRoutePath(window.location.pathname) === "/galeria") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
   navigateToRoute("/");
 });
 
@@ -1439,10 +1518,21 @@ function navigateToRoute(pathname: string, behavior: ScrollBehavior = "smooth"):
 }
 
 function scrollToRoute(pathname: string, behavior: ScrollBehavior = "smooth"): boolean {
-  const sectionId = getRouteSection(pathname);
+  const normalizedPath = normalizeRoutePath(pathname);
+  const sectionId = getRouteSection(normalizedPath);
 
   if (!sectionId) {
     return false;
+  }
+
+  const isGalleryPage = sectionId === "galeria";
+  homePage?.classList.toggle("hidden", isGalleryPage);
+  galleryPage?.classList.toggle("hidden", !isGalleryPage);
+  document.title = isGalleryPage ? "Galeria | Blocos Serezini" : "Blocos Serezini";
+
+  if (isGalleryPage) {
+    window.scrollTo({ top: 0, behavior });
+    return true;
   }
 
   if (sectionId === "hero") {

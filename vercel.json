@@ -4,6 +4,8 @@
     { "source": "/sobre/", "destination": "/index.html" },
     { "source": "/produtos", "destination": "/index.html" },
     { "source": "/produtos/", "destination": "/index.html" },
+    { "source": "/galeria", "destination": "/index.html" },
+    { "source": "/galeria/", "destination": "/index.html" },
     { "source": "/calculadora", "destination": "/index.html" },
     { "source": "/calculadora/", "destination": "/index.html" },
     { "source": "/diferenciais", "destination": "/index.html" },
