@@ -123,7 +123,7 @@ const products: Product[] = [
     id: "01",
     name: "Bloco de Vedação",
     description:
-      "Para paredes de fechamento e divisórias. Disponível nas medidas mais usadas em obra.",
+      "Utilizado para fechamento de paredes sem função estrutural, oferecendo praticidade, economia e bom acabamento na construção.",
     specs: [
       ["Normas", "NBR 6136 / NBR 15270"],
       ["Resistência", "≥ 3 MPa"],
@@ -202,7 +202,7 @@ const products: Product[] = [
     id: "02",
     name: "Bloco Estrutural",
     description:
-      "Para alvenaria estrutural, conforme projeto. Medidas de 12, 14 e 19 cm.",
+      "Utilizado na construção de paredes que sustentam a estrutura da obra, dispensando vigas e pilares em muitos projetos.",
     specs: [
       ["Normas", "NBR 6136 / NBR 16868"],
       ["Resistência", "4,5 MPa a 8 MPa"],
@@ -251,7 +251,7 @@ const products: Product[] = [
     id: "03",
     name: "Canaleta",
     description:
-      "Para cintas, vergas, contravergas e amarrações. Compatível com a modulação dos blocos.",
+      "Peça usada para passagem de ferragens e concreto em cintas, vergas e amarrações estruturais, reforçando a construção.",
     specs: [
       ["Formato", "Canaleta"],
       ["Dimensões", "14x19x39 / 19x19x39 cm"],
@@ -434,7 +434,7 @@ app.innerHTML = `
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10"></div>
     <div class="pointer-events-none absolute inset-0 opacity-35 ghost-grid"></div>
 
-    <header id="topo" class="sticky top-0 z-50 border-b border-transparent bg-surface/80 backdrop-blur transition-colors duration-300">
+    <header id="topo" class="site-chrome sticky top-0 z-50 border-b border-transparent bg-surface/80 backdrop-blur transition-colors duration-300">
       <div class="shell flex items-center justify-between py-4">
         <a href="/" class="flex items-center gap-3">
           <img src="/brand/logo.png" alt="Blocos Serezini" class="h-12 w-auto object-contain sm:h-14" />
@@ -443,7 +443,7 @@ app.innerHTML = `
         <button
           type="button"
           id="menu-toggle"
-          class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white lg:hidden"
+          class="btn-secondary inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white lg:hidden"
           aria-expanded="false"
           aria-controls="primary-nav"
           aria-label="Abrir navegação"
@@ -456,7 +456,7 @@ app.innerHTML = `
 
         <nav
           id="primary-nav"
-          class="absolute left-5 right-5 top-[calc(100%+0.75rem)] hidden rounded-[1.75rem] border border-white/10 bg-panel/95 p-5 shadow-[var(--shadow-frame)] lg:static lg:flex lg:items-center lg:gap-10 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+          class="absolute left-5 right-5 top-[calc(100%+0.75rem)] hidden rounded-[1.75rem] border border-white/10 bg-panel-strong/95 p-5 shadow-[var(--shadow-frame)] lg:static lg:flex lg:items-center lg:gap-10 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
         >
           <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-8">
             ${[
@@ -507,7 +507,7 @@ app.innerHTML = `
             <a href="/produtos" class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
               Ver medidas
             </a>
-            <a href="/contato" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/30 hover:bg-white/10">
+            <a href="/contato" class="btn-secondary inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/30 hover:bg-white/10">
               Pedir orçamento
             </a>
           </div>
@@ -528,7 +528,7 @@ app.innerHTML = `
 
         <div class="relative reveal" data-reveal>
           <div class="relative overflow-hidden border-l border-white/10 pl-5 lg:pl-8">
-            <div class="relative h-[30rem] overflow-hidden sm:h-[34rem] lg:h-[42rem]">
+            <div class="on-dark relative h-[30rem] overflow-hidden sm:h-[34rem] lg:h-[42rem]">
               <img
                 src="${factoryPhotos.patio}"
                 width="1200"
@@ -539,7 +539,7 @@ app.innerHTML = `
                 decoding="async"
                 fetchpriority="high"
               />
-              <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(17,21,26,0.08)_0%,rgba(17,21,26,0.18)_42%,rgba(17,21,26,0.92)_100%)]"></div>
+              <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(37,40,45,0.08)_0%,rgba(37,40,45,0.18)_42%,rgba(37,40,45,0.92)_100%)]"></div>
               <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
                 <p class="mt-2 font-display text-5xl tracking-[0.08em] text-accent-soft">Pátio de produção</p>
                 <p class="mt-3 max-w-md text-base leading-7 text-copy/80">Produto no chão, equipe perto e carregamento combinado antes da entrega.</p>
@@ -586,73 +586,84 @@ app.innerHTML = `
       </section>
 
       <section id="produtos" class="shell scroll-mt-24 py-14 lg:py-28">
-        <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div class="reveal" data-reveal>
-            <p class="section-kicker">Linha de produtos</p>
-            <h2 class="section-title max-w-3xl">Escolha o bloco e peça orçamento.</h2>
-          </div>
-          <p class="section-copy reveal max-w-md text-sm leading-6 lg:uppercase lg:tracking-[0.16em]" data-reveal>
-            No celular, toque no produto para ver fotos, medidas e 3D. Se já souber a medida, peça orçamento direto.
-          </p>
+        <div class="reveal" data-reveal>
+          <p class="section-kicker mb-3">Linha de produtos</p>
+          <h2 class="product-section-title">Escolha o bloco e<br />peça orçamento.</h2>
         </div>
 
-        <div class="mt-8 grid border-y border-white/10 lg:mt-12">
+        <div class="product-list">
           ${products
-            .map(
-              (product) => `
-                <article class="reveal group relative overflow-hidden border-b border-white/10 py-5 last:border-b-0 lg:py-7" data-reveal>
-                  <div class="absolute right-5 top-4 hidden font-display text-5xl leading-none tracking-[0.08em] text-white/6 lg:block">${product.id}</div>
-                  <div class="grid grid-cols-[6.75rem_1fr] gap-4 lg:grid-cols-[17rem_1fr] lg:items-center lg:gap-8">
-                    ${productCardMedia(product)}
-                    <div class="min-w-0">
-                      <div class="hidden h-12 w-12 items-center justify-center rounded-[1rem] border border-accent/25 bg-accent/10 text-accent-soft lg:inline-flex">
-                        ${product.icon}
-                      </div>
-                      <h3 class="font-display text-3xl tracking-[0.06em] text-white lg:mt-5">${product.name}</h3>
-                      <p class="mt-2 text-sm leading-6 text-muted lg:mt-4">${product.description}</p>
-                      ${productCardDetails(product)}
-                      <div class="mt-4 flex flex-col gap-2 sm:flex-row lg:mt-6">
-                        <button
-                          type="button"
-                          data-product-trigger="${product.id}"
-                          data-product-variant="0"
-                          class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-accent-soft"
-                        >
-                          Ver produto
-                          <span aria-hidden="true">→</span>
-                        </button>
-                        <button
-                          type="button"
-                          data-product-trigger="${product.id}"
-                          data-product-variant="0"
-                          data-product-quote
-                          class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-white transition hover:border-accent/40 hover:bg-accent/10"
-                        >
-                          Orçar
-                        </button>
-                      </div>
+            .map((product) => {
+              const isFeatured = product.id === "02";
+
+              return `
+                <article class="product-list-card reveal ${isFeatured ? "is-featured" : ""}" data-reveal>
+                  ${productListMedia(product)}
+                  <div class="product-list-body">
+                    <h3 class="product-list-name">${product.name}</h3>
+                    <p class="product-list-desc">${product.description}</p>
+                    ${productListMeta(product)}
+                  </div>
+                  <div class="product-list-actions">
+                    <p class="product-list-number">${product.id}</p>
+                    <div class="product-list-buttons">
+                      <button
+                        type="button"
+                        data-product-trigger="${product.id}"
+                        data-product-variant="0"
+                        class="product-list-button product-list-button-outline"
+                      >
+                        Ver produto <span aria-hidden="true">&rarr;</span>
+                      </button>
+                      <button
+                        type="button"
+                        data-product-trigger="${product.id}"
+                        data-product-variant="0"
+                        data-product-quote
+                        class="product-list-button product-list-button-red"
+                      >
+                        Orçar
+                      </button>
                     </div>
                   </div>
                 </article>
-              `,
-            )
+              `;
+            })
             .join("")}
+        </div>
+      </section>
+
+      <section class="on-dark dark-cta py-10 lg:py-12">
+        <div class="shell grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-muted">Atendimento direto</p>
+            <h2 class="mt-3 font-display text-4xl tracking-[0.06em] text-white sm:text-5xl">Já sabe a medida?</h2>
+            <p class="mt-3 max-w-2xl text-base leading-7 text-muted">
+              Envie sua lista pelo WhatsApp e receba retorno com produto, quantidade e entrega alinhados.
+            </p>
+          </div>
+          <a
+            href="/contato"
+            class="btn-light inline-flex items-center justify-center rounded-full border px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] transition"
+          >
+            Peça orçamento
+          </a>
         </div>
       </section>
 
       <section id="calculadora" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div class="reveal" data-reveal>
-            <p class="section-kicker">Calculadora de blocos</p>
+            <p class="section-divider">Calculadora</p>
             <h2 class="section-title max-w-2xl">Calcule uma estimativa antes de pedir orçamento.</h2>
             <p class="section-copy mt-6">
               Adicione uma ou mais paredes e veja uma quantidade aproximada de blocos. O cálculo considera bloco 39x19 cm com junta de 1 cm.
             </p>
           </div>
 
-          <div class="frame reveal p-6 sm:p-8 lg:p-10" data-reveal>
+          <div class="frame reveal p-6 sm:p-8 lg:mt-2 lg:p-10" data-reveal>
             <form id="block-calculator-form" class="grid gap-6">
-              <div class="order-3 grid gap-4 rounded-lg border border-white/10 bg-white/[0.03] p-4 sm:grid-cols-3 sm:p-5">
+              <div class="on-dark order-3 grid gap-4 rounded-lg border border-white/10 bg-panel-strong p-4 shadow-[var(--shadow-frame)] sm:grid-cols-3 sm:p-5">
                 <div>
                   <p class="text-xs uppercase tracking-[0.18em] text-muted">Área líquida</p>
                   <p id="calculator-area" class="mt-1 font-display text-4xl tracking-[0.06em] text-white">0 m²</p>
@@ -673,7 +684,7 @@ app.innerHTML = `
                   <button
                     type="button"
                     id="calculator-add-wall"
-                    class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:border-accent/40 hover:bg-accent/10"
+                    class="btn-secondary inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:border-accent/40 hover:bg-accent/10"
                   >
                     Adicionar parede
                   </button>
@@ -701,7 +712,7 @@ app.innerHTML = `
                 </button>
                 <a
                   href="/contato"
-                  class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08]"
+                  class="btn-secondary inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08]"
                 >
                   Ir para contato
                 </a>
@@ -719,7 +730,7 @@ app.innerHTML = `
                           data-product="${option.product}"
                           data-label="${option.label}"
                           data-dimensions="${option.dimensions}"
-                          class="flex items-center justify-between gap-3 border border-white/10 bg-white/[0.03] px-4 py-3 text-left transition hover:border-accent/50 hover:bg-accent/10"
+                          class="btn-secondary flex items-center justify-between gap-3 border border-white/10 bg-white/[0.03] px-4 py-3 text-left transition hover:border-accent/50 hover:bg-accent/10"
                         >
                           <span class="text-sm font-semibold text-white">${option.label}</span>
                           <span class="text-xs uppercase tracking-[0.14em] text-muted">${option.dimensions}</span>
@@ -737,7 +748,7 @@ app.innerHTML = `
       <section id="diferenciais" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <div class="reveal" data-reveal>
-            <p class="section-kicker">Como funciona</p>
+            <p class="section-divider">Como funciona</p>
             <h2 class="section-title max-w-xl">Menos dúvida no pedido. Menos atraso na obra.</h2>
             <p class="section-copy mt-6">
               A compra de bloco precisa ser simples: medida correta, quantidade alinhada e entrega combinada.
@@ -747,7 +758,7 @@ app.innerHTML = `
             </a>
           </div>
 
-          <div class="reveal border-y border-white/10" data-reveal>
+          <div class="reveal border-y border-white/10 lg:mt-2" data-reveal>
             ${differentials
               .map(
                 (item, index) => `
@@ -766,37 +777,28 @@ app.innerHTML = `
       </section>
 
       <section id="contato" class="shell scroll-mt-24 py-20 lg:py-28">
-        <div class="grid gap-8 lg:grid-cols-[0.92fr_1.08fr]">
-          <div class="reveal border-y border-white/10 py-8 sm:py-10" data-reveal>
-            <p class="section-kicker">Fale com a equipe</p>
-            <h2 class="section-title max-w-xl">Passe sua lista de blocos pelo WhatsApp.</h2>
-            <p class="section-copy mt-6">
-              Preencha produto, quantidade estimada e local de entrega. A mensagem já sai pronta para atendimento.
-            </p>
-
-            <div class="mt-8 overflow-hidden">
-              <img
-                src="${factoryPhotos.fachada}"
-                width="1600"
-                height="1200"
-                alt="Entrada da fábrica Blocos Serezini em Cachoeiro de Itapemirim"
-                class="h-64 w-full object-cover"
-                style="object-position: center 55%;"
-                loading="lazy"
-                decoding="async"
-              />
+        <div class="contact-panel reveal grid lg:grid-cols-[0.92fr_1.08fr]" data-reveal>
+          <div class="on-dark contact-info-panel min-h-[34rem]">
+            <div>
+              <p class="section-kicker">Fale com a equipe</p>
+              <h2 class="font-display text-5xl leading-[0.92] tracking-[0.04em] text-white sm:text-6xl">
+                Passe sua lista de blocos pelo WhatsApp.
+              </h2>
+              <p class="mt-6 max-w-md text-base leading-7 text-muted">
+                Preencha produto, quantidade estimada e local de entrega. A mensagem já sai pronta para atendimento.
+              </p>
             </div>
 
-            <div class="mt-10 space-y-6">
+            <div class="mt-10">
               ${contactItems
                 .map(
                   ({ label, value, href }) => `
-                    <div class="border-b border-white/10 pb-4">
-                      <p class="text-xs uppercase tracking-[0.28em] text-accent-soft">${label}</p>
+                    <div class="border-t border-white/10 py-3 last:border-b">
+                      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-accent">${label}</p>
                       ${
                         href
-                          ? `<a href="${href}" target="_blank" rel="noreferrer" class="mt-2 inline-flex text-base text-copy/85 transition hover:text-accent-soft">${value}</a>`
-                          : `<p class="mt-2 text-base text-copy/85">${value}</p>`
+                          ? `<a href="${href}" target="_blank" rel="noreferrer" class="clickable-text contact-info-link mt-1 inline text-base leading-6">${value}</a>`
+                          : `<p class="mt-1 text-base leading-6 text-white/85">${value}</p>`
                       }
                     </div>
                   `,
@@ -805,9 +807,10 @@ app.innerHTML = `
             </div>
           </div>
 
-          <div class="frame reveal p-8 sm:p-10" data-reveal>
-            <form id="contact-form" class="grid scroll-mt-24 gap-5">
-              <div class="grid gap-5 sm:grid-cols-2">
+          <div class="contact-form-panel">
+            <p class="contact-form-heading">Formulário de contato</p>
+            <form id="contact-form" class="contact-form-body">
+              <div class="grid gap-4 sm:grid-cols-2">
                 ${inputField("name", "Nome", "Seu nome completo")}
                 ${inputField("phone", "Telefone / WhatsApp", "(28) 99982-2728", "tel")}
               </div>
@@ -818,7 +821,7 @@ app.innerHTML = `
                 <span>Produto de interesse</span>
                 <select
                   name="product"
-                  class="rounded-[1.25rem] border border-white/10 bg-surface px-4 py-4 text-base normal-case tracking-normal text-white outline-none transition focus:border-accent"
+                  class="contact-field"
                 >
                   <option value="">Selecione um produto</option>
                   <option>Bloco de Vedação</option>
@@ -834,15 +837,19 @@ app.innerHTML = `
                   name="message"
                   rows="6"
                   placeholder="Ex.: 1.000 blocos 14x19x39 para entrega em Cachoeiro."
-                  class="rounded-[1.25rem] border border-white/10 bg-surface px-4 py-4 text-base normal-case tracking-normal text-white outline-none transition focus:border-accent"
+                  class="contact-field min-h-28 resize-none"
                 ></textarea>
               </label>
 
               <div class="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
                 <button
                   type="submit"
-                  class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft"
+                  class="btn-secondary contact-whatsapp-submit inline-flex w-full items-center justify-center gap-3 rounded-md px-7 py-4 text-sm font-semibold uppercase tracking-[0.12em]"
                 >
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.47 14.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.18.2-.35.22-.65.08-.29-.15-1.25-.47-2.38-1.48-.89-.78-1.49-1.76-1.66-2.06-.17-.29-.01-.45.13-.6.13-.14.3-.35.45-.52.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.29-1.04 1.02-1.04 2.49 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z" />
+                    <path d="M12.06 21.8h-.01a9.94 9.94 0 0 1-5.04-1.38l-.36-.22-3.73.98.99-3.64-.24-.37A9.9 9.9 0 0 1 2.15 11.9c0-5.46 4.44-9.9 9.9-9.9 2.64 0 5.13 1.03 7 2.9a9.83 9.83 0 0 1 2.9 7c0 5.46-4.44 9.9-9.89 9.9Zm8.4-18.29A11.82 11.82 0 0 0 12.06 0C5.5 0 .16 5.34.16 11.9c0 2.09.54 4.14 1.59 5.94L.05 24l6.3-1.65a11.9 11.9 0 0 0 5.7 1.45h.01c6.55 0 11.89-5.33 11.89-11.89a11.8 11.8 0 0 0-3.49-8.4Z" />
+                  </svg>
                   Enviar no WhatsApp
                 </button>
                 <p id="form-feedback" class="text-sm text-muted" aria-live="polite"></p>
@@ -866,18 +873,18 @@ app.innerHTML = `
               <a href="/produtos" class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-accent-soft">
                 Ver produtos
               </a>
-              <a href="/contato" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:border-white/30 hover:bg-white/10">
+              <a href="/contato" class="btn-secondary inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:border-white/30 hover:bg-white/10">
                 Pedir orçamento
               </a>
             </div>
           </div>
         </div>
 
-        <div class="mt-10 grid auto-rows-[minmax(18rem,_auto)] gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-10 grid auto-rows-[minmax(18rem,_auto)] items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
           ${galleryPhotos
             .map((photo) => {
               const figureClass = [
-                "reveal group overflow-hidden border border-white/10 bg-white/[0.03]",
+                "reveal group self-start overflow-hidden border border-white/10 bg-white/[0.03]",
                 photo.featured ? "sm:col-span-2 lg:row-span-2" : "",
               ]
                 .filter(Boolean)
@@ -915,7 +922,7 @@ app.innerHTML = `
           <button
             type="button"
             id="product-modal-close"
-            class="absolute right-5 top-5 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-surface/80 text-white transition hover:border-white/25 hover:bg-white/10"
+            class="btn-secondary absolute right-5 top-5 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-surface/80 text-white transition hover:border-white/25 hover:bg-white/10"
             aria-label="Fechar visualização 3D"
           >
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -924,7 +931,7 @@ app.innerHTML = `
           </button>
 
           <div class="grid max-h-[92vh] overflow-y-auto lg:grid-cols-[1.15fr_0.85fr]">
-            <div id="product-viewer-panel" class="relative order-2 border-t border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,118,90,0.16),_transparent_35%),linear-gradient(180deg,#151a20_0%,#11151a_100%)] p-4 sm:p-8 lg:order-none lg:block lg:border-r lg:border-t-0">
+            <div id="product-viewer-panel" class="on-dark relative order-2 border-t border-white/10 bg-[radial-gradient(circle_at_top,_rgba(209,30,30,0.16),_transparent_35%),linear-gradient(180deg,#25282d_0%,#25282d_100%)] p-4 sm:p-8 lg:order-none lg:block lg:border-r lg:border-t-0">
               <div class="mb-4 flex items-center justify-between gap-4">
                 <div class="hidden lg:block">
                   <p id="modal-kicker" class="text-xs uppercase tracking-[0.28em] text-accent-soft">Medidas do produto</p>
@@ -940,13 +947,13 @@ app.innerHTML = `
                 <button
                   type="button"
                   id="mobile-media-toggle"
-                  class="hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:border-accent/40 hover:bg-accent/10 lg:hidden"
+                  class="btn-secondary hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:border-accent/40 hover:bg-accent/10 lg:hidden"
                 >
                   Ver fotos reais
                 </button>
               </div>
 
-              <div id="product-viewer" class="h-72 rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.10),_transparent_35%),linear-gradient(180deg,#0e1318_0%,#121820_100%)] shadow-[var(--shadow-frame)] sm:h-[30rem] lg:h-[24rem] lg:rounded-[1.8rem]"></div>
+              <div id="product-viewer" class="h-72 rounded-[1.5rem] border border-white/10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.10),_transparent_35%),linear-gradient(180deg,#25282d_0%,#25282d_100%)] shadow-[var(--shadow-frame)] sm:h-[30rem] lg:h-[24rem] lg:rounded-[1.8rem]"></div>
               <div id="modal-mobile-photos" class="hidden lg:hidden"></div>
 
               <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
@@ -998,7 +1005,7 @@ app.innerHTML = `
                 <button
                   type="button"
                   id="modal-close-secondary"
-                  class="hidden items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08] sm:inline-flex"
+                  class="btn-secondary hidden items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-6 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/25 hover:bg-white/[0.08] sm:inline-flex"
                 >
                   Continuar navegando
                 </button>
@@ -1009,7 +1016,7 @@ app.innerHTML = `
       </div>
     </div>
 
-    <footer class="border-t border-white/10 bg-panel/80">
+    <footer class="site-chrome border-t border-white/10 bg-panel/80">
       <div class="shell py-12 lg:py-16">
         <div class="grid gap-10 md:grid-cols-2 xl:grid-cols-[0.75fr_0.9fr_1fr_1.2fr_0.8fr]">
           <div>
@@ -1026,7 +1033,7 @@ app.innerHTML = `
               ]
                 .map(
                   (item) => `
-                    <a href="${item.href}" class="transition hover:text-accent-soft">${item.label}</a>
+                    <a href="${item.href}" class="clickable-text">${item.label}</a>
                   `,
                 )
                 .join("")}
@@ -1039,7 +1046,7 @@ app.innerHTML = `
               ${products
                 .map(
                   (product) => `
-                    <a href="/produtos" class="transition hover:text-accent-soft">${product.name}</a>
+                    <a href="/produtos" class="clickable-text">${product.name}</a>
                   `,
                 )
                 .join("")}
@@ -1049,8 +1056,8 @@ app.innerHTML = `
           <div>
             <p class="font-display text-3xl tracking-[0.08em] text-white">Contato</p>
             <div class="mt-6 grid gap-3 text-sm text-muted">
-              <a href="https://wa.me/5528999822728" target="_blank" rel="noreferrer" class="transition hover:text-accent-soft">(28) 99982-2728</a>
-              <a href="mailto:blocosserezini@gmail.com" class="break-words transition hover:text-accent-soft">blocosserezini@gmail.com</a>
+              <a href="https://wa.me/5528999822728" target="_blank" rel="noreferrer" class="clickable-text">(28) 99982-2728</a>
+              <a href="mailto:blocosserezini@gmail.com" class="clickable-text break-words">blocosserezini@gmail.com</a>
               <p>Segunda a sexta: 7h às 17h</p>
               <p>Sábado: 7h às 11h</p>
             </div>
@@ -1065,7 +1072,7 @@ app.innerHTML = `
                 href="${googleMapsUrl}"
                 target="_blank"
                 rel="noreferrer"
-                class="mt-4 inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:border-accent/60 hover:text-accent-soft"
+                class="btn-secondary mt-4 inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:border-accent/60 hover:text-accent-soft"
               >
                 Abrir no Google Maps
               </a>
@@ -1080,7 +1087,7 @@ app.innerHTML = `
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Abrir Instagram"
-                class="grid h-12 w-12 place-items-center rounded-[1rem] bg-accent text-white transition hover:bg-accent-soft"
+                class="footer-social-button grid h-12 w-12 place-items-center rounded-[1rem]"
               >
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                   <rect x="4" y="4" width="16" height="16" rx="4" />
@@ -1093,7 +1100,7 @@ app.innerHTML = `
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Abrir WhatsApp"
-                class="grid h-12 w-12 place-items-center rounded-[1rem] bg-accent text-white transition hover:bg-accent-soft"
+                class="footer-social-button grid h-12 w-12 place-items-center rounded-[1rem]"
               >
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M17.47 14.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.18.2-.35.22-.65.08-.29-.15-1.25-.47-2.38-1.48-.89-.78-1.49-1.76-1.66-2.06-.17-.29-.01-.45.13-.6.13-.14.3-.35.45-.52.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.29-1.04 1.02-1.04 2.49 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z" />
@@ -1108,7 +1115,7 @@ app.innerHTML = `
           <button
             type="button"
             id="back-to-top"
-            class="mx-auto flex items-center gap-3 rounded-full border border-accent/70 px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent hover:text-white"
+            class="btn-secondary mx-auto flex items-center gap-3 rounded-full border border-accent/70 px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent hover:text-white"
           >
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="m12 19 0-14M6 11l6-6 6 6" />
@@ -1885,7 +1892,7 @@ function renderModalContent(): void {
             class="rounded-full border px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition sm:px-4 sm:py-3 sm:text-sm sm:tracking-[0.18em] ${
               index === activeVariantIndex
                 ? "border-accent bg-accent text-white"
-                : "border-white/10 bg-white/[0.03] text-white hover:border-white/25 hover:bg-white/[0.08]"
+                : "btn-secondary border-white/10 bg-white/[0.03] text-white hover:border-white/25 hover:bg-white/[0.08]"
             }"
           >
             ${item.label}
@@ -2561,6 +2568,88 @@ function productCardDetails(product: Product): string {
   `;
 }
 
+function productListMedia(product: Product): string {
+  const slides = getProductCardSlides(product);
+
+  if (!slides.length) {
+    return `
+      <div class="product-list-media">
+        ${product.icon}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="product-list-media product-list-photo" ${slides.length > 1 ? "data-product-carousel" : ""}>
+      <div class="relative h-40 w-full overflow-hidden lg:h-full lg:min-h-[8.125rem]">
+        ${slides
+          .map(
+            (slide, index) => `
+              <img
+                src="${slide.src}"
+                alt="${slide.alt}"
+                class="absolute inset-0 h-full w-full object-cover transition duration-700 ${
+                  index === 0 ? "opacity-100" : "opacity-0"
+                }"
+                style="object-position: ${slide.position ?? "center"};"
+                data-carousel-slide
+                data-variant-index="${slide.variantIndex}"
+                data-slide-label="${slide.label}"
+                loading="lazy"
+                decoding="async"
+              />
+            `,
+          )
+          .join("")}
+      </div>
+      ${
+        slides.length > 1
+          ? `<div class="absolute bottom-3 left-3 flex gap-1.5" aria-hidden="true">
+              ${slides
+                .map(
+                  (_, index) => `
+                    <span
+                      class="h-1.5 w-1.5 rounded-full transition ${index === 0 ? "bg-accent-soft" : "bg-white/25"}"
+                      data-carousel-dot
+                    ></span>
+                  `,
+                )
+                .join("")}
+            </div>`
+          : ""
+      }
+    </div>
+  `;
+}
+
+function productListMeta(product: Product): string {
+  const dimensions = product.specs.find(([label]) => label === "Dimensões")?.[1];
+  const use = product.specs.find(([label]) => label === "Aplicação" || label === "Uso")?.[1];
+  const details = [
+    dimensions ? ["Medidas", dimensions] : null,
+    use ? ["Uso", use] : null,
+  ].filter(Boolean) as Array<[string, string]>;
+
+  if (!details.length) {
+    return "";
+  }
+
+  return `
+    <div class="product-list-meta">
+      ${details
+        .map(
+          ([label, value]) => `
+            <div class="product-list-meta-item">
+              <span class="product-list-meta-label">${label}</span>
+              <span class="product-list-meta-value">${value}</span>
+            </div>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 function getProductCardSlides(product: Product): ProductCardSlide[] {
   return product.variants.flatMap((variant, variantIndex) => {
     const photo = variant.photos?.[0];
@@ -2603,7 +2692,7 @@ function inputField(name: string, label: string, placeholder: string, type = "te
         type="${type}"
         name="${name}"
         placeholder="${placeholder}"
-        class="rounded-[1.25rem] border border-white/10 bg-surface px-4 py-4 text-base normal-case tracking-normal text-white outline-none transition focus:border-accent"
+        class="contact-field"
       />
     </label>
   `;
@@ -2636,7 +2725,7 @@ function calculatorWallRow(index: number, length: string, height: string, openin
         <button
           type="button"
           data-remove-wall
-          class="rounded-full border border-white/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted transition hover:border-accent/40 hover:text-white"
+          class="btn-secondary rounded-full border border-white/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted transition hover:border-accent/40 hover:text-white"
         >
           Remover
         </button>
