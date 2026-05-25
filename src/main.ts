@@ -114,8 +114,11 @@ const productPhotos = {
   vedacao19Close: "/photos/products/bloco-vedacao-19-close.jpeg",
   vedacao19Chao: "/photos/products/bloco-vedacao-19-chao.jpeg",
   estrutural12Close: "/photos/products/bloco-estrutural-12-close.jpeg",
+  estrutural14Close: "/photos/products/bloco-estrutural-14-close.jpeg",
   estrutural19Close: "/photos/products/bloco-estrutural-19-close.jpeg",
   estrutural19Chao: "/photos/products/bloco-estrutural-19-chao.jpeg",
+  canaleta14Close: "/photos/products/canaleta-14-close.jpeg",
+  canaleta19Close: "/photos/products/canaleta-19-close.jpeg",
 };
 
 const products: Product[] = [
@@ -225,7 +228,19 @@ const products: Product[] = [
           },
         ],
       },
-      { label: "14 cm", widthCm: 14, dimensions: "14x19x39 cm" },
+      {
+        label: "14 cm",
+        widthCm: 14,
+        dimensions: "14x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.estrutural14Close,
+            alt: "Close do bloco estrutural 14 cm",
+            label: "Close do produto",
+            position: "center 52%",
+          },
+        ],
+      },
       {
         label: "19 cm",
         widthCm: 19,
@@ -261,8 +276,32 @@ const products: Product[] = [
     icon: blockIcon("stack"),
     modelKind: "canaleta",
     variants: [
-      { label: "14 cm", widthCm: 14, dimensions: "14x19x39 cm" },
-      { label: "19 cm", widthCm: 19, dimensions: "19x19x39 cm" },
+      {
+        label: "14 cm",
+        widthCm: 14,
+        dimensions: "14x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.canaleta14Close,
+            alt: "Close da canaleta 14 cm",
+            label: "Close do produto",
+            position: "center 52%",
+          },
+        ],
+      },
+      {
+        label: "19 cm",
+        widthCm: 19,
+        dimensions: "19x19x39 cm",
+        photos: [
+          {
+            src: productPhotos.canaleta19Close,
+            alt: "Close da canaleta 19 cm",
+            label: "Close do produto",
+            position: "center 52%",
+          },
+        ],
+      },
     ],
   },
 ];
@@ -348,6 +387,13 @@ const galleryPhotos: GalleryPhoto[] = [
     position: "center 52%",
   },
   {
+    src: productPhotos.estrutural14Close,
+    alt: "Close do bloco estrutural 14 cm",
+    label: "Estrutural 14 cm",
+    category: "Produtos",
+    position: "center 52%",
+  },
+  {
     src: productPhotos.estrutural19Close,
     alt: "Close do bloco estrutural 19 cm",
     label: "Estrutural 19 cm",
@@ -360,6 +406,20 @@ const galleryPhotos: GalleryPhoto[] = [
     label: "Estrutural 19 cm no pátio",
     category: "Produtos",
     position: "center 50%",
+  },
+  {
+    src: productPhotos.canaleta14Close,
+    alt: "Close da canaleta 14 cm",
+    label: "Canaleta 14 cm",
+    category: "Produtos",
+    position: "center 52%",
+  },
+  {
+    src: productPhotos.canaleta19Close,
+    alt: "Close da canaleta 19 cm",
+    label: "Canaleta 19 cm",
+    category: "Produtos",
+    position: "center 52%",
   },
 ];
 
@@ -414,7 +474,7 @@ const differentials: Highlight[] = [
   {
     title: "Linha completa",
     description:
-      "Vedação, estrutural e canaleta no mesmo atendimento.",
+      "Blocos de vedação, estruturais e canaletas esperando por você.",
   },
   {
     title: "Prazo combinado",
@@ -746,32 +806,44 @@ app.innerHTML = `
       </section>
 
       <section id="diferenciais" class="shell scroll-mt-24 py-20 lg:py-28">
-        <div class="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-          <div class="reveal" data-reveal>
-            <p class="section-divider">Como funciona</p>
-            <h2 class="section-title max-w-xl">Menos dúvida no pedido. Menos atraso na obra.</h2>
-            <p class="section-copy mt-6">
-              A compra de bloco precisa ser simples: medida correta, quantidade alinhada e entrega combinada.
-            </p>
-            <a href="/contato" class="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
-              Pedir orçamento
-            </a>
-          </div>
-
-          <div class="reveal border-y border-white/10 lg:mt-2" data-reveal>
+        <div class="how-panel reveal grid lg:grid-cols-[1fr_1fr]" data-reveal>
+          <div class="how-steps">
             ${differentials
               .map(
                 (item, index) => `
-                  <article class="grid gap-4 border-b border-white/10 py-6 last:border-b-0 sm:grid-cols-[5rem_1fr]">
-                    <p class="font-display text-5xl leading-none tracking-[0.06em] text-accent-soft">0${index + 1}</p>
+                  <article class="how-step">
+                    <p class="how-step-number">0${index + 1}</p>
                     <div>
-                      <h3 class="font-display text-4xl tracking-[0.06em] text-white">${item.title}</h3>
-                      <p class="mt-2 max-w-xl text-base leading-7 text-muted">${item.description}</p>
+                      <h3 class="how-step-title">${item.title}</h3>
+                      <p class="how-step-copy">${item.description}</p>
                     </div>
                   </article>
                 `,
               )
               .join("")}
+          </div>
+
+          <div class="on-dark how-summary">
+            <div>
+              <div class="mb-12 flex justify-end">
+                <span class="inline-flex rounded-[3px] bg-accent px-5 py-3 text-xs font-bold uppercase tracking-[0.12em] text-white">
+                  Como funciona
+                </span>
+              </div>
+              <p class="how-summary-kicker">4 passos simples</p>
+              <h2 class="how-summary-title">
+                Menos <span class="accent">dúvida</span><br />
+                no pedido.<br />
+                Menos <span class="accent">atraso</span><br />
+                na obra.
+              </h2>
+              <p class="how-summary-copy">
+                A compra de bloco precisa ser simples: medida correta, quantidade alinhada e entrega combinada.
+              </p>
+              <a href="/contato" class="btn-light mt-10 inline-flex items-center justify-center rounded-lg border px-6 py-3 text-sm font-bold uppercase tracking-[0.08em] transition">
+                Pedir orçamento <span aria-hidden="true">→</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>

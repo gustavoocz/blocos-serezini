@@ -157,6 +157,7 @@
 
   .product-list-meta-item {
     @apply grid gap-1;
+    min-width: 0;
   }
 
   .product-list-meta-label {
@@ -223,7 +224,8 @@
 
   @media (min-width: 640px) {
     .product-list-meta {
-      @apply flex-row gap-5;
+      @apply grid gap-x-5 gap-y-2;
+      grid-template-columns: minmax(13.5rem, 16rem) minmax(0, 1fr);
     }
   }
 
@@ -255,6 +257,74 @@
 
   .dark-cta {
     background: var(--color-brand-gray);
+  }
+
+  .how-panel {
+    @apply overflow-hidden rounded-lg border border-line bg-panel shadow-[var(--shadow-frame)];
+  }
+
+  .how-steps {
+    @apply grid bg-panel;
+  }
+
+  .how-step {
+    @apply relative grid min-h-32 content-center gap-4 border-b border-line px-6 py-7 last:border-b-0 sm:grid-cols-[3.5rem_1fr] sm:px-8;
+  }
+
+  .how-step::before {
+    content: "";
+    @apply absolute bottom-0 left-0 top-0 w-[3px] bg-accent;
+  }
+
+  .how-step-number {
+    @apply inline-flex items-center gap-2 font-display text-4xl leading-none tracking-[0.04em] text-accent;
+  }
+
+  .how-step-number::before {
+    content: "";
+    @apply block h-1.5 w-1.5 rounded-full bg-accent/30;
+  }
+
+  .how-step-title {
+    @apply flex items-center gap-3 text-sm font-bold uppercase tracking-[0.04em] text-copy;
+  }
+
+  .how-step-title::after {
+    content: "";
+    @apply hidden h-px w-6 bg-accent sm:block;
+  }
+
+  .how-step:first-child .how-step-title::after {
+    display: none;
+  }
+
+  .how-step-copy {
+    @apply mt-2 max-w-sm text-sm font-medium leading-6 text-muted;
+  }
+
+  .how-summary {
+    @apply flex min-h-[34rem] flex-col justify-center bg-panel-strong px-8 py-10 sm:px-10 lg:px-14;
+  }
+
+  .how-summary-kicker {
+    @apply mb-7 flex items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-accent;
+  }
+
+  .how-summary-kicker::before {
+    content: "";
+    @apply h-px w-7 bg-accent;
+  }
+
+  .how-summary-title {
+    @apply max-w-md text-4xl font-bold leading-tight text-white sm:text-5xl;
+  }
+
+  .how-summary-title .accent {
+    color: var(--color-accent);
+  }
+
+  .how-summary-copy {
+    @apply mt-7 max-w-md text-base font-medium leading-7 text-muted;
   }
 
   .clickable-text {
