@@ -10,6 +10,8 @@
     { "source": "/calculadora/", "destination": "/index.html" },
     { "source": "/diferenciais", "destination": "/index.html" },
     { "source": "/diferenciais/", "destination": "/index.html" },
+    { "source": "/faq", "destination": "/index.html" },
+    { "source": "/faq/", "destination": "/index.html" },
     { "source": "/contato", "destination": "/index.html" },
     { "source": "/contato/", "destination": "/index.html" }
   ]

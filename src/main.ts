@@ -89,7 +89,7 @@ type ContactItem = {
 };
 
 const stats: Stat[] = [
-  { value: "ES", label: "atendimento em Cachoeiro e região" },
+  { value: "ES", label: "atendimento em Cachoeiro de Itapemirim" },
   { value: "3", label: "linhas principais para pronta cotação" },
   { value: "ABNT", label: "referências técnicas nas especificações" },
   { value: "Zap", label: "orçamento direto pelo WhatsApp" },
@@ -138,7 +138,7 @@ const products: Product[] = [
       src: productPhotos.vedacao14Close,
       alt: "Bloco de vedação 14 cm segurado na mão",
       label: "Foto real do bloco 14 cm",
-      position: "center 70%",
+      position: "center 60%",
     },
     modelKind: "vedacao",
     variants: [
@@ -170,7 +170,7 @@ const products: Product[] = [
             src: productPhotos.vedacao14Close,
             alt: "Close do bloco de vedação 14 cm",
             label: "Close do produto",
-            position: "center 70%",
+            position: "center 60%",
           },
           {
             src: productPhotos.vedacao14Chao,
@@ -189,7 +189,7 @@ const products: Product[] = [
             src: productPhotos.vedacao19Close,
             alt: "Close do bloco de vedação 19 cm",
             label: "Close do produto",
-            position: "center 70%",
+            position: "center 60%",
           },
           {
             src: productPhotos.vedacao19Chao,
@@ -224,7 +224,7 @@ const products: Product[] = [
             src: productPhotos.estrutural12Close,
             alt: "Close do bloco estrutural 12 cm",
             label: "Close do produto",
-            position: "center 70%",
+            position: "center 60%",
           },
         ],
       },
@@ -237,7 +237,7 @@ const products: Product[] = [
             src: productPhotos.estrutural14Close,
             alt: "Close do bloco estrutural 14 cm",
             label: "Close do produto",
-            position: "center 70%",
+            position: "center 60%",
           },
         ],
       },
@@ -250,7 +250,7 @@ const products: Product[] = [
             src: productPhotos.estrutural19Close,
             alt: "Close do bloco estrutural 19 cm",
             label: "Close do produto",
-            position: "center 70%",
+            position: "center 60%",
           },
           {
             src: productPhotos.estrutural19Chao,
@@ -285,7 +285,7 @@ const products: Product[] = [
             src: productPhotos.canaleta14Close,
             alt: "Close da canaleta 14 cm",
             label: "Close do produto",
-            position: "center 70%",
+            position: "center 65%",
           },
         ],
       },
@@ -298,7 +298,7 @@ const products: Product[] = [
             src: productPhotos.canaleta19Close,
             alt: "Close da canaleta 19 cm",
             label: "Close do produto",
-            position: "center 70%",
+            position: "center 65%",
           },
         ],
       },
@@ -356,7 +356,7 @@ const galleryPhotos: GalleryPhoto[] = [
     alt: "Close do bloco de vedação 14 cm",
     label: "Vedação 14 cm",
     category: "Produtos",
-    position: "center 70%",
+    position: "center 60%",
   },
   {
     src: productPhotos.vedacao14Chao,
@@ -370,7 +370,7 @@ const galleryPhotos: GalleryPhoto[] = [
     alt: "Close do bloco de vedação 19 cm",
     label: "Vedação 19 cm",
     category: "Produtos",
-    position: "center 70%",
+    position: "center 60%",
   },
   {
     src: productPhotos.vedacao19Chao,
@@ -384,21 +384,21 @@ const galleryPhotos: GalleryPhoto[] = [
     alt: "Close do bloco estrutural 12 cm",
     label: "Estrutural 12 cm",
     category: "Produtos",
-    position: "center 70%",
+    position: "center 60%",
   },
   {
     src: productPhotos.estrutural14Close,
     alt: "Close do bloco estrutural 14 cm",
     label: "Estrutural 14 cm",
     category: "Produtos",
-    position: "center 70%",
+    position: "center 60%",
   },
   {
     src: productPhotos.estrutural19Close,
     alt: "Close do bloco estrutural 19 cm",
     label: "Estrutural 19 cm",
     category: "Produtos",
-    position: "center 70%",
+    position: "center 60%",
   },
   {
     src: productPhotos.estrutural19Chao,
@@ -412,14 +412,57 @@ const galleryPhotos: GalleryPhoto[] = [
     alt: "Close da canaleta 14 cm",
     label: "Canaleta 14 cm",
     category: "Produtos",
-    position: "center 70%",
+    position: "center 65%",
   },
   {
     src: productPhotos.canaleta19Close,
     alt: "Close da canaleta 19 cm",
     label: "Canaleta 19 cm",
     category: "Produtos",
-    position: "center 70%",
+    position: "center 65%",
+  },
+];
+
+type FaqItem = {
+  question: string;
+  answer: string;
+};
+
+const faqItems: FaqItem[] = [
+  {
+    question: "Qual a quantidade mínima de blocos para entrega na obra?",
+    answer:
+      "Atendemos desde pequenas reformas até grandes empreendimentos. Para entregas com caminhão da fábrica, a quantidade mínima ou o valor do frete varia conforme a distância da cidade de entrega. Você também pode retirar qualquer quantidade diretamente no pátio da fábrica em Cachoeiro de Itapemirim.",
+  },
+  {
+    question: "Quais cidades da região vocês atendem com entrega?",
+    answer:
+      "Nossa fábrica fica em Cachoeiro de Itapemirim e atendemos toda a região Sul do Espírito Santo, incluindo Castelo, Itapemirim, Marataízes, Muqui, Atílio Vivácqua, Vargem Alta, Mimoso do Sul, Rio Novo do Sul e cidades vizinhas. Consulte seu endereço no WhatsApp para combinarmos rota e prazo.",
+  },
+  {
+    question: "Qual a diferença entre o Bloco de Vedação e o Bloco Estrutural?",
+    answer:
+      "O Bloco de Vedação é indicado para fechamento de paredes em obras que já contam com pilares e vigas de sustentação em concreto armado. Já o Bloco Estrutural possui maior resistência mecânica (MPa) e paredes mais espessas, suportando as cargas da edificação e reduzindo o consumo de aço, madeira e fôrmas.",
+  },
+  {
+    question: "Quantos blocos de concreto são necessários por metro quadrado (m²)?",
+    answer:
+      "Para os blocos no padrão de 39x19 cm com junta de assentamento de 1 cm, o consumo é de exatamente 12,5 blocos por m² de alvenaria. Você pode utilizar nossa calculadora nesta página para simular a metragem com desconto de portas e janelas.",
+  },
+  {
+    question: "Os blocos da Blocos Serezini seguem as normas da ABNT?",
+    answer:
+      "Sim. Fabricamos conforme as referências das normas ABNT NBR 6136 e NBR 12118, com controle criterioso de matéria-prima, dosagem e cura, garantindo resistência à compressão e padronização dimensional com arestas vivas.",
+  },
+  {
+    question: "Como solicitar um orçamento e qual o prazo de resposta?",
+    answer:
+      "Basta nos enviar uma mensagem pelo WhatsApp informando a medida pretendida e a quantidade aproximada. O retorno é rápido e feito diretamente por quem entende da fábrica, alinhando produto, valor e prazo de entrega.",
+  },
+  {
+    question: "Posso retirar a carga direto na fábrica com veículo próprio?",
+    answer:
+      "Sim! Funcionamos de segunda a sexta das 07h às 17h e aos sábados das 07h às 11h na R. José Dias Lobato, 155 - Otton Marins, Cachoeiro de Itapemirim. Temos equipe no pátio para auxiliar no carregamento rápido.",
   },
 ];
 
@@ -430,6 +473,7 @@ const routeSections: Record<string, string> = {
   "/galeria": "galeria",
   "/calculadora": "calculadora",
   "/diferenciais": "diferenciais",
+  "/faq": "faq",
   "/contato": "contato",
 };
 
@@ -490,11 +534,68 @@ if (!app) {
 }
 
 app.innerHTML = `
-  <div class="relative isolate overflow-hidden">
+  <div class="relative isolate overflow-x-clip">
+    <a href="#main-content" class="skip-link">Ir ao conteúdo principal</a>
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/10"></div>
     <div class="pointer-events-none absolute inset-0 opacity-35 ghost-grid"></div>
 
-    <header id="topo" class="site-chrome sticky top-0 z-50 border-b border-transparent bg-surface/80 backdrop-blur transition-colors duration-300">
+    <header id="topo" class="site-chrome fixed top-0 left-0 right-0 z-50 border-b border-transparent bg-[#25282d]/95 backdrop-blur-md transition-all duration-300">
+      <!-- Topbar com redes sociais, contato e e-mail -->
+      <div id="header-topbar" class="header-topbar border-b border-white/10 bg-black/25 text-xs text-white/80">
+        <div class="shell flex items-center justify-between py-2">
+          <!-- Esquerda: Telefone/WhatsApp, E-mail e Cidade -->
+          <div class="flex items-center gap-4 sm:gap-6">
+            <a
+              href="https://wa.me/5528999822728"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-1.5 transition hover:text-white"
+            >
+              <svg class="h-3.5 w-3.5 text-[#25d366]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.47 14.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.18.2-.35.22-.65.08-.29-.15-1.25-.47-2.38-1.48-.89-.78-1.49-1.76-1.66-2.06-.17-.29-.01-.45.13-.6.13-.14.3-.35.45-.52.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.29-1.04 1.02-1.04 2.49 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z" />
+                <path d="M12.06 21.8h-.01a9.94 9.94 0 0 1-5.04-1.38l-.36-.22-3.73.98.99-3.64-.24-.37A9.9 9.9 0 0 1 2.15 11.9c0-5.46 4.44-9.9 9.9-9.9 2.64 0 5.13 1.03 7 2.9a9.83 9.83 0 0 1 2.9 7c0 5.46-4.44 9.9-9.89 9.9Zm8.4-18.29A11.82 11.82 0 0 0 12.06 0C5.5 0 .16 5.34.16 11.9c0 2.09.54 4.14 1.59 5.94L.05 24l6.3-1.65a11.9 11.9 0 0 0 5.7 1.45h.01c6.55 0 11.89-5.33 11.89-11.89a11.8 11.8 0 0 0-3.49-8.4Z" />
+              </svg>
+              <span class="font-medium">(28) 99982-2728</span>
+            </a>
+            <a
+              href="mailto:blocosserezini@gmail.com"
+              class="hidden items-center gap-1.5 transition hover:text-white sm:inline-flex"
+            >
+              <svg class="h-3.5 w-3.5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+              </svg>
+              <span>blocosserezini@gmail.com</span>
+            </a>
+            <span class="hidden items-center gap-1.5 text-white/50 md:inline-flex">
+              <svg class="h-3.5 w-3.5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0 1 15 0Z" />
+              </svg>
+              <span>Cachoeiro de Itapemirim - ES</span>
+            </span>
+          </div>
+
+          <!-- Direita: Redes sociais -->
+          <div class="flex items-center gap-4">
+            <span class="hidden text-white/50 lg:inline">Siga-nos:</span>
+            <a
+              href="https://www.instagram.com/blocosserezini/"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-1.5 transition hover:text-white"
+              aria-label="Instagram da Blocos Serezini"
+            >
+              <svg class="h-3.5 w-3.5 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+              <span class="text-[0.72rem] font-semibold tracking-wide">@blocosserezini</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="shell flex items-center justify-between py-4">
         <a href="/" class="flex items-center gap-3">
           <img src="/brand/logo.png" alt="Blocos Serezini" class="h-12 w-auto object-contain sm:h-14" />
@@ -525,6 +626,7 @@ app.innerHTML = `
                 { href: "/galeria", label: "Galeria" },
                 { href: "/calculadora", label: "Calculadora" },
                 { href: "/diferenciais", label: "Diferenciais" },
+                { href: "/faq", label: "Dúvidas" },
                 { href: "/contato", label: "Contato" },
               ]
               .map(
@@ -551,58 +653,66 @@ app.innerHTML = `
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <div data-page="home">
-      <section id="hero" class="shell grid min-h-screen items-center gap-10 py-12 lg:grid-cols-[1.1fr_0.9fr] lg:py-16">
-        <div class="relative z-10 max-w-3xl">
-          <p class="section-kicker reveal" data-reveal>Blocos de concreto no Espírito Santo</p>
-          <h1 class="section-title reveal max-w-3xl text-[4.3rem] sm:text-[5.8rem] lg:text-[7.6rem]" data-reveal>
-             Bem-vindo(a) à <span class="text-accent">Blocos serezini</span>
-          </h1>
-          <p class="section-copy reveal mt-6 max-w-xl text-lg sm:text-xl" data-reveal>
-            Blocos de vedação, blocos estruturais e canaletas para construtoras, lojas de material e obras em geral.
-          </p>
-
-          <div class="reveal mt-10 flex flex-col gap-4 sm:flex-row" data-reveal>
-            <a href="/produtos" class="inline-flex items-center justify-center rounded-full bg-accent px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:bg-accent-soft">
-              Ver medidas
-            </a>
-            <a href="/contato" class="btn-secondary inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:border-white/30 hover:bg-white/10">
-              Pedir orçamento
-            </a>
-          </div>
-
-          <dl class="mt-14 grid border-y border-white/10 sm:grid-cols-2 xl:grid-cols-4">
-            ${stats
-              .map(
-                (stat, index) => `
-                  <div class="reveal border-b border-white/10 py-5 sm:px-5 ${index % 2 === 0 ? "sm:border-r" : ""} ${index < 2 ? "sm:border-b" : "sm:border-b-0"} ${index < 3 ? "xl:border-r" : ""} xl:border-b-0" data-reveal>
-                    <dt class="font-display text-5xl leading-none tracking-[0.06em] text-accent">${stat.value}</dt>
-                    <dd class="mt-2 max-w-[12rem] text-sm leading-5 text-muted">${stat.label}</dd>
-                  </div>
-                `,
-              )
-              .join("")}
-          </dl>
+      <section id="hero" class="relative min-h-screen overflow-hidden">
+        <div class="absolute inset-0">
+          <img
+            src="${factoryPhotos.patio}"
+            width="1200"
+            height="1600"
+            alt="Pátio da Blocos Serezini com blocos de concreto organizados"
+            class="h-full w-full object-cover"
+            style="object-position: center 72%;"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <div class="absolute inset-0 bg-gradient-to-r from-[#25282d]/95 via-[#25282d]/85 to-[#25282d]/60"></div>
         </div>
 
-        <div class="relative reveal" data-reveal>
-          <div class="relative overflow-hidden border-l border-white/10 pl-5 lg:pl-8">
-            <div class="on-dark relative h-[30rem] overflow-hidden sm:h-[34rem] lg:h-[42rem]">
-              <img
-                src="${factoryPhotos.patio}"
-                width="1200"
-                height="1600"
-                alt="Pátio da Blocos Serezini com blocos de concreto organizados"
-                class="h-full w-full object-cover"
-                style="object-position: center 72%;"
-                decoding="async"
-                fetchpriority="high"
-              />
-              <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(37,40,45,0.08)_0%,rgba(37,40,45,0.18)_42%,rgba(37,40,45,0.92)_100%)]"></div>
-              <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <p class="mt-2 font-display text-5xl tracking-[0.08em] text-accent-soft">Pátio de produção</p>
-                <p class="mt-3 max-w-md text-base leading-7 text-copy/80">Produto no chão, equipe perto e carregamento combinado antes da entrega.</p>
+        <div class="relative z-10 flex min-h-screen items-center">
+          <div class="shell w-full pt-32 pb-20 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28">
+            <div class="max-w-3xl">
+              <h1 class="reveal mt-8 font-display text-[3.5rem] leading-[0.92] tracking-[0.04em] sm:text-[5rem] lg:text-[6.5rem]" data-reveal>
+                <span class="text-accent">Blocos</span> de concreto para <span class="text-accent">sua obra</span>
+              </h1>
+
+              <p class="reveal mt-6 max-w-xl text-base leading-7 text-white/85 sm:text-lg" data-reveal>
+                Excelência e qualidade em soluções para alvenaria, de pequenas obras a grandes projetos.
+              </p>
+
+              <div class="reveal mt-8 flex flex-col gap-3 text-sm text-white/90 sm:flex-row sm:items-center sm:gap-6" data-reveal>
+                <span class="inline-flex items-center gap-2">
+                  <svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 0 1 15 0Z" />
+                  </svg>
+                  Cachoeiro de Itapemirim
+                </span>
+                <span class="inline-flex items-center gap-2">
+                  <svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                  </svg>
+                  (28) 99982-2728
+                </span>
+              </div>
+
+              <div class="reveal mt-10 flex flex-col gap-4 sm:flex-row" data-reveal>
+                <a
+                  href="https://wa.me/5528999822728?text=Ol%C3%A1%2C%20Blocos%20Serezini!%20Vim%20do%20site%20e%20tenho%20interesse%20em%20um%20or%C3%A7amento."
+                  target="_blank"
+                  rel="noreferrer"
+                  class="hero-cta-pulse inline-flex items-center justify-center gap-2.5 rounded-full bg-[#25d366] px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white shadow-[0_14px_34px_rgba(37,211,102,0.3)] transition hover:bg-[#20bd5a] hover:shadow-[0_18px_42px_rgba(37,211,102,0.4)]"
+                >
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M17.47 14.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.29-.77.96-.94 1.16-.18.2-.35.22-.65.08-.29-.15-1.25-.47-2.38-1.48-.89-.78-1.49-1.76-1.66-2.06-.17-.29-.01-.45.13-.6.13-.14.3-.35.45-.52.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.79.37-.27.29-1.04 1.02-1.04 2.49 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35Z" />
+                    <path d="M12.06 21.8h-.01a9.94 9.94 0 0 1-5.04-1.38l-.36-.22-3.73.98.99-3.64-.24-.37A9.9 9.9 0 0 1 2.15 11.9c0-5.46 4.44-9.9 9.9-9.9 2.64 0 5.13 1.03 7 2.9a9.83 9.83 0 0 1 2.9 7c0 5.46-4.44 9.9-9.89 9.9Zm8.4-18.29A11.82 11.82 0 0 0 12.06 0C5.5 0 .16 5.34.16 11.9c0 2.09.54 4.14 1.59 5.94L.05 24l6.3-1.65a11.9 11.9 0 0 0 5.7 1.45h.01c6.55 0 11.89-5.33 11.89-11.89a11.8 11.8 0 0 0-3.49-8.4Z" />
+                  </svg>
+                  Solicitar orçamento
+                </a>
+                <a href="/produtos" class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-sm transition hover:border-white/40 hover:bg-white/10">
+                  Ver produtos
+                </a>
               </div>
             </div>
           </div>
@@ -719,6 +829,28 @@ app.innerHTML = `
             <p class="section-copy mt-6">
               Adicione uma ou mais paredes e veja uma quantidade aproximada de blocos. O cálculo considera bloco 39x19 cm com junta de 1 cm.
             </p>
+
+            <div class="mt-8 rounded-lg border border-line bg-panel/90 p-5 shadow-[var(--shadow-frame)] backdrop-blur">
+              <p class="text-[0.68rem] font-bold uppercase tracking-[0.2em] text-accent">Como funciona o cálculo:</p>
+              <ul class="mt-3 space-y-2.5 text-xs text-muted">
+                <li class="flex items-start gap-2.5">
+                  <span class="font-bold text-accent">1.</span>
+                  <span>Informe o comprimento e a altura de cada parede.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="font-bold text-accent">2.</span>
+                  <span>Desconte a área total de portas e janelas (se houver).</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="font-bold text-accent">3.</span>
+                  <span>Defina a margem de perda (recomendamos de 5% a 10%).</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="font-bold text-accent">4.</span>
+                  <span>Clique em escolher medida para enviar o orçamento direto para o WhatsApp.</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div class="frame reveal p-6 sm:p-8 lg:mt-2 lg:p-10" data-reveal>
@@ -848,6 +980,62 @@ app.innerHTML = `
         </div>
       </section>
 
+      <section id="faq" class="shell scroll-mt-24 py-20 lg:py-28">
+        <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <div class="reveal" data-reveal>
+            <p class="section-divider">Dúvidas Frequentes</p>
+            <h2 class="section-title max-w-xl">Perguntas sobre blocos, pedidos e entregas.</h2>
+            <p class="section-copy mt-6">
+              Respostas diretas sobre pedido mínimo, frete na região, laudos técnicos e retirada no pátio da fábrica.
+            </p>
+            <div class="mt-8 rounded-lg border border-line bg-panel p-5 shadow-[var(--shadow-frame)]">
+              <p class="text-xs font-semibold uppercase tracking-[0.16em] text-copy">Ainda tem dúvidas?</p>
+              <p class="mt-2 text-xs leading-5 text-muted">
+                Fale diretamente com nossa equipe no WhatsApp para tirar dúvidas sobre o seu projeto ou pedido.
+              </p>
+              <a
+                href="https://wa.me/5528999822728?text=Ol%C3%A1%2C%20Blocos%20Serezini!%20Tenho%20uma%20d%C3%BAvida%20sobre%20os%20blocos%20de%20concreto."
+                target="_blank"
+                rel="noreferrer"
+                class="clickable-text mt-3 inline-block text-xs font-bold uppercase tracking-[0.12em] text-accent"
+              >
+                Chamar no WhatsApp &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="reveal space-y-3" data-reveal>
+            ${faqItems
+              .map(
+                (item, index) => `
+                  <div class="overflow-hidden rounded-lg border border-line bg-panel shadow-[var(--shadow-frame)]">
+                    <button
+                      type="button"
+                      data-faq-trigger="${index}"
+                      class="flex w-full items-center justify-between gap-4 p-5 text-left text-sm font-bold uppercase tracking-[0.04em] text-copy transition hover:text-accent sm:p-6"
+                      aria-expanded="false"
+                    >
+                      <span>${item.question}</span>
+                      <span class="faq-icon grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line text-accent transition-transform duration-300">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </span>
+                    </button>
+                    <div
+                      data-faq-answer="${index}"
+                      class="hidden border-t border-line px-5 pb-5 pt-3 text-sm leading-6 text-muted sm:px-6 sm:pb-6"
+                    >
+                      <p>${item.answer}</p>
+                    </div>
+                  </div>
+                `,
+              )
+              .join("")}
+          </div>
+        </div>
+      </section>
+
       <section id="contato" class="shell scroll-mt-24 py-20 lg:py-28">
         <div class="contact-panel reveal grid lg:grid-cols-[0.92fr_1.08fr]" data-reveal>
           <div class="on-dark contact-info-panel min-h-[34rem]">
@@ -883,33 +1071,34 @@ app.innerHTML = `
             <p class="contact-form-heading">Formulário de contato</p>
             <form id="contact-form" class="contact-form-body">
               <div class="grid gap-4 sm:grid-cols-2">
-                ${inputField("name", "Nome", "Seu nome completo")}
-                ${inputField("phone", "Telefone / WhatsApp", "(28) 99982-2728", "tel")}
+                ${inputField("name", "Nome", "Seu nome completo", "text", true)}
+                ${inputField("phone", "Telefone / WhatsApp", "(28) 99982-2728", "tel", true, "\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}")}
               </div>
 
-              ${inputField("email", "E-mail", "seu@email.com", "email")}
+              <div class="grid gap-4 sm:grid-cols-2">
+                ${inputField("city", "Cidade / Bairro", "Ex.: Cachoeiro - Aeroporto")}
+                <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
+                  <span>Produto de interesse</span>
+                  <select
+                    name="product"
+                    class="contact-field"
+                  >
+                    <option value="">Selecione um produto</option>
+                    <option>Bloco de Vedação</option>
+                    <option>Bloco Estrutural</option>
+                    <option>Canaleta</option>
+                    <option>Múltiplos produtos</option>
+                  </select>
+                </label>
+              </div>
 
               <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
-                <span>Produto de interesse</span>
-                <select
-                  name="product"
-                  class="contact-field"
-                >
-                  <option value="">Selecione um produto</option>
-                  <option>Bloco de Vedação</option>
-                  <option>Bloco Estrutural</option>
-                  <option>Canaleta</option>
-                  <option>Múltiplos produtos</option>
-                </select>
-              </label>
-
-              <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
-                <span>Mensagem</span>
+                <span>Mensagem / Lista de blocos</span>
                 <textarea
                   name="message"
-                  rows="6"
+                  rows="4"
                   placeholder="Ex.: 1.000 blocos 14x19x39 para entrega em Cachoeiro."
-                  class="contact-field min-h-28 resize-none"
+                  class="contact-field min-h-24 resize-none"
                 ></textarea>
               </label>
 
@@ -1101,6 +1290,7 @@ app.innerHTML = `
                 { href: "/galeria", label: "Galeria" },
                 { href: "/calculadora", label: "Calculadora" },
                 { href: "/diferenciais", label: "Diferenciais" },
+                { href: "/faq", label: "Dúvidas" },
                 { href: "/contato", label: "Contato" },
               ]
                 .map(
@@ -1219,6 +1409,7 @@ app.innerHTML = `
 `;
 
 const header = document.querySelector<HTMLElement>("header");
+const headerTopbar = document.querySelector<HTMLElement>("#header-topbar");
 const menuToggle = document.querySelector<HTMLButtonElement>("#menu-toggle");
 const nav = document.querySelector<HTMLElement>("#primary-nav");
 const navLinks = document.querySelectorAll<HTMLElement>("[data-nav-link]");
@@ -1350,13 +1541,41 @@ revealElements.forEach((element, index) => {
 
 productCarousels.forEach(setupProductCarousel);
 
-window.addEventListener("scroll", () => {
-  if (!header) {
-    return;
-  }
+let lastScrollY = window.scrollY;
+const scrollDelta = 6;
 
-  header.classList.toggle("border-white/10", window.scrollY > 18);
-});
+window.addEventListener(
+  "scroll",
+  () => {
+    if (!header) {
+      return;
+    }
+
+    const currentScrollY = window.scrollY;
+    header.classList.toggle("border-white/10", currentScrollY > 18);
+
+    if (headerTopbar) {
+      if (currentScrollY <= 25) {
+        // No topo da página: sempre visível
+        headerTopbar.classList.remove("topbar-hidden");
+      } else {
+        const diff = currentScrollY - lastScrollY;
+        if (Math.abs(diff) >= scrollDelta) {
+          if (diff > 0) {
+            // Descendo a página: esconde a topbar, mantém a barra principal sticky
+            headerTopbar.classList.add("topbar-hidden");
+          } else {
+            // Subindo a página: revela a topbar com redes sociais, contato e email
+            headerTopbar.classList.remove("topbar-hidden");
+          }
+        }
+      }
+    }
+
+    lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
+  },
+  { passive: true },
+);
 
 menuToggle?.addEventListener("click", () => {
   const isHidden = nav?.classList.toggle("hidden");
@@ -1540,16 +1759,21 @@ window.addEventListener("resize", () => {
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
 
+  if (form && !form.reportValidity()) {
+    return;
+  }
+
   const data = new FormData(form);
   const name = String(data.get("name") || "").trim();
   const phone = String(data.get("phone") || "").trim();
-  const email = String(data.get("email") || "").trim();
+  const city = String(data.get("city") || "").trim();
   const product = String(data.get("product") || "").trim();
   const message = String(data.get("message") || "").trim();
 
   if (!name || !phone) {
     if (formFeedback) {
       formFeedback.textContent = "Preencha pelo menos nome e telefone para continuar.";
+      formFeedback.className = "text-sm text-accent";
     }
     return;
   }
@@ -1560,7 +1784,7 @@ form?.addEventListener("submit", (event) => {
     "Quero orçamento para blocos:",
     `Nome: ${name}`,
     `Telefone: ${phone}`,
-    email ? `E-mail: ${email}` : "",
+    city ? `Cidade/Bairro: ${city}` : "",
     product ? `Produto: ${product}` : "",
     message ? `Mensagem: ${message}` : "",
   ]
@@ -1570,8 +1794,29 @@ form?.addEventListener("submit", (event) => {
   window.open(`https://wa.me/5528999822728?text=${encodeURIComponent(lines)}`, "_blank", "noopener,noreferrer");
 
   if (formFeedback) {
-    formFeedback.textContent = "Mensagem pronta. Abrimos o WhatsApp em uma nova aba.";
+    formFeedback.textContent = "✓ Mensagem pronta! Abrimos o WhatsApp em uma nova aba.";
+    formFeedback.className = "text-sm text-[#25d366] font-semibold form-success-toast";
   }
+
+  form.reset();
+});
+
+const faqTriggers = document.querySelectorAll<HTMLButtonElement>("[data-faq-trigger]");
+faqTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    const index = trigger.dataset.faqTrigger;
+    const answer = document.querySelector<HTMLElement>(`[data-faq-answer="${index}"]`);
+    const icon = trigger.querySelector(".faq-icon");
+
+    if (answer) {
+      const isHidden = answer.classList.contains("hidden");
+      answer.classList.toggle("hidden", !isHidden);
+      trigger.setAttribute("aria-expanded", String(isHidden));
+      if (icon) {
+        icon.classList.toggle("rotate-180", isHidden);
+      }
+    }
+  });
 });
 
 syncCalculatorWallLabels();
@@ -2652,8 +2897,8 @@ function productListMedia(product: Product): string {
   }
 
   return `
-    <div class="product-list-media product-list-photo" ${slides.length > 1 ? "data-product-carousel" : ""}>
-      <div class="relative h-40 w-full overflow-hidden lg:h-full lg:min-h-[8.125rem]">
+    <div class="product-list-media product-list-photo relative overflow-hidden" ${slides.length > 1 ? "data-product-carousel" : ""}>
+      <div class="relative h-56 w-full overflow-hidden sm:h-64 lg:h-full lg:min-h-[8.125rem]">
         ${slides
           .map(
             (slide, index) => `
@@ -2676,7 +2921,7 @@ function productListMedia(product: Product): string {
       </div>
       ${
         slides.length > 1
-          ? `<div class="absolute bottom-3 left-3 flex gap-1.5" aria-hidden="true">
+          ? `<div class="absolute bottom-3 left-3 z-10 flex gap-1.5" aria-hidden="true">
               ${slides
                 .map(
                   (_, index) => `
@@ -2756,15 +3001,19 @@ function getProductCardSlideLabel(productName: string, variantLabel: string): st
   return `${productName} ${size}`;
 }
 
-function inputField(name: string, label: string, placeholder: string, type = "text"): string {
+function inputField(name: string, label: string, placeholder: string, type = "text", required = false, pattern = ""): string {
+  const reqAttr = required ? 'required' : '';
+  const patAttr = pattern ? `pattern="${pattern}"` : '';
   return `
     <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
-      <span>${label}</span>
+      <span>${label}${required ? ' <span class="text-accent">*</span>' : ''}</span>
       <input
         type="${type}"
         name="${name}"
         placeholder="${placeholder}"
         class="contact-field"
+        ${reqAttr}
+        ${patAttr}
       />
     </label>
   `;
