@@ -432,12 +432,12 @@ const faqItems: FaqItem[] = [
   {
     question: "Qual a quantidade mínima de blocos para entrega na obra?",
     answer:
-      "Atendemos desde pequenas reformas até grandes empreendimentos. Para entregas com caminhão da fábrica, a quantidade mínima ou o valor do frete varia conforme a distância da cidade de entrega. Você também pode retirar qualquer quantidade diretamente no pátio da fábrica em Cachoeiro de Itapemirim.",
+      "Atendemos desde pequenas reformas até grandes empreendimentos em Cachoeiro de Itapemirim. Para entregas com caminhão da fábrica, a quantidade mínima ou o frete varia conforme o bairro. Você também pode retirar qualquer quantidade diretamente no pátio da fábrica.",
   },
   {
-    question: "Quais cidades da região vocês atendem com entrega?",
+    question: "Vocês realizam entrega em toda a cidade de Cachoeiro?",
     answer:
-      "Nossa fábrica fica em Cachoeiro de Itapemirim e atendemos toda a região Sul do Espírito Santo, incluindo Castelo, Itapemirim, Marataízes, Muqui, Atílio Vivácqua, Vargem Alta, Mimoso do Sul, Rio Novo do Sul e cidades vizinhas. Consulte seu endereço no WhatsApp para combinarmos rota e prazo.",
+      "Sim! Atendemos exclusivamente em Cachoeiro de Itapemirim - ES, com entrega direta no seu canteiro de obras em qualquer bairro da cidade, além da opção de retirada imediata no pátio da fábrica. Consulte seu bairro no WhatsApp para combinarmos o frete e o prazo.",
   },
   {
     question: "Qual a diferença entre o Bloco de Vedação e o Bloco Estrutural?",
@@ -733,7 +733,7 @@ app.innerHTML = `
                 A produção passou para a próxima geração sem perder a rotina de atendimento direto. O cliente fala com quem conhece o bloco, a medida e a entrega.
               </p>
               <p class="section-copy">
-                O sobrenome virou marca porque o trabalho continuou no mesmo lugar: fabricar bloco de concreto para obras da região, com orientação simples e prazo combinado.
+                O sobrenome virou marca porque o trabalho continuou no mesmo lugar: fabricar bloco de concreto para obras em Cachoeiro de Itapemirim, com orientação simples e prazo combinado.
               </p>
             </div>
           </div>
@@ -986,7 +986,7 @@ app.innerHTML = `
             <p class="section-divider">Dúvidas Frequentes</p>
             <h2 class="section-title max-w-xl">Perguntas sobre blocos, pedidos e entregas.</h2>
             <p class="section-copy mt-6">
-              Respostas diretas sobre pedido mínimo, frete na região, laudos técnicos e retirada no pátio da fábrica.
+              Respostas diretas sobre pedido mínimo, frete em Cachoeiro de Itapemirim, laudos técnicos e retirada no pátio da fábrica.
             </p>
             <div class="mt-8 rounded-lg border border-line bg-panel p-5 shadow-[var(--shadow-frame)]">
               <p class="text-xs font-semibold uppercase tracking-[0.16em] text-copy">Ainda tem dúvidas?</p>
@@ -1076,7 +1076,7 @@ app.innerHTML = `
               </div>
 
               <div class="grid gap-4 sm:grid-cols-2">
-                ${inputField("city", "Cidade / Bairro", "Ex.: Cachoeiro - Aeroporto")}
+                ${inputField("city", "Bairro em Cachoeiro", "Ex.: Aeroporto, Baiminas, Marbrasa")}
                 <label class="grid gap-2 text-sm uppercase tracking-[0.2em] text-muted">
                   <span>Produto de interesse</span>
                   <select
@@ -1784,7 +1784,7 @@ form?.addEventListener("submit", (event) => {
     "Quero orçamento para blocos:",
     `Nome: ${name}`,
     `Telefone: ${phone}`,
-    city ? `Cidade/Bairro: ${city}` : "",
+    city ? `Bairro (Cachoeiro): ${city}` : "",
     product ? `Produto: ${product}` : "",
     message ? `Mensagem: ${message}` : "",
   ]
